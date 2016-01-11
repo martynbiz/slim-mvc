@@ -35,7 +35,7 @@ MartynBiz\Mongo\Connection::getInstance()->init(array(
 ));
 
 // Set up dependencies
-require APPLICATION_PATH . '/dependencies.php';
+require APPLICATION_PATH . '/services.php';
 
 // Register middleware
 require APPLICATION_PATH . '/middleware.php';
