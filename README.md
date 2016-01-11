@@ -6,7 +6,7 @@ Slim 3 with additional support attaching controllers to routes, and controller t
 
 /app/routes.php
 
-```
+```php
 $app->get('/', 'App\Controller\IndexController#home');
 $app->get('/contact', 'App\Controller\IndexController#contact');
 
@@ -68,6 +68,30 @@ class ArticlesController extends Base
 ```
 
 ## Views & Layouts ##
+
+### PHP templates ###
+
+Coming soon
+
+### Twig templates ###
+
+/app/services.php
+
+```php
+$container['view'] = function ($container) {
+    // TODO switch on caching for production
+    $view = new \Slim\Views\Twig( APPLICATION_PATH . '/views/', [
+        // 'cache' => realpath(APPLICATION_PATH . '/../cache/')
+    ]);
+    $view->addExtension(new \Slim\Views\TwigExtension(
+        $container['router'],
+        $container['request']->getUri()
+    ));
+
+    return $view;
+};
+```
+
 
 /app/views/layout.html
 
@@ -131,7 +155,7 @@ class ExampleController extends Base
         $examples = $this->getService('model.example')->find();
 
         return $this->render('admin/example/index.html', array(
-            // data to pass to the view
+            'examples' => $examples,
         ));
     }
     .
@@ -179,7 +203,7 @@ class ExampleControllerTest extends TestCase
         $this->dispatch('/articles');
 
         // mock dependencies (optional)
-        $this->setDependency('model.article', $articleMock);
+        $this->setService('model.article', $articleMock);
 
         $this->assertController('articles');
         $this->assertAction('index');
@@ -190,9 +214,10 @@ class ExampleControllerTest extends TestCase
 
 Other built-in assertions (coming soon)
 
+```php
 $this->assertRedirects('...');
 $this->assertViewReceives(array);
-
+```
 
 ## TODO
 
@@ -211,5 +236,3 @@ MVC framework
 * flash
 * mongo - how to handle created_at, updated_at
 * mongo - soft deletes, deleted_at
-
-* migrations - sql db only
