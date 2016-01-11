@@ -1,0 +1,18 @@
+<table class="table table-striped">
+    <tr>
+        <th width="20%">Title</th>
+        <td><input type="text" name="title" value="{{ article.title }}" class="form-control"></td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td><textarea name="description" class="form-control" rows="5">{{ article.description }}</textarea></td>
+    </tr>
+    <tr>
+        <th>File upload</th>
+        <td><div class="fallback">
+            <input name="file" type="file" multiple />
+        </div></td>
+    </tr>
+</table>
+
+<input type="hidden" type="type" value="video">

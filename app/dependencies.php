@@ -31,3 +31,9 @@ $container['view'] = function ($container) {
 
     return $view;
 };
+
+// Models
+
+$container['model.article'] = function ($container) {
+    return new App\Model\Article();
+};

@@ -2,27 +2,73 @@
 
 namespace App\Controller\Admin;
 
-use App\Controller\SlimController;
+use SlimMvc\Controller\Base;
+use App\Model\Article;
 
-class ArticlesController extends SlimController
+class ArticlesController extends Base
 {
     public function index()
     {
-        $this->render('admin/articles/index.twig');
+        $articles = $this->getService('model.article')->find();
+
+        return $this->render('admin/articles/index.html', array(
+            'articles' => $articles->toArray(),
+        ));
     }
 
-    public function show()
+    public function show($id)
     {
-        $this->render('admin/articles/show.twig');
+        $article = $this->getService('model.article')->findOne(array(
+            'id' => (int) $id,
+        ));
+
+        return $this->render('admin/articles/show.html', array(
+            'article' => $article->toArray(),
+        ));
     }
 
     public function create()
     {
-        $this->render('admin/articles/new.twig');
+        return $this->render('admin/articles/create.html');
     }
 
-    public function edit()
+    public function post()
     {
-        $this->render('admin/articles/edit.twig');
+        $article = new Article( $this->getPost() );
+
+        if ( $article->save() ) {
+            return $this->redirect('/admin/articles');
+        } else {
+            $this->flash( $article->getErrors() );
+            return $this->create();
+        }
+    }
+
+    public function edit($id)
+    {
+        $article = $this->getService('model.article')->findOne(array(
+            'id' => (int) $id,
+        ));
+
+        // TODO how to forward from update - add set() and get() to Mongo?
+        // $article->set( $this->getPost() );
+
+        return $this->render('admin/articles/edit.html', array(
+            'article' => $article->toArray(),
+        ));
+    }
+
+    public function update($id)
+    {
+        $article = $this->getService('model.article')->findOne(array(
+            'id' => (int) $id,
+        ));
+
+        if ( $article->save( $this->getPost() ) ) {
+            return $this->redirect('/admin/articles/' . $id);
+        } else {
+            $this->flash( $article->getErrors() );
+            return $this->edit($id);
+        }
     }
 }

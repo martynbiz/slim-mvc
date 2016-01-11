@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "737ee5d7903ba70ef6bd4f9858c71b06",
-    "content-hash": "1687e1704d543c85a1c71078be124f4f",
+    "hash": "35282193fd7d88c5143273503ab2d475",
+    "content-hash": "67af470719403c1938bf563857d96831",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -33,6 +33,39 @@
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "time": "2014-12-30 15:22:37"
+        },
+        {
+            "name": "martynbiz/php-mongo",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/martynbiz/php-mongo.git",
+                "reference": "c2e435bf2668970f48d29e7714d706a4ea9f66f9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/martynbiz/php-mongo/zipball/c2e435bf2668970f48d29e7714d706a4ea9f66f9",
+                "reference": "c2e435bf2668970f48d29e7714d706a4ea9f66f9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "MartynBiz": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "homepage": "http://github.com/martynbiz/php-mongo",
+            "time": "2016-01-11 09:53:58"
         },
         {
             "name": "monolog/monolog",
@@ -1419,16 +1452,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.0.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "3df409958a646dad2bc5046c3fb671ee24a1a691"
+                "reference": "9db3e5a309bd5f3dfd974f5b42d820904352c4d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/3df409958a646dad2bc5046c3fb671ee24a1a691",
-                "reference": "3df409958a646dad2bc5046c3fb671ee24a1a691",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/9db3e5a309bd5f3dfd974f5b42d820904352c4d8",
+                "reference": "9db3e5a309bd5f3dfd974f5b42d820904352c4d8",
                 "shasum": ""
             },
             "require": {
@@ -1437,7 +1470,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0-dev"
+                    "dev-master": "3.1-dev"
                 }
             },
             "autoload": {
@@ -1464,12 +1497,14 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2015-12-26 13:39:53"
+            "time": "2016-01-06 10:01:46"
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "martynbiz/php-mongo": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

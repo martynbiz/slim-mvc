@@ -82,6 +82,24 @@ class App extends Slim
     }
 
     /**
+    * Add REST routes
+    * @param  string $pattern  The route URI pattern
+    * @param  string  $callable The controller class name
+    * @return void
+    */
+    public function resource($pattern, $callable)
+    {
+        $this->get($pattern, $callable . '#index');
+        $this->get($pattern . '/{id:[0-9]+}', $callable . '#show');
+        $this->get($pattern . '/create', $callable . '#create');
+        $this->get($pattern . '/{id:[0-9]+}/edit', $callable . '#edit');
+
+        $this->post($pattern, $callable . '#post');
+        $this->put($pattern . '/{id:[0-9]+}', $callable . '#update');
+        $this->delete($pattern . '/{id:[0-9]+}', $callable . '#delete');
+    }
+
+    /**
      * Create a closure that instantiates (or gets from container) and then calls
      * the action method.
      *
@@ -176,6 +194,7 @@ class App extends Slim
 
     /**
      * Get the last controller called
+     * @return int
      */
     public function getStatusCode()
     {
@@ -184,28 +203,20 @@ class App extends Slim
 
     /**
      * Set the last controller called
+     * @param int $statusCode
+     * @return void
      */
     public function setStatusCode($statusCode)
     {
         $this->statusCode = $statusCode;
     }
 
-   /**
-    * Add REST routes
-    *
-    * @param  string $pattern  The route URI pattern
-    * @param  string  $callable The controller class name
-    *
-    * @return void
-    */
-   public function resource($pattern, $callable)
-   {
-       $this->get($pattern . '', $callable . '#index');
-       $this->get($pattern . '/{id}', $callable . '#show');
-       $this->get($pattern . '/{id}/create', $callable . '#create');
-       $this->get($pattern . '/{id}/edit', $callable . '#edit');
-       $this->post($pattern . '', $callable . '#post');
-       $this->update($pattern . '/{id}', $callable . '#update');
-       $this->delete($pattern . '/{id}', $callable . '#delete');
-   }
+    /**
+     * Shorthand method to Slim's flash method
+     * @param mixed $message
+     */
+    public function flash($message)
+    {
+        $this->app->flash($message);
+    }
 }

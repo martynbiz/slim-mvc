@@ -25,6 +25,15 @@ session_start();
 $settings = require APPLICATION_PATH . '/config/settings.php';
 $app = new SlimMvc\App($settings);
 
+MartynBiz\Mongo\Connection::getInstance()->init(array(
+    'db' => 'crsrc_development',
+    // 'username' => 'myuser',
+    // 'password' => '89dD7HH7di!89',
+    'classmap' => array(
+        'articles' => '\\App\\Model\\Article',
+    ),
+));
+
 // Set up dependencies
 require APPLICATION_PATH . '/dependencies.php';
 

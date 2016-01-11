@@ -1,0 +1,28 @@
+{% extends "admin.html" %}
+
+{% block body %}
+<ol class="breadcrumb">
+    <li><a href="/admin">Admin</a></li>
+    <li><a href="/admin/articles">Articles</a></li>
+    <li class="active">{{ article.title|e }}</li>
+</ol>
+
+<table class="table table-striped">
+    <tr>
+        <th width="20%">Title</th>
+        <td>{{ article.title|e }}</td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td>{{ article.description|e }}</td>
+    </tr>
+    <tr>
+        <th>Type</th>
+        <td>{{ article.type|e }}</td>
+    </tr>
+    <tr>
+        <th>Data created</th>
+        <td>{{ article.created_at|e }}</td>
+    </tr>
+</table>
+{% endblock %}
