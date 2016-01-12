@@ -7,6 +7,8 @@ Slim 3 with additional support attaching controllers to routes, and controller t
 /app/routes.php
 
 ```php
+<?php
+
 $app->get('/', 'App\Controller\IndexController#home');
 $app->get('/contact', 'App\Controller\IndexController#contact');
 
@@ -23,7 +25,7 @@ namespace App\Controller;
 
 use SlimMvc\Controller\Base;
 
-class ArticlesController extends Base
+class ExampleController extends Base
 {
     public function index()
     {
