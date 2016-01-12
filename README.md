@@ -25,7 +25,7 @@ namespace App\Controller;
 
 use SlimMvc\Controller\Base;
 
-class ArticlesController extends Base
+class ExampleController extends Base
 {
     public function index()
     {
