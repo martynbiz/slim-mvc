@@ -33,3 +33,12 @@ require APPLICATION_PATH . '/middleware.php';
 
 // Register routes
 require APPLICATION_PATH . '/routes.php';
+
+MartynBiz\Mongo\Connection::getInstance()->init(array(
+    'db' => 'crsrc_testing',
+    // 'username' => 'myuser',
+    // 'password' => '89dD7HH7di!89',
+    'classmap' => array(
+        'articles' => '\\App\\Model\\Article',
+    ),
+));

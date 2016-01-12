@@ -18,7 +18,23 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected $app;
 
-    public function dispatch($path, $method='get', $data=array())
+    /**
+     * Perform get dispatch
+     */
+    public function get($path)
+    {
+        $this->dispatch($path, 'GET');
+    }
+
+    /**
+     * Perform post dispatch
+     */
+    public function post($path, $data=array())
+    {
+        $this->dispatch($path, 'POST', $data);
+    }
+
+    protected function dispatch($path, $method='GET', $data=array())
     {
         // Run app
         $this->app = App::getInstance();
@@ -26,7 +42,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
         // Prepare a mock environment
         $env = Environment::mock(array(
             'REQUEST_URI' => $path,
-            'REQUEST_METHOD' => 'GET',
+            'REQUEST_METHOD' => $method,
         ));
 
         // Prepare request and response objects
@@ -35,7 +51,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $cookies = [];
         $serverParams = $env->all();
         $body = new RequestBody();
-        $req = new Request('GET', $uri, $headers, $cookies, $serverParams, $body);
+        $req = new Request($method, $uri, $headers, $cookies, $serverParams, $body);
         $res = new Response();
 
         $response = call_user_func_array($this->app, array($req, $res));
@@ -54,5 +70,19 @@ class TestCase extends \PHPUnit_Framework_TestCase
     public function assertStatusCode($statusCode)
     {
         $this->assertEquals($statusCode, $this->app->getStatusCode());
+    }
+
+    public function assertRedirects()
+    {
+        $statusCode = $this->app->getStatusCode();
+
+        $this->assertTrue($statusCode >= 300 and $statusCode < 400);
+    }
+
+    public function assertRedirectsTo($path)
+    {
+        $statusCode = $this->app->getStatusCode();
+
+        $this->assertTrue($statusCode >= 300 and $statusCode < 400);
     }
 }

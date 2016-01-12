@@ -40,12 +40,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/martynbiz/php-mongo.git",
-                "reference": "c2e435bf2668970f48d29e7714d706a4ea9f66f9"
+                "reference": "31873a9e1b34731e1fec028b3bd64b7d13c93d16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/martynbiz/php-mongo/zipball/c2e435bf2668970f48d29e7714d706a4ea9f66f9",
-                "reference": "c2e435bf2668970f48d29e7714d706a4ea9f66f9",
+                "url": "https://api.github.com/repos/martynbiz/php-mongo/zipball/31873a9e1b34731e1fec028b3bd64b7d13c93d16",
+                "reference": "31873a9e1b34731e1fec028b3bd64b7d13c93d16",
                 "shasum": ""
             },
             "require": {
@@ -65,7 +65,7 @@
                 "MIT"
             ],
             "homepage": "http://github.com/martynbiz/php-mongo",
-            "time": "2016-01-11 09:53:58"
+            "time": "2016-01-12 03:05:38"
         },
         {
             "name": "monolog/monolog",

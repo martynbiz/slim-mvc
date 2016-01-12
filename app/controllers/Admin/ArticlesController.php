@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use SlimMvc\Controller\Base;
 use App\Model\Article;
+use App\Exception\NotFound as NotFoundException;
 
 class ArticlesController extends Base
 {
@@ -18,7 +19,7 @@ class ArticlesController extends Base
 
     public function show($id)
     {
-        $article = $this->getService('model.article')->findOne(array(
+        $article = $this->getService('model.article')->findOneOrFail(array(
             'id' => (int) $id,
         ));
 
@@ -39,19 +40,19 @@ class ArticlesController extends Base
         if ( $article->save() ) {
             return $this->redirect('/admin/articles');
         } else {
-            $this->flash( $article->getErrors() );
+            // $this->flash( $article->getErrors() );
             return $this->create();
         }
     }
 
     public function edit($id)
     {
-        $article = $this->getService('model.article')->findOne(array(
+        $article = $this->getService('model.article')->findOneOrFail(array(
             'id' => (int) $id,
         ));
 
-        // TODO how to forward from update - add set() and get() to Mongo?
-        // $article->set( $this->getPost() );
+        // if any post params from failed update, set them in the model
+        $article->set( $this->getPost() );
 
         return $this->render('admin/articles/edit.html', array(
             'article' => $article->toArray(),
@@ -60,7 +61,7 @@ class ArticlesController extends Base
 
     public function update($id)
     {
-        $article = $this->getService('model.article')->findOne(array(
+        $article = $this->getService('model.article')->findOneOrFail(array(
             'id' => (int) $id,
         ));
 
