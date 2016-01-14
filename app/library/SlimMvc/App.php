@@ -15,16 +15,6 @@ class App extends Slim
     private static $instance;
 
     /**
-     * @var string Name of last controller called
-     */
-    protected $controllerName;
-
-    /**
-     * @var string Name of last action called
-     */
-    protected $actionName;
-
-    /**
      * Create new application - extended to store the instance which we'll use in tests
      *
      * @param ContainerInterface|array $container Either a ContainerInterface or an associative array of application settings
@@ -150,73 +140,14 @@ class App extends Slim
             $controllerName = rtrim($controllerName, 'controller');
             $controllerName = array_pop(explode('\\', $controllerName));
 
-            $app->setControllerName($controllerName);
-            $app->setActionName($actionName);
-            $app->setStatusCode($response->getStatusCode());
+            // these values will be useful when testing
+            $response->setControllerName($controllerName);
+            $response->setActionName($actionName);
+            // $response->setStatusCode($response->getStatusCode());
 
             return call_user_func_array(array($controller, $actionName), $args);
         };
 
         return $callable;
-    }
-
-    /**
-     * Get the last controller called
-     */
-    public function getControllerName()
-    {
-        return $this->controllerName;
-    }
-
-    /**
-     * Set the last controller called
-     */
-    public function setControllerName($controllerName)
-    {
-        return $this->controllerName = $controllerName;
-    }
-
-    /**
-     * Get the last controller called
-     */
-    public function getActionName()
-    {
-        return $this->actionName;
-    }
-
-    /**
-     * Set the last controller called
-     */
-    public function setActionName($actionName)
-    {
-        $this->actionName = $actionName;
-    }
-
-    /**
-     * Get the last controller called
-     * @return int
-     */
-    public function getStatusCode()
-    {
-        return $this->statusCode;
-    }
-
-    /**
-     * Set the last controller called
-     * @param int $statusCode
-     * @return void
-     */
-    public function setStatusCode($statusCode)
-    {
-        $this->statusCode = $statusCode;
-    }
-
-    /**
-     * Shorthand method to Slim's flash method
-     * @param mixed $message
-     */
-    public function flash($message)
-    {
-        $this->app->flash($message);
     }
 }

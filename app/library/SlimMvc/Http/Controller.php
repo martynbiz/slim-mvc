@@ -1,7 +1,7 @@
 <?php
-namespace SlimMvc\Controller;
+namespace SlimMvc\Http;
 
-abstract class Base
+abstract class Controller
 {
     // Optional properties
     protected $app;
@@ -37,7 +37,7 @@ abstract class Base
      */
     protected function getPost()
     {
-        return $_POST;
+        return $this->request->getParams();
     }
 
     /**

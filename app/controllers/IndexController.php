@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use SlimMvc\Controller\Base;
+use SlimMvc\Http\Controller;
 
-class IndexController extends Base
+class IndexController extends Controller
 {
     public function home()
     {

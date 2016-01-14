@@ -2,11 +2,11 @@
 
 namespace App\Controller\Admin;
 
-use SlimMvc\Controller\Base;
+use SlimMvc\Http\Controller;
 use App\Model\Article;
 use App\Exception\NotFound as NotFoundException;
 
-class ArticlesController extends Base
+class ArticlesController extends Controller
 {
     public function index()
     {
@@ -51,11 +51,8 @@ class ArticlesController extends Base
             'id' => (int) $id,
         ));
 
-        // if any post params from failed update, set them in the model
-        $article->set( $this->getPost() );
-
         return $this->render('admin/articles/edit.html', array(
-            'article' => $article->toArray(),
+            'article' => array_merge($article->toArray(), $this->getPost()),
         ));
     }
 

@@ -23,49 +23,49 @@ class ArticlesControllerTests extends TestCase
         $this->article->delete();
     }
 
-    // public function testIndexAction()
-    // {
-    //     $this->get('/admin/articles');
-    //
-    //     // assertions
-    //
-    //     $this->assertController('articles');
-    //     $this->assertAction('index');
-    //     $this->assertStatusCode(200);
-    // }
-    //
-    // public function testShowAction()
-    // {
-    //     $this->get('/admin/articles/' . $this->article->id);
-    //
-    //     // assertions
-    //
-    //     $this->assertController('articles');
-    //     $this->assertAction('show');
-    //     $this->assertStatusCode(200);
-    // }
-    //
-    // public function testCreateAction()
-    // {
-    //     $this->get('/admin/articles/create');
-    //
-    //     // assertions
-    //
-    //     $this->assertController('articles');
-    //     $this->assertAction('create');
-    //     $this->assertStatusCode(200);
-    // }
-    //
-    // public function testEditAction()
-    // {
-    //     $this->get('/admin/articles/' . $this->article->id . '/edit');
-    //
-    //     // assertions
-    //
-    //     $this->assertController('articles');
-    //     $this->assertAction('edit');
-    //     $this->assertStatusCode(200);
-    // }
+    public function testIndexAction()
+    {
+        $this->get('/admin/articles');
+
+        // assertions
+
+        $this->assertController('articles');
+        $this->assertAction('index');
+        $this->assertStatusCode(200);
+    }
+
+    public function testShowAction()
+    {
+        $this->get('/admin/articles/' . $this->article->id);
+
+        // assertions
+
+        $this->assertController('articles');
+        $this->assertAction('show');
+        $this->assertStatusCode(200);
+    }
+
+    public function testCreateAction()
+    {
+        $this->get('/admin/articles/create');
+
+        // assertions
+
+        $this->assertController('articles');
+        $this->assertAction('create');
+        $this->assertStatusCode(200);
+    }
+
+    public function testEditAction()
+    {
+        $this->get('/admin/articles/' . $this->article->id . '/edit');
+
+        // assertions
+
+        $this->assertController('articles');
+        $this->assertAction('edit');
+        $this->assertStatusCode(200);
+    }
 
     public function testPostActionWithValidParams()
     {
@@ -75,6 +75,8 @@ class ArticlesControllerTests extends TestCase
 
         // assertions
 
+        $this->assertController('articles');
+        $this->assertAction('post');
         $this->assertRedirects();
     }
 

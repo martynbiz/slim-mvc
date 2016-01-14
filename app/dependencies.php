@@ -1,6 +1,11 @@
 <?php
 // DIC configuration
 
+use Slim\Http\Headers;
+
+use App\Http\Request;
+use App\Http\Response;
+
 $container = $app->getContainer();
 
 // view renderer
@@ -30,6 +35,20 @@ $container['view'] = function ($container) {
     ));
 
     return $view;
+};
+
+// TODO move to App\Slim::run() -- won't affect tests
+// replace request with our own
+$container['request'] = function ($container) {
+    return Request::createFromEnvironment($container->get('environment'));
+};
+
+// replace reponse with our own
+$container['response'] = function ($container) {
+    $headers = new Headers(['Content-Type' => 'text/html; charset=UTF-8']);
+    $response = new Response(200, $headers);
+
+    return $response->withProtocolVersion($container->get('settings')['httpVersion']);
 };
 
 // Models

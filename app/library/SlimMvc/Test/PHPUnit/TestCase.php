@@ -6,17 +6,33 @@ use SlimMvc\App;
 
 use Slim\Http\Environment;
 use Slim\Http\Headers;
-use Slim\Http\Request;
 use Slim\Http\RequestBody;
-use Slim\Http\Response;
 use Slim\Http\Uri;
+
+use App\Http\Request;
+use App\Http\Response;
 
 class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Slim\App $app
+     * @var SlimMvc\App
      */
     protected $app;
+
+    /**
+     * @var RequestInterface
+     */
+    protected $request;
+
+    /**
+     * @var ResponseInterface
+     */
+    protected $response;
+
+    /**
+     * @var Headers
+     */
+    protected $headers;
 
     /**
      * Perform get dispatch
@@ -51,38 +67,43 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $cookies = [];
         $serverParams = $env->all();
         $body = new RequestBody();
+
+        // create request, and set params
         $req = new Request($method, $uri, $headers, $cookies, $serverParams, $body);
+        if (!empty($data))
+            $req = $req->withParsedBody($data);
+
         $res = new Response();
 
-        $response = call_user_func_array($this->app, array($req, $res));
+        $this->headers = $headers;
+        $this->request = $req;
+        $this->response = call_user_func_array($this->app, array($req, $res));
     }
 
-    public function assertController($controller)
+    public function assertController($controllerName)
     {
-        $this->assertEquals($controller, $this->app->getControllerName());
+        $this->assertEquals($controllerName, $this->response->getControllerName());
     }
 
-    public function assertAction($action)
+    public function assertAction($actionName)
     {
-        $this->assertEquals($action, $this->app->getActionName());
+        $this->assertEquals($actionName, $this->response->getActionName());
     }
 
     public function assertStatusCode($statusCode)
     {
-        $this->assertEquals($statusCode, $this->app->getStatusCode());
+        $this->assertEquals($statusCode, $this->response->getStatusCode());
     }
 
     public function assertRedirects()
     {
-        $statusCode = $this->app->getStatusCode();
+        $statusCode = $this->response->getStatusCode();
 
         $this->assertTrue($statusCode >= 300 and $statusCode < 400);
     }
 
     public function assertRedirectsTo($path)
     {
-        $statusCode = $this->app->getStatusCode();
 
-        $this->assertTrue($statusCode >= 300 and $statusCode < 400);
     }
 }

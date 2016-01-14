@@ -2,27 +2,27 @@
 
 namespace App\Controller;
 
-use SlimMvc\Controller\Base;
+use SlimMvc\Http\Controller;
 
-class ArticlesController extends Base
+class ArticlesController extends Controller
 {
     public function index()
     {
-        $this->render('articles/index.twig');
+        $this->render('articles/index.html');
     }
 
     public function show($id)
     {
-        $this->render('articles/show.twig');
+        $this->render('articles/show.html');
     }
 
     public function create()
     {
-        $this->render('articles/create.twig');
+        $this->render('articles/create.html');
     }
 
     public function edit($id)
     {
-        $this->render('articles/edit.twig');
+        $this->render('articles/edit.html');
     }
 }
