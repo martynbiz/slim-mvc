@@ -2,15 +2,14 @@
 
 namespace SlimMvc\Test\PHPUnit;
 
-use SlimMvc\App;
-
 use Slim\Http\Environment;
 use Slim\Http\Headers;
 use Slim\Http\RequestBody;
 use Slim\Http\Uri;
 
-use App\Http\Request;
-use App\Http\Response;
+use SlimMvc\App;
+use SlimMvc\Http\Request;
+use SlimMvc\Http\Response;
 
 use Symfony\Component\DomCrawler\Crawler;
 

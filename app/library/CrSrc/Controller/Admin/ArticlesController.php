@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace CrSrc\Controller\Admin;
 
 use SlimMvc\Http\Controller;
-use App\Model\Article;
-use App\Exception\NotFound as NotFoundException;
+use CrSrc\Model\Article;
 
 class ArticlesController extends Controller
 {

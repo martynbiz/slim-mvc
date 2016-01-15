@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace CrSrc\Controller;
 
 use SlimMvc\Http\Controller;
 

@@ -2,7 +2,7 @@
 
 use SlimMvc\Test\PHPUnit\TestCase;
 
-use App\Model\Article;
+use CrSrc\Model\Article;
 
 class ArticlesControllerTests extends TestCase
 {

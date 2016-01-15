@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace CrSrc\Model;
 
 use MartynBiz\Mongo;
 

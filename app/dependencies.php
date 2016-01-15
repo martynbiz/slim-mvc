@@ -3,8 +3,8 @@
 
 use Slim\Http\Headers;
 
-use App\Http\Request;
-use App\Http\Response;
+use SlimMvc\Http\Request;
+use SlimMvc\Http\Response;
 
 $container = $app->getContainer();
 
@@ -54,5 +54,5 @@ $container['response'] = function ($container) {
 // Models
 
 $container['model.article'] = function ($container) {
-    return new App\Model\Article();
+    return new CrSrc\Model\Article();
 };
