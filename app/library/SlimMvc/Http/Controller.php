@@ -43,7 +43,7 @@ abstract class Controller
     /**
      * Shorthand method to get dependency from container
      */
-    protected function getService($name)
+    protected function get($name)
     {
         return $this->app->getContainer()->get($name);
     }
@@ -63,5 +63,20 @@ abstract class Controller
     public function redirect($url, $status = 302)
     {
         return $this->response->withRedirect($url, $status);
+    }
+
+    /**
+     * Pass on the control to another action. Of the same class (for now)
+     *
+     * @param  string $actionName    The redirect destination.
+     * @param  string                 $status The redirect HTTP status code.
+     * @return self
+     */
+    public function forward($actionName, $data=array())
+    {
+        // update the action name that was last used
+        $this->response->setActionName($actionName);
+
+        return call_user_func_array(array($this, $actionName), $data);
     }
 }

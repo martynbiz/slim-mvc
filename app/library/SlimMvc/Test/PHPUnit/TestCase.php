@@ -12,6 +12,8 @@ use Slim\Http\Uri;
 use App\Http\Request;
 use App\Http\Response;
 
+use Symfony\Component\DomCrawler\Crawler;
+
 class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -97,13 +99,28 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
     public function assertRedirects()
     {
-        $statusCode = $this->response->getStatusCode();
-
-        $this->assertTrue($statusCode >= 300 and $statusCode < 400);
+        $this->assertTrue($this->response->isRedirect());
     }
 
     public function assertRedirectsTo($path)
     {
+        return $this->assertEquals($path, $this->response->getHeaderLine('Location'));
+    }
 
+    public function assertQuery($query)
+    {
+        // TODO getBody is not returning anything :(
+        $html = (string)$this->response->getBody();
+
+        $crawler = new Crawler($html);
+        $this->assertTrue($crawler->filter($query)->count() > 0);
+    }
+
+    public function assertQueryCount($query, $count)
+    {
+        $html = (string)$this->response->getBody();
+
+        $crawler = new Crawler($html);
+        $this->assertEquals($count, $crawler->filter($query)->count());
     }
 }

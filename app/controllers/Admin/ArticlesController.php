@@ -10,7 +10,7 @@ class ArticlesController extends Controller
 {
     public function index()
     {
-        $articles = $this->getService('model.article')->find();
+        $articles = $this->get('model.article')->find();
 
         return $this->render('admin/articles/index.html', array(
             'articles' => $articles->toArray(),
@@ -19,7 +19,7 @@ class ArticlesController extends Controller
 
     public function show($id)
     {
-        $article = $this->getService('model.article')->findOneOrFail(array(
+        $article = $this->get('model.article')->findOneOrFail(array(
             'id' => (int) $id,
         ));
 
@@ -40,14 +40,14 @@ class ArticlesController extends Controller
         if ( $article->save() ) {
             return $this->redirect('/admin/articles');
         } else {
-            // $this->flash( $article->getErrors() );
-            return $this->create();
+            // $this->get('flash')->set( $article->getErrors() );
+            return $this->forward('create');
         }
     }
 
     public function edit($id)
     {
-        $article = $this->getService('model.article')->findOneOrFail(array(
+        $article = $this->get('model.article')->findOneOrFail(array(
             'id' => (int) $id,
         ));
 
@@ -58,7 +58,7 @@ class ArticlesController extends Controller
 
     public function update($id)
     {
-        $article = $this->getService('model.article')->findOneOrFail(array(
+        $article = $this->get('model.article')->findOneOrFail(array(
             'id' => (int) $id,
         ));
 

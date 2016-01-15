@@ -20,7 +20,7 @@ class ArticlesControllerTests extends TestCase
     public function tearDown()
     {
         // create fixtures
-        $this->article->delete();
+        $this->article->getConnection()->delete('articles');
     }
 
     public function testIndexAction()
@@ -69,22 +69,51 @@ class ArticlesControllerTests extends TestCase
 
     public function testPostActionWithValidParams()
     {
-        $data = $this->getArticleData();
-
-        $this->post('/admin/articles', $data);
+        $this->post('/admin/articles', $this->getArticleData() );
 
         // assertions
 
         $this->assertController('articles');
         $this->assertAction('post');
-        $this->assertRedirects();
+        $this->assertRedirectsTo('/admin/articles');
+    }
+
+    /**
+     * @dataProvider getInvalidArticleData
+     */
+    public function testPostActionWithInvalidParams($postData)
+    {
+        $this->post('/admin/articles', $postData );
+
+        // assertions
+
+        $this->assertController('articles');
+        $this->assertAction('create');
     }
 
     public function getArticleData($data=array())
     {
         return array_merge( array(
             'title' => 'A long time ago in a galaxy far far away',
-            'description' => '...'
+            'description' => '<p>Hello world!</p>',
         ), $data );
+    }
+
+    public function getInvalidArticleData()
+    {
+        return array(
+            array(
+                array(
+                    'title' => 'A long time ago in a galaxy far far away',
+                    // 'description' => '<p>Hello world!</p>', // missing description
+                ),
+            ),
+            array(
+                array(
+                    // 'title' => 'A long time ago in a galaxy far far away', // missing title
+                    'description' => '<p>Hello world!</p>',
+                ),
+            ),
+        );
     }
 }
