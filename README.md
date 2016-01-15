@@ -227,8 +227,6 @@ $this->assertViewReceives(array);
 
 
 MVC framework
-* mongo - create get/set, validate method
-* testing - tests for crud controllers
 * environments, multiple configs (dev, testing, prod)
 * psr-4, move controllers to library
 * cache views in prod
@@ -238,3 +236,8 @@ MVC framework
 * flash
 * mongo - how to handle created_at, updated_at
 * mongo - soft deletes, deleted_at
+
+tests:
+* crud: update, delete
+* query
+* csrf

@@ -51,6 +51,10 @@ $container['response'] = function ($container) {
     return $response->withProtocolVersion($container->get('settings')['httpVersion']);
 };
 
+// $container['csrf'] = function ($c) {
+//     return new \Slim\Csrf\Guard;
+// };
+
 // Models
 
 $container['model.article'] = function ($container) {
