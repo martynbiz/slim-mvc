@@ -1,8 +1,8 @@
 # SlimMVC #
 
-Slim 3 with additional support attaching controllers to routes, and controller testing.
+Easily add controllers to a Slim Framework v3 application.
 
-## Controllers ##
+## Controller ##
 
 /app/routes.php
 
@@ -81,7 +81,7 @@ class ExampleController extends Controller
 }
 ```
 
-## Dependencies ##
+## Dependencies within controllers ##
 
 /app/dependencies.php
 
@@ -113,7 +113,7 @@ class ExampleController extends Controller
 ```
 
 
-## Testing ##
+## Testing controllers ##
 
 /phpunit.xml
 
@@ -168,16 +168,26 @@ class ExampleControllerTest extends TestCase
 
 ## TODO
 
+crsrc
+* authentication -- login page, zend auth middleware
+http://framework.zend.com/manual/current/en/modules/zend.authentication.intro.html
+* csrf - ask question on so
+* flash
+* cache
+* gulp?
 * psr-4, move controllers to library
 * cache views in prod
+* zend-like: bootstrap, resources (one for mongo, another for eloquent), -- extend app?
+* vagrant
+
+slim-mvc-project
 * create project that can easily be installed
-* middleware: csrf, auth
-* zend-like: bootstrap, resources (one for mongo, another for eloquent),
-* flash
+
+mongo
 * mongo - how to handle created_at, updated_at
 * mongo - soft deletes, deleted_at
 
-tests:
+tests
 * can we run tests with run() instead? then we can use App for bootstrap (eg. routes)
 * crud: update, delete
 * query

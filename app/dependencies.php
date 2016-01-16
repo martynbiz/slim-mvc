@@ -37,7 +37,6 @@ $container['view'] = function ($container) {
     return $view;
 };
 
-// TODO move to App\Slim::run() -- won't affect tests
 // replace request with our own
 $container['request'] = function ($container) {
     return Request::createFromEnvironment($container->get('environment'));
@@ -52,16 +51,15 @@ $container['response'] = function ($container) {
 };
 
 $container['auth'] = function ($c) {
-    return new \CrSrc\Middleware\Auth;
+    return new Zend\Authentication\AuthenticationService();
 };
-
-
-// $container['csrf'] = function ($c) {
-//     return new \Slim\Csrf\Guard;
-// };
 
 // Models
 
 $container['model.article'] = function ($container) {
     return new CrSrc\Model\Article();
+};
+
+$container['model.user'] = function ($container) {
+    return new CrSrc\Model\User();
 };

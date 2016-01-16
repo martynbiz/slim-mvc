@@ -44,8 +44,9 @@ abstract class Controller
             // store the name of the controller and action so we can assert during tests
             $controllerName = get_class($controller); // eg. CrSrc\Controller\Admin\ArticlesController
             $controllerName = strtolower($controllerName); // eg. crsrc\controller\admin\articlescontroller
-            $controllerName = rtrim($controllerName, 'controller'); // eg. crsrc\controller\admin\articles
-            $controllerName = array_pop(explode('\\', $controllerName)); // eg. articles
+            $controllerName = array_pop(explode('\\', $controllerName)); // eg. articlescontroller
+            preg_match('/(.*)controller$/', $controllerName, $result); // eg. articles?
+            $controllerName = $result[1];
 
             // these values will be useful when testing, but not included with the
             // Slim\Http\Response. Instead use SlimMvc\Http\Response

@@ -7,6 +7,11 @@ use CrSrc\Model\User;
 
 class UsersController extends Controller
 {
+    public function show()
+    {
+
+    }
+
     public function create()
     {
         return $this->render('users/create.html', array(
@@ -23,5 +28,15 @@ class UsersController extends Controller
         } else {
             return $this->forward('create');
         }
+    }
+
+    public function edit()
+    {
+
+    }
+
+    public function update()
+    {
+
     }
 }

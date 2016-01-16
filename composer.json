@@ -1,14 +1,13 @@
 {
-    "name": "slim/slim-skeleton",
-    "description": "A Slim Framework skeleton application for rapid development",
-    "keywords": ["microframework","rest","router", "psr7"],
-    "homepage": "http://github.com/slimphp/Slim-Skeleton",
+    "name": "martynbiz/slim-controllers",
+    "description": "Controller for Slim Framework v3",
+    "homepage": "http://github.com/martynbiz/slim-controllers",
     "license": "MIT",
     "authors": [
         {
-            "name": "Josh Lockhart",
-            "email": "info@joshlockhart.com",
-            "homepage": "http://www.joshlockhart.com/"
+            "name": "Martyn Bissett",
+            "email": "martynbissett@yahoo.co.uk",
+            "homepage": "http://martyn.biz/"
         }
     ],
     "minimum-stability": "dev",

@@ -1,0 +1,25 @@
+{% extends "main.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">Login</li>
+</ol>
+
+<form method="post" action="/session">
+    <table class="table table-striped">
+        <tr>
+            <th>Email</th>
+            <td><input type="text" name="email" value="{{ params.email }}" class="form-control"></td>
+        </tr>
+        <tr>
+            <th>Password</th>
+            <td><input type="password" name="password" value="{{ params.password }}" class="form-control"></td>
+        </tr>
+    </table>
+
+    <button type="submit">Login</button>
+</form>
+{% endblock %}

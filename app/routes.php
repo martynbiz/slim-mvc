@@ -10,6 +10,16 @@ $app->group('', function () use ($app) {
     $app->get('/contact', $controller('contact'));
 });
 
+// index routes (homepage, about, etc)
+$app->group('/session', function () use ($app) {
+
+    $controller = new CrSrc\Controller\SessionController($app);
+
+    $app->get('/login', $controller('login'));
+    $app->post('', $controller('post'));
+    $app->delete('/logout', $controller('logout'));
+});
+
 // create resource method for Slim::resource($route, $name)
 $app->group('/articles', function () use ($app) {
 
@@ -45,4 +55,4 @@ $app->group('/admin', function () use ($app) {
         $app->put('/{id:[0-9]+}', $controller('update'));
         $app->delete('/{id:[0-9]+}', $controller('delete'));
     });
-});
+})->add( new \CrSrc\Middleware\Auth() );
