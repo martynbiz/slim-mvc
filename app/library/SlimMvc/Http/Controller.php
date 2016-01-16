@@ -48,7 +48,7 @@ abstract class Controller
             $controllerName = array_pop(explode('\\', $controllerName)); // eg. articles
 
             // these values will be useful when testing, but not included with the
-            // Slim\Http\Response. Instead use SlimMvc\Http\Response 
+            // Slim\Http\Response. Instead use SlimMvc\Http\Response
             if (method_exists($response, 'setControllerName')) {
                 $response->setControllerName($controllerName);
             }
@@ -129,7 +129,9 @@ abstract class Controller
     public function forward($actionName, $data=array())
     {
         // update the action name that was last used
-        $this->response->setActionName($actionName);
+        if (method_exists($this->response, 'setActionName')) {
+            $this->response->setActionName($actionName);
+        }
 
         return call_user_func_array(array($this, $actionName), $data);
     }

@@ -19,10 +19,8 @@ class UsersController extends Controller
         $user = new User( $this->getPost() );
 
         if ( $user->save() ) {
-            // $this->get('flash')->set( $article->getErrors() );
             return $this->redirect('/');
         } else {
-            // $this->get('flash')->set( $article->getErrors() );
             return $this->forward('create');
         }
     }

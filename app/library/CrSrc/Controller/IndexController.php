@@ -6,7 +6,7 @@ use SlimMvc\Http\Controller;
 
 class IndexController extends Controller
 {
-    public function home()
+    public function index()
     {
         $this->render('index/index.html');
     }

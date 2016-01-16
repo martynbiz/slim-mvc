@@ -1,12 +1,23 @@
 <?php
 // Routes
 
-// Define app routes
-$app->get('/', 'CrSrc\Controller\IndexController#home');
-$app->get('/contact', 'CrSrc\Controller\IndexController#contact');
+// index routes (homepage, about, etc)
+$app->group('', function () use ($app) {
+
+    $controller = new CrSrc\Controller\IndexController($app);
+
+    $app->get('/', $controller('index'));
+    $app->get('/contact', $controller('contact'));
+});
 
 // create resource method for Slim::resource($route, $name)
-$app->resource('/articles', 'CrSrc\Controller\ArticlesController');
+$app->group('/articles', function () use ($app) {
+
+    $controller = new CrSrc\Controller\ArticlesController($app);
+
+    $app->get('/{id:[0-9]+}', $controller('show'));
+    $app->get('/{id:[0-9]+}/{slug}', $controller('show'));
+});
 
 // users routes (eg. register)
 $app->group('/users', function () use ($app) {

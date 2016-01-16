@@ -9,11 +9,23 @@ Slim 3 with additional support attaching controllers to routes, and controller t
 ```php
 <?php
 
-$app->get('/', 'App\Controller\IndexController#home');
-$app->get('/contact', 'App\Controller\IndexController#contact');
+// index routes (homepage, about, etc)
+$app->group('', function () use ($app) {
 
-// RESTful routes
-$app->resource('/example', 'App\Controller\ExampleController');
+    $controller = new App\Controller\IndexController($app);
+
+    $app->get('/', $controller('index'));
+    $app->get('/contact', $controller('contact'));
+});
+
+// create resource method for Slim::resource($route, $name)
+$app->group('/articles', function () use ($app) {
+
+    $controller = new App\Controller\ExampleController($app);
+
+    $app->get('/{id:[0-9]+}', $controller('show'));
+    $app->get('/{id:[0-9]+}/{slug}', $controller('show'));
+});
 ```
 
 /app/controllers/ExampleController.php
@@ -23,9 +35,9 @@ $app->resource('/example', 'App\Controller\ExampleController');
 
 namespace App\Controller;
 
-use SlimMvc\Controller\Base;
+use SlimMvc\Http\Controller;
 
-class ExampleController extends Base
+class ExampleController extends Controller
 {
     public function index()
     {
@@ -69,72 +81,7 @@ class ExampleController extends Base
 }
 ```
 
-## Views & Layouts ##
-
-### PHP templates ###
-
-Coming soon
-
-### Twig templates ###
-
-/app/services.php
-
-```php
-$container['view'] = function ($container) {
-    // TODO switch on caching for production
-    $view = new \Slim\Views\Twig( APPLICATION_PATH . '/views/', [
-        // 'cache' => realpath(APPLICATION_PATH . '/../cache/')
-    ]);
-    $view->addExtension(new \Slim\Views\TwigExtension(
-        $container['router'],
-        $container['request']->getUri()
-    ));
-
-    return $view;
-};
-```
-
-
-/app/views/layout.html
-
-```html
-<html>
-    <head>
-        <title>{% block title %}SlimMvc Application{% endblock %}</title>
-    </head>
-    <body>
-        <h1>Main</h1>
-        {% block body %}{% endblock %}
-    </body>
-</html>
-```
-
-/app/views/example/index.html
-
-```html
-{% extends "layout.html" %}
-
-{% block title %}Create new example{% endblock %}
-
-{% block body %}
-<table class="table table-striped">
-    <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Data created</th>
-    </tr>
-    {% for example in examples %}
-    <tr>
-        <td><a href="/admin/examples/{{ example.id }}">{{ example.title|e }}</a></td>
-        <td>{{ example.description|e }}</td>
-        <td>{{ example.created_at|e }}</td>
-    </tr>
-    {% endfor %}
-</table>
-{% endblock %}
-```
-
-## Services ##
+## Dependencies ##
 
 /app/dependencies.php
 
@@ -150,11 +97,11 @@ $container['model.example'] = function ($container) {
 .
 .
 .
-class ExampleController extends Base
+class ExampleController extends Controller
 {
     public function index()
     {
-        $examples = $this->getService('model.example')->find();
+        $examples = $this->get('model.example')->find();
 
         return $this->render('admin/example/index.html', array(
             'examples' => $examples,
@@ -205,28 +152,22 @@ class ExampleControllerTest extends TestCase
         $this->dispatch('/articles');
 
         // mock dependencies (optional)
-        $this->setService('model.article', $articleMock);
+        $container = $this->app->getContainer();
+        container->set('model.article', $articleMock);
 
         $this->assertController('articles');
         $this->assertAction('index');
         $this->assertStatusCode(200);
+        $this->assertQuery('table#examples');
+        $this->assertQueryCount('div.errors', 0);
+        // $this->assertRedirects();
+        // $this->assertRedirectsTo('...');
     }
 }
 ```
 
-Other built-in assertions (coming soon)
-
-```php
-$this->assertRedirects('...');
-$this->assertViewReceives(array);
-```
-
 ## TODO
 
-
-
-
-MVC framework
 * psr-4, move controllers to library
 * cache views in prod
 * create project that can easily be installed
@@ -237,6 +178,7 @@ MVC framework
 * mongo - soft deletes, deleted_at
 
 tests:
+* can we run tests with run() instead? then we can use App for bootstrap (eg. routes)
 * crud: update, delete
 * query
 * csrf
