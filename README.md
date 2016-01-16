@@ -227,7 +227,6 @@ $this->assertViewReceives(array);
 
 
 MVC framework
-* environments, multiple configs (dev, testing, prod)
 * psr-4, move controllers to library
 * cache views in prod
 * create project that can easily be installed
@@ -241,3 +240,4 @@ tests:
 * crud: update, delete
 * query
 * csrf
+* more appropriate error messages for TestCase's assert* methods

@@ -1,0 +1,16 @@
+{% extends "admin.html" %}
+
+{% block title %}Create new article{% endblock %}
+
+{% block body %}
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">Register</li>
+</ol>
+
+<form method="post" action="/admin/articles">
+    {% include 'users/partials/form.html' %}
+
+    <button type="submit">Create</button>
+</form>
+{% endblock %}

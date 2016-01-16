@@ -23,10 +23,7 @@ session_start();
 
 // Instantiate the app
 $settings = require APPLICATION_PATH . '/config/settings.php';
-
-
-
-$app = new SlimMvc\App($settings);
+$app = new Slim\App($settings);
 
 MartynBiz\Mongo\Connection::getInstance()->init($settings['mongo']['development']);
 

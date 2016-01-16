@@ -51,6 +51,11 @@ $container['response'] = function ($container) {
     return $response->withProtocolVersion($container->get('settings')['httpVersion']);
 };
 
+$container['auth'] = function ($c) {
+    return new \CrSrc\Middleware\Auth;
+};
+
+
 // $container['csrf'] = function ($c) {
 //     return new \Slim\Csrf\Guard;
 // };

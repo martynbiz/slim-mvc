@@ -53,9 +53,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
     protected function dispatch($path, $method='GET', $data=array())
     {
-        // Run app
-        $this->app = App::getInstance();
-
         // Prepare a mock environment
         $env = Environment::mock(array(
             'REQUEST_URI' => $path,
@@ -83,11 +80,19 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
     public function assertController($controllerName)
     {
+        if (!method_exists($this->response, 'getControllerName')) {
+            throw new \Exception('getControllerName not found, please use \SlimMvc\Http\Response in your app.');
+        }
+
         $this->assertEquals($controllerName, $this->response->getControllerName());
     }
 
     public function assertAction($actionName)
     {
+        if (!method_exists($this->response, 'getActionName')) {
+            throw new \Exception('getActionName not found, please use \SlimMvc\Http\Response in your app.');
+        }
+
         $this->assertEquals($actionName, $this->response->getActionName());
     }
 

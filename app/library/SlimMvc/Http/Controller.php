@@ -8,6 +8,60 @@ abstract class Controller
     protected $request;
     protected $response;
 
+    /**
+     * @param \Slim\App $app
+     */
+    public function __construct(\Slim\App $app)
+    {
+        $this->app = $app;
+    }
+
+    /**
+     * This method allows use to return a callable that calls the action for
+     * the route.
+     * @param string $action Name of the action method to call
+     */
+    public function __invoke($actionName)
+    {
+        $app = $this->app;
+        $controller = $this;
+
+        $callable = function ($request, $response, $args) use ($app, $controller, $actionName) {
+
+            $container = $app->getContainer();
+
+            // Set the app, request and response into the controller if we can
+            if (method_exists($controller, 'setApp')) {
+                $controller->setApp($app);
+            }
+            if (method_exists($controller, 'setRequest')) {
+                $controller->setRequest($request);
+            }
+            if (method_exists($controller, 'setResponse')) {
+                $controller->setResponse($response);
+            }
+
+            // store the name of the controller and action so we can assert during tests
+            $controllerName = get_class($controller); // eg. CrSrc\Controller\Admin\ArticlesController
+            $controllerName = strtolower($controllerName); // eg. crsrc\controller\admin\articlescontroller
+            $controllerName = rtrim($controllerName, 'controller'); // eg. crsrc\controller\admin\articles
+            $controllerName = array_pop(explode('\\', $controllerName)); // eg. articles
+
+            // these values will be useful when testing, but not included with the
+            // Slim\Http\Response. Instead use SlimMvc\Http\Response 
+            if (method_exists($response, 'setControllerName')) {
+                $response->setControllerName($controllerName);
+            }
+            if (method_exists($response, 'setActionName')) {
+                $response->setActionName($actionName);
+            }
+
+            return call_user_func_array(array($controller, $actionName), $args);
+        };
+
+        return $callable;
+    }
+
     // Optional setters
     public function setApp($app)
     {

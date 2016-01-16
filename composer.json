@@ -21,7 +21,8 @@
         "martynbiz/php-mongo": "dev-master",
         "symfony/dom-crawler": "^3.0",
         "symfony/css-selector": "^3.0",
-        "slim/csrf": "^0.6.0"
+        "slim/csrf": "^0.6.0",
+        "zendframework/zend-authentication": "^2.5"
     },
     "require-dev": {
         "phpunit/phpunit": "4.8.*"

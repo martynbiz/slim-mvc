@@ -1,28 +1,9 @@
 <?php
 
-use SlimMvc\Test\PHPUnit\TestCase;
-
 use CrSrc\Model\Article;
 
-class ArticlesControllerTests extends TestCase
+class ArticlesControllerTests extends \CrSrc\Test\PHPUnit\TestCase
 {
-    public function setUp()
-    {
-        // create fixtures
-        $this->article = new Article( array(
-            'title' => 'A long time ago in a galaxy far far away...',
-            'description' => '...'
-        ) );
-
-        $this->article->save();
-    }
-
-    public function tearDown()
-    {
-        // create fixtures
-        $this->article->getConnection()->delete('articles');
-    }
-
     public function testIndexAction()
     {
         $this->get('/admin/articles');
