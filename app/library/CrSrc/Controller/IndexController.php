@@ -6,7 +6,16 @@ class IndexController extends BaseController
 {
     public function index()
     {
-        return $this->render('index/index.html');
+        // get articles from cache
+        $cacheId = 'homepage_articles';
+        if (!$articles = $this->get('cache')->get($cacheId)) {
+            $articles = $this->get('model.article')->find();
+            $this->get('cache')->set($cacheId, $articles, 3600);
+        }
+
+        return $this->render('index/index.html', array(
+            'articles' => $articles->toArray(),
+        ));
     }
 
     public function contact()

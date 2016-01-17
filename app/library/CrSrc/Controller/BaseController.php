@@ -4,7 +4,7 @@ namespace CrSrc\Controller;
 
 use SlimMvc\Http\Controller;
 
-class BaseController extends Controller
+abstract class BaseController extends Controller
 {
     /**
      * @var User
@@ -13,20 +13,26 @@ class BaseController extends Controller
 
     /**
      * Render the view from within the controller
-     * @param string $file Name of the template/ view to render
-     * @param array $args Additional varables to pass to the view
+     * @param string $filepath Name of the template/ view to render
+     * @param array $data Additional varables to pass to the view
      * @param Response?
      */
-    protected function render($file, $args=array())
+    protected function render($filepath, $data=array())
     {
         // before we pass on operation to the SlimMvc\Http\Controller::render, we'll
         // set some useful variables for the view (e.g. currently logged in user)
-        $args['current_user'] = $this->getCurrentUser();
-        if ($args['current_user']) {
-            $args['current_user'] = $args['current_user']->toArray();
+
+        // attach the current user to the view variables
+        $currentUser = $this->getCurrentUser();
+        if ($currentUser) {
+            $data['current_user'] = $currentUser->toArray();
         }
 
-        return parent::render($file, $args);
+        // attach any flash messages
+        $data['flash_messages'] = $this->get('flash')->flushMessages();
+// var_dump($_SESSION); exit;
+// var_dump($data['flash_messages']); exit;
+        return parent::render($filepath, $data);
     }
 
     /**

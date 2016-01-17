@@ -169,19 +169,18 @@ class ExampleControllerTest extends TestCase
 ## TODO
 
 crsrc
-* authentication -- login page, zend auth middleware
-http://framework.zend.com/manual/current/en/modules/zend.authentication.intro.html
-* csrf - ask question on so
-* flash
-* cache
+* path_for
+* csrf - ask question on SO
+* flash -- my flash isn't working, SO?
 * gulp?
 * psr-4, move controllers to library
 * cache views in prod
 * zend-like: bootstrap, resources (one for mongo, another for eloquent), -- extend app?
 * vagrant
 
-slim-mvc-project
-* create project that can easily be installed
+slim-mvc package
+* package up controller lib (slim3-controller)
+* create project that can easily be installed (slim3-project)
 
 mongo
 * mongo - how to handle created_at, updated_at

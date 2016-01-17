@@ -12,6 +12,8 @@ use Zend\Authentication\Result;
 use CrSrc\Auth\AuthInterface;
 use CrSrc\Auth\Adapter\Mongo as AuthAdapter;
 
+use CrSrc\Model\User;
+
 class Auth implements AuthInterface
 {
     /**
@@ -63,7 +65,7 @@ class Auth implements AuthInterface
      */
     public function authenticate($username, $password)
     {
-        $adapter = new AuthAdapter($username, $password);
+        $adapter = new AuthAdapter($username, $password, new User());
         $result = $this->authService->authenticate($adapter);
 
         if ($result->getCode() === Result::SUCCESS) {

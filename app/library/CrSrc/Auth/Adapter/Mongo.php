@@ -5,6 +5,8 @@ namespace CrSrc\Auth\Adapter;
 use Zend\Authentication\Adapter\AdapterInterface;
 use Zend\Authentication\Result;
 
+use CrSrc\Model\User;
+
 class Mongo implements AdapterInterface
 {
     /**
@@ -18,14 +20,20 @@ class Mongo implements AdapterInterface
     protected $password;
 
     /**
+     * @var CrSrc\Model\User
+     */
+    protected $model;
+
+    /**
      * Sets username and password for authentication
      *
      * @return void
      */
-    public function __construct($username, $password)
+    public function __construct($username, $password, User $model)
     {
         $this->username = $username;
         $this->password = $password;
+        $this->model = $model;
     }
 
     /**
@@ -37,11 +45,33 @@ class Mongo implements AdapterInterface
      */
     public function authenticate()
     {
-        // lookup the user in the database, return a Result
-        return new Result(
-            Result::SUCCESS,
-            $this->username,
-            array()
-        );
+        // look up $user from the database
+        $user = $this->model->findOne( array(
+            'email' => $this->username,
+            'password' => $this->password,
+        ) );
+
+        // if a user was found, return the appropriate Result
+        if ($user) {
+            return new Result(
+                Result::SUCCESS,
+                $this->username,
+                array()
+            );
+        } else {
+            return new Result(
+                Result::FAILURE_IDENTITY_NOT_FOUND,
+                null,
+                array()
+            );
+        }
+    }
+
+    /**
+     * Get an instance of the model
+     */
+    protected function getModel()
+    {
+        return new User();
     }
 }

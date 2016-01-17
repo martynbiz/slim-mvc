@@ -17,8 +17,10 @@ class SessionController extends BaseController
         $authService->authenticate($params['email'], $params['password']);
 
         if ($authService->isAuthenticated()) {
+            $this->get('flash')->addMessage('success', 'You have successfully logged in.');
             return $this->redirect('/');
         } else {
+            $this->get('flash')->addMessage('errors', 'Invalid username/password. Please try again.');
             return $this->forward('login');
         }
     }

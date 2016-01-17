@@ -7,6 +7,22 @@
         {% include 'partials/header.html' %}
 
         <div class="container">
+            {% if flash_messages.success %}
+            <div class="alert alert-success">
+                {% for message in flash_messages.success %}
+                {{ message }}<br>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if flash_messages.errors %}
+            <div class="alert alert-danger">
+                {% for message in flash_messages.errors %}
+                {{ message }}<br>
+                {% endfor %}
+            </div>
+            {% endif %}
+
             {% block body %}{% endblock %}
         </div>
 
