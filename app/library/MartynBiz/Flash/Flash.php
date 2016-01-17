@@ -21,10 +21,11 @@ class Flash
      */
     public function __construct($storage=null)
     {
-        // if storage is not defined, use the $_SESSION
+        // if storage is not defined, create ArrayObject (not persistent)
         if (is_null($storage)) {
-            $_SESSION['__martynbiz_flash_session'] = new \ArrayObject();
-            $storage = &$_SESSION['__martynbiz_flash_session'];
+            $storage = new \ArrayObject();
+        } elseif (! $storage instanceof \ArrayAccess) {
+            throw new \Exception('$storage must be an instance of ArrayAccess.');
         }
 
         $this->storage = $storage;
@@ -49,7 +50,12 @@ class Flash
     public function flushMessages()
     {
         $messages = $this->storage->getArrayCopy();
-        $this->storage = new $this->storage();
+
+        // clear storage items
+        foreach ($this->storage as $key => $value) {
+            unset($this->storage[$key]);
+        }
+
         return $messages;
     }
 }

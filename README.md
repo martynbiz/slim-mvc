@@ -169,27 +169,35 @@ class ExampleControllerTest extends TestCase
 ## TODO
 
 crsrc
+* acl - roles, admin menus
+* article create: slug, approve, ckeditor
 * path_for
+* pagination?
 * csrf - ask question on SO
 * flash -- my flash isn't working, SO?
 * gulp?
 * psr-4, move controllers to library
-* cache views in prod
-* zend-like: bootstrap, resources (one for mongo, another for eloquent), -- extend app?
+* create project that can easily be installed (martynbiz/slim3-project)
+v2
+* contributers/ submit articles for approval
+* video, photos
 * vagrant
+* zend-like: bootstrap, resources (one for mongo, another for eloquent), -- extend app?
 
-slim-mvc package
+
+
+
+
+martynbiz/slim3-contoller
+* update README - installation/ usage notes
 * package up controller lib (slim3-controller)
-* create project that can easily be installed (slim3-project)
-
-mongo
-* mongo - how to handle created_at, updated_at
-* mongo - soft deletes, deleted_at
-* access properties like: $user['username'] or $user->username
-
 tests
 * can we run tests with run() instead? then we can use App for bootstrap (eg. routes)
 * crud: update, delete
 * query
-* csrf
 * more appropriate error messages for TestCase's assert* methods
+
+martynbiz/php-mongo
+* mongo - how to handle created_at, updated_at
+* mongo - soft deletes, deleted_at
+* access properties like: $user['username'] or $user->username

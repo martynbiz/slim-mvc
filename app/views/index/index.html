@@ -9,9 +9,9 @@
         <th>Type</th>
         <th>Data created</th>
     </tr>
-    {% for article in articles %}
+    {% for article in featured_articles %}
     <tr>
-        <td><a href="/admin/articles/{{ article.id }}">{{ article.title|e }}</a></td>
+        <td><a href="{{ path_for('articles_show_wslug', { 'id': article.id, 'slug': article.slug }) }}">{{ article.title|e }}</a></td>
         <td>{{ article.type|e }}</td>
         <td>{{ article.created_at|e }}</td>
     </tr>

@@ -3,13 +3,13 @@
 $container = $app->getContainer();
 
 // view renderer
-$container['renderer'] = function ($container) {
+$container['renderer'] = function ($c) {
     $settings = $c->get('settings')['renderer'];
     return new \Slim\Views\PhpRenderer($settings['template_path']);
 };
 
 // monolog
-$container['logger'] = function ($container) {
+$container['logger'] = function ($c) {
     $settings = $c->get('settings')['logger'];
     $logger = new \Monolog\Logger($settings['name']);
     $logger->pushProcessor(new \Monolog\Processor\UidProcessor());
@@ -18,33 +18,35 @@ $container['logger'] = function ($container) {
 };
 
 // Register component on container
-$container['view'] = function ($container) {
-    // TODO switch on caching for production
-    $view = new \Slim\Views\Twig( APPLICATION_PATH . '/views/', [
-        // 'cache' => realpath(APPLICATION_PATH . '/../cache/')
-    ]);
+$container['view'] = function ($c) {
+    $settings = $c->get('settings')['view'];
+    $view = new \Slim\Views\Twig( APPLICATION_PATH . '/views/', $settings);
     $view->addExtension(new \Slim\Views\TwigExtension(
-        $container['router'],
-        $container['request']->getUri()
+        $c['router'],
+        $c['request']->getUri()
     ));
 
     return $view;
 };
 
+$container['csrf'] = function ($c) {
+    return new \Slim\Csrf\Guard;
+};
+
 // replace request with our own
-$container['request'] = function ($container) {
-    return \SlimMvc\Http\Request::createFromEnvironment($container->get('environment'));
+$container['request'] = function ($c) {
+    return \SlimMvc\Http\Request::createFromEnvironment($c->get('environment'));
 };
 
 // replace reponse with our own
-$container['response'] = function ($container) {
+$container['response'] = function ($c) {
     $headers = new \Slim\Http\Headers(['Content-Type' => 'text/html; charset=UTF-8']);
     $response = new \SlimMvc\Http\Response(200, $headers);
 
-    return $response->withProtocolVersion($container->get('settings')['httpVersion']);
+    return $response->withProtocolVersion($c->get('settings')['httpVersion']);
 };
 
-$container['auth'] = function ($container) {
+$container['auth'] = function ($c) {
 
     // we're using Zend's AuthenticationService here
     $authService = new \Zend\Authentication\AuthenticationService();
@@ -59,13 +61,13 @@ $container['auth'] = function ($container) {
     return $auth;
 };
 
-$container['flash'] = function ($container) {
+$container['flash'] = function ($c) {
     // TODO get this to work :(
     $storage = null; //new \Zend\Session\Container('crsrc_flash_messages');
     return new \MartynBiz\Flash($storage);
 };
 
-$container['cache'] = function ($container) {
+$container['cache'] = function ($c) {
 
     // we wanna set the prefix so not to clash with other apps
     $backend = new \Predis\Client(null, array(
@@ -80,10 +82,10 @@ $container['cache'] = function ($container) {
 
 // Models
 
-$container['model.article'] = function ($container) {
+$container['model.article'] = function ($c) {
     return new \CrSrc\Model\Article();
 };
 
-$container['model.user'] = function ($container) {
+$container['model.user'] = function ($c) {
     return new \CrSrc\Model\User();
 };

@@ -6,15 +6,23 @@ class IndexController extends BaseController
 {
     public function index()
     {
-        // get articles from cache
-        $cacheId = 'homepage_articles';
-        if (!$articles = $this->get('cache')->get($cacheId)) {
-            $articles = $this->get('model.article')->find();
-            $this->get('cache')->set($cacheId, $articles, 3600);
+        // get featured articles from cache
+        $cacheId = 'homepage_featured';
+        if (! $featuredArticles = $this->get('cache')->get($cacheId)) {
+            $featuredArticles = $this->get('model.article')->find();
+            $this->get('cache')->set($cacheId, $featuredArticles, 3600);
+        }
+
+        // get popular articles from cache
+        $cacheId = 'homepage_popular';
+        if (! $popularArticles = $this->get('cache')->get($cacheId)) {
+            $popularArticles = $this->get('model.article')->find();
+            $this->get('cache')->set($cacheId, $popularArticles, 3600);
         }
 
         return $this->render('index/index.html', array(
-            'articles' => $articles->toArray(),
+            'featured_articles' => $featuredArticles->toArray(),
+            'popular_articles' => $popularArticles->toArray(),
         ));
     }
 

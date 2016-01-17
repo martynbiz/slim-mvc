@@ -15,6 +15,9 @@ $settings = [
             'name' => 'slim-app',
             'path' => APPLICATION_PATH . '/../logs/app.log',
         ],
+        'view' => [
+            // 'cache' => realpath(APPLICATION_PATH . '/../cache/')
+        ],
     ],
     'mongo' => [
         'db' => 'crsrc',
