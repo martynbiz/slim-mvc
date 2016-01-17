@@ -3,6 +3,7 @@
 namespace CrSrc\Model;
 
 use MartynBiz\Mongo;
+use MartynBiz\Validator;
 
 /**
  *
@@ -24,21 +25,23 @@ class User extends Mongo
     {
         $this->resetErrors();
 
-        if (empty($this->data['first_name'])) {
-            $this->setError('First name must be given');
-        }
+        $validator = new Validator($this->data);
 
-        if (empty($this->data['last_name'])) {
-            $this->setError('Last name must be given');
-        }
+        $validator->check('first_name')
+            ->isNotEmpty('First name is missing');
 
-        if (empty($this->data['email'])) {
-            $this->setError('Email must be given');
-        }
+        $validator->check('last_name')
+            ->isNotEmpty('First name is missing');
 
-        if (empty($this->data['password'])) {
-            $this->setError('Last name must be given');
-        }
+        $validator->check('email')
+            ->isNotEmpty('Email address is missing')
+            ->isEmail('Invalid email address');
+
+        $validator->check('password')
+            ->isNotEmpty('Password is missing');
+
+        // update the model's errors with the validators
+        $this->setError( $validator->getErrors() );
 
         return empty($this->getErrors());
     }

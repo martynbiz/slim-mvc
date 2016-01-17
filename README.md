@@ -186,6 +186,7 @@ slim-mvc-project
 mongo
 * mongo - how to handle created_at, updated_at
 * mongo - soft deletes, deleted_at
+* access properties like: $user['username'] or $user->username
 
 tests
 * can we run tests with run() instead? then we can use App for bootstrap (eg. routes)

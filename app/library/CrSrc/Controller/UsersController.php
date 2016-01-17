@@ -2,10 +2,9 @@
 
 namespace CrSrc\Controller;
 
-use SlimMvc\Http\Controller;
 use CrSrc\Model\User;
 
-class UsersController extends Controller
+class UsersController extends BaseController
 {
     public function show()
     {

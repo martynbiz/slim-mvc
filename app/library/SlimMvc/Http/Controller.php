@@ -79,6 +79,12 @@ abstract class Controller
         $this->response = $response;
     }
 
+    /**
+     * Render the view from within the controller
+     * @param string $file Name of the template/ view to render
+     * @param array $args Additional varables to pass to the view
+     * @param Response?
+     */
     protected function render($file, $args=array())
     {
         $container = $this->app->getContainer();

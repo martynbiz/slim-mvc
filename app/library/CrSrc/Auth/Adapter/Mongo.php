@@ -1,11 +1,22 @@
 <?php
 
-namespace CrSrc\Auth;
+namespace CrSrc\Auth\Adapter;
 
 use Zend\Authentication\Adapter\AdapterInterface;
+use Zend\Authentication\Result;
 
-class Adapter implements AdapterInterface
+class Mongo implements AdapterInterface
 {
+    /**
+     * @var string
+     */
+    protected $username;
+
+    /**
+     * @var string
+     */
+    protected $password;
+
     /**
      * Sets username and password for authentication
      *
@@ -13,7 +24,8 @@ class Adapter implements AdapterInterface
      */
     public function __construct($username, $password)
     {
-        // ...
+        $this->username = $username;
+        $this->password = $password;
     }
 
     /**
@@ -25,6 +37,11 @@ class Adapter implements AdapterInterface
      */
     public function authenticate()
     {
-        // ...
+        // lookup the user in the database, return a Result
+        return new Result(
+            Result::SUCCESS,
+            $this->username,
+            array()
+        );
     }
 }

@@ -17,7 +17,7 @@ $app->group('/session', function () use ($app) {
 
     $app->get('/login', $controller('login'));
     $app->post('', $controller('post'));
-    $app->delete('/logout', $controller('logout'));
+    $app->delete('', $controller('delete'));
 });
 
 // create resource method for Slim::resource($route, $name)

@@ -16,6 +16,7 @@ class Article extends Mongo
     protected $whitelist = array(
         'title',
         'description',
+        'author',
     );
 
     public function validate()

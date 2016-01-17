@@ -9,13 +9,13 @@ use SlimMvc\Http\Response;
 $container = $app->getContainer();
 
 // view renderer
-$container['renderer'] = function ($c) {
+$container['renderer'] = function ($container) {
     $settings = $c->get('settings')['renderer'];
     return new Slim\Views\PhpRenderer($settings['template_path']);
 };
 
 // monolog
-$container['logger'] = function ($c) {
+$container['logger'] = function ($container) {
     $settings = $c->get('settings')['logger'];
     $logger = new Monolog\Logger($settings['name']);
     $logger->pushProcessor(new Monolog\Processor\UidProcessor());
@@ -50,8 +50,19 @@ $container['response'] = function ($container) {
     return $response->withProtocolVersion($container->get('settings')['httpVersion']);
 };
 
-$container['auth'] = function ($c) {
-    return new Zend\Authentication\AuthenticationService();
+$container['auth'] = function ($container) {
+
+    // we're using Zend's AuthenticationService here
+    $authService = new Zend\Authentication\AuthenticationService();
+
+    // even though SessionStorage is the default container, we want it to use
+    // this app's object and namespace
+    $authService->setStorage( new Zend\Authentication\Storage\Session('crsrc') );
+
+    // create an instance of our AuthInterface implemented class 
+    $auth = new CrSrc\Auth($authService);
+
+    return $auth;
 };
 
 // Models

@@ -16,11 +16,25 @@ $settings = [
             'path' => APPLICATION_PATH . '/../logs/app.log',
         ],
     ],
+    'mongo' => [
+        'db' => 'crsrc',
+        'classmap' => [
+            'articles' => '\\App\\Model\\Article',
+            'users' => '\\App\\Model\\User',
+        ]
+    ],
+    'mongo_testing' => [
+        'db' => 'crsrc_testing',
+        'classmap' => [
+            'articles' => '\\App\\Model\\Article',
+            'users' => '\\App\\Model\\User',
+        ]
+    ],
 ];
 
 // load environment settings
 if (file_exists(APPLICATION_PATH . '/config/' . APPLICATION_ENV . '.php')) {
-    $settings = array_merge_recursive(
+    $settings = array_replace_recursive(
         $settings,
         require APPLICATION_PATH . '/config/' . APPLICATION_ENV . '.php'
     );
@@ -28,7 +42,7 @@ if (file_exists(APPLICATION_PATH . '/config/' . APPLICATION_ENV . '.php')) {
 
 // load any private settings (eg. database credentials)
 if (file_exists(APPLICATION_PATH . '/config/local.php')) {
-    $settings = array_merge_recursive(
+    $settings = array_replace_recursive(
         $settings,
         require APPLICATION_PATH . '/config/local.php'
     );

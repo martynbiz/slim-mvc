@@ -2,38 +2,31 @@
 
 namespace CrSrc\Controller;
 
-use SlimMvc\Http\Controller;
-use Zend\Authentication\Result;
-use CrSrc\Auth\Adapter as AuthAdapter;
-
-class SessionController extends Controller
+class SessionController extends BaseController
 {
     public function login()
     {
-        $this->render('session/login.html');
+        return $this->render('session/login.html');
     }
 
     public function post()
     {
         $params = $this->getPost();
+        $authService = $this->get('auth');
 
-        $adapter = new AuthAdapter($params['username'], $params['password']);
-        $result = $this->get('auth')->authenticate($adapter);
+        $authService->authenticate($params['email'], $params['password']);
 
-        if ($result->getCode() === Result::SUCCESS) {
-            $this->redirect('/');
+        if ($authService->isAuthenticated()) {
+            return $this->redirect('/');
         } else {
-            $this->forward('login');
+            return $this->forward('login');
         }
-    }
-
-    public function logout()
-    {
-        $this->render('session/logout.html');
     }
 
     public function delete()
     {
+        $this->get('auth')->clearIdentity();
 
+        return $this->redirect('/');
     }
 }

@@ -22,10 +22,10 @@ require APPLICATION_PATH . '/../vendor/autoload.php';
 session_start();
 
 // Instantiate the app
-$settings = require APPLICATION_PATH . '/config/settings.php';
+$settings = require APPLICATION_PATH . '/config/global.php';
 $app = new Slim\App($settings);
 
-MartynBiz\Mongo\Connection::getInstance()->init($settings['mongo']['development']);
+MartynBiz\Mongo\Connection::getInstance()->init($settings['mongo']);
 
 // Set up dependencies
 require APPLICATION_PATH . '/dependencies.php';

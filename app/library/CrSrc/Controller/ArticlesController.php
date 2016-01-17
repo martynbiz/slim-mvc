@@ -2,9 +2,7 @@
 
 namespace CrSrc\Controller;
 
-use SlimMvc\Http\Controller;
-
-class ArticlesController extends Controller
+class ArticlesController extends BaseController
 {
     public function index()
     {

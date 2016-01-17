@@ -19,7 +19,7 @@ class UsersControllerTests extends TestCase
 
     public function testPostActionWithValidParams()
     {
-        $this->post('/users', $this->getArticleData() );
+        $this->post('/users', $this->getUserData() );
 
         // assertions
 
@@ -41,7 +41,7 @@ class UsersControllerTests extends TestCase
         $this->assertAction('create');
     }
 
-    public function getArticleData($data=array())
+    public function getUserData($data=array())
     {
         return array_merge( array(
             'first_name' => 'Martyn',

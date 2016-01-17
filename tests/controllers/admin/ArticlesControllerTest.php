@@ -72,6 +72,9 @@ class ArticlesControllerTests extends \CrSrc\Test\PHPUnit\TestCase
         $this->assertAction('create');
     }
 
+
+    // data providers
+
     public function getArticleData($data=array())
     {
         return array_merge( array(
