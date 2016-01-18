@@ -65,15 +65,14 @@ class ArticlesControllerTests extends \CrSrc\Test\PHPUnit\TestCase
 
     public function testPostCreateArticleRedirectsOnCreate()
     {
-        // TODO use data provider
         $type = Article::TYPE_ARTICLE;
 
         $article = new Article();
-        $article->id = 1;
+        $article->id = 1; // required for redirect
         $article->type = $type;
 
         $initialValues = array(
-            // 'type' => $type,
+            'type' => $type,
         );
 
         // Configure the stub.

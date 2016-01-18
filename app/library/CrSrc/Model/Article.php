@@ -25,21 +25,23 @@ class Article extends Mongo
     // define on the fields that can be saved
     protected $whitelist = array(
         'title',
+        'slug',
         'description',
         'author',
+        'type',
     );
 
     public function validate()
     {
         $this->resetErrors();
 
-        if (empty($this->data['title'])) {
-            $this->setError('Title must be given');
-        }
-
-        if (empty($this->data['description'])) {
-            $this->setError('Description must be given');
-        }
+        // if (empty($this->data['title'])) {
+        //     $this->setError('Title must be given');
+        // }
+        //
+        // if (empty($this->data['description'])) {
+        //     $this->setError('Description must be given');
+        // }
 
         return empty($this->getErrors());
     }

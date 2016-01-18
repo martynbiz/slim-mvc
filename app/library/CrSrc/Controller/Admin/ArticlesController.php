@@ -16,6 +16,10 @@ class ArticlesController extends Controller
         ));
     }
 
+    /**
+     * This view will serve as a review page where the author can re-open for
+     * further editing, or an admin/editor can approve to go live.
+     */
     public function show($id)
     {
         $article = $this->get('model.article')->findOneOrFail(array(
@@ -35,8 +39,9 @@ class ArticlesController extends Controller
      */
     public function post()
     {
+        // TODO change mongo so that we can insert an empty draft
         $article = $this->get('model.article')->create(array(
-            // 'type' => ... // TODO handle this
+            'type' => Article::TYPE_ARTICLE,
         ));
 
         if ($article) {
@@ -47,6 +52,9 @@ class ArticlesController extends Controller
         }
     }
 
+    /**
+     * Upon creation too, the user will be redirect here to edit the article
+     */
     public function edit($id)
     {
         $article = $this->get('model.article')->findOneOrFail(array(

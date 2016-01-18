@@ -6,8 +6,8 @@
 <ol class="breadcrumb">
     <li><a href="/admin">Admin</a></li>
     <li><a href="/admin/articles">Articles</a></li>
-    <li><a href="/admin/articles/{{ article.id }}">{{ article.title|e }}</a></li>
-    <li class="active">Edit</li>
+    <!-- li><a href="/admin/articles/{{ article.id }}">{{ article.title|e }}</a></li-->
+    <li class="active">Draft</li>
 </ol>
 
 <form method="post" action="/admin/articles/{{ article.id }}">
@@ -15,6 +15,7 @@
 
     <input type="hidden" name="_METHOD" value="PUT">
 
-    <button type="submit">Update</button>
+    <button type="submit" class="btn btn-primary">Submit for approval</button>
+    <button type="submit" class="btn btn-default">Save draft</button>
 </form>
 {% endblock %}
