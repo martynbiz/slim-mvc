@@ -70,8 +70,8 @@ abstract class TestCase extends \SlimMvc\Test\PHPUnit\TestCase
 
     public function tearDown()
     {
-        // create fixtures
-        Connection::getInstance()->delete('articles', array());
+        // // create fixtures
+        // Connection::getInstance()->delete('articles', array());
     }
 
     public function login()

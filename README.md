@@ -169,9 +169,12 @@ class ExampleControllerTest extends TestCase
 ## TODO
 
 crsrc
-* acl - roles, admin menus
-* admin-lte template - create form: title box, content box, location box, tags
 * article create: slug, approve, ckeditor
+* unit test admin/articles/*
+* acl - roles, admin menus
+* auth - http://help.slimframework.com/discussions/questions/9050-how-to-access-the-container-within-middleware-class-in-slim-v3
+* admin-lte template - create form: title box, content box, location box, tags
+
 * homepage - latest
 * route /{region}/{id}/{slug} -- on the fly routes (regions collection), getUrl() eg. /glasgow/123/green-shop
 * route /{tag}
@@ -206,9 +209,11 @@ tests
 * crud: update, delete
 * query
 * more appropriate error messages for TestCase's assert* methods
+* validate json
 
 martynbiz/php-mongo
 * mongo - how to handle created_at, updated_at
 * mongo - soft deletes, deleted_at
 * paginate
 * access properties like: $user['username'] or $user->username
+* $article = $this->get('model.article')->create(...); // we can mock this

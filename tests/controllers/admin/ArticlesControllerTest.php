@@ -1,11 +1,39 @@
 <?php
 
+use MartynBiz\Mongo\MongoIterator;
+
 use CrSrc\Model\Article;
 
 class ArticlesControllerTests extends \CrSrc\Test\PHPUnit\TestCase
 {
+    /**
+     * @var Article_stub
+     */
+    protected $articleMock;
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $container = $this->app->getContainer();
+
+        // create mock articles
+        // Create a stub for the SomeClass class.
+        $this->articleMock = $this->getMockBuilder('CrSrc\Model\Article')
+                     ->disableOriginalConstructor()
+                     ->getMock();
+
+        $container['model.article'] = $this->articleMock;
+    }
+
     public function testIndexAction()
     {
+        // Configure the stub.
+        $this->articleMock
+            ->expects( $this->once() )
+            ->method('find')
+            ->willReturn( new MongoIterator() ); // empty is fine
+
         $this->get('/admin/articles');
 
         // assertions
@@ -17,7 +45,16 @@ class ArticlesControllerTests extends \CrSrc\Test\PHPUnit\TestCase
 
     public function testShowAction()
     {
-        $this->get('/admin/articles/' . $this->article->id);
+        $article = new Article();
+        $article->id = 1;
+
+        // Configure the stub.
+        $this->articleMock
+            ->expects( $this->once() )
+            ->method('findOneOrFail')
+            ->willReturn($article); // empty is fine
+
+        $this->get('/admin/articles/' . $article->id);
 
         // assertions
 
@@ -26,20 +63,50 @@ class ArticlesControllerTests extends \CrSrc\Test\PHPUnit\TestCase
         $this->assertStatusCode(200);
     }
 
-    public function testCreateAction()
+    public function testPostCreateArticleRedirectsOnCreate()
     {
-        $this->get('/admin/articles/create');
+        // TODO use data provider
+        $type = Article::TYPE_ARTICLE;
+
+        $article = new Article();
+        $article->id = 1;
+        $article->type = $type;
+
+        $initialValues = array(
+            // 'type' => $type,
+        );
+
+        // Configure the stub.
+        $this->articleMock
+            ->expects( $this->once() )
+            ->method('create')
+            ->with($initialValues)
+            ->willReturn($article); // empty is fine
+
+        $this->post('/admin/articles?type=article');
 
         // assertions
 
         $this->assertController('articles');
-        $this->assertAction('create');
-        $this->assertStatusCode(200);
+        $this->assertAction('post');
+        $this->assertRedirects(); // don't have the id to check the correct url
     }
 
     public function testEditAction()
     {
-        $this->get('/admin/articles/' . $this->article->id . '/edit');
+        $article = new Article();
+        $article->id = 1;
+
+        // Configure the stub.
+        $this->articleMock
+            ->expects( $this->once() )
+            ->method('findOneOrFail')
+            ->with(array(
+                'id' => $article->id
+            ))
+            ->willReturn($article); // empty is fine
+
+        $this->get('/admin/articles/' . $article->id . '/edit');
 
         // assertions
 
@@ -48,29 +115,29 @@ class ArticlesControllerTests extends \CrSrc\Test\PHPUnit\TestCase
         $this->assertStatusCode(200);
     }
 
-    public function testPostActionWithValidParams()
-    {
-        $this->post('/admin/articles', $this->getArticleData() );
+    // public function testPutActionRedirectsToEdit()
+    // {
+    //     $this->put('/admin/articles/' . $this->article->id, $this->getArticleData());
+    //
+    //     // assertions
+    //
+    //     $this->assertController('articles');
+    //     $this->assertAction('show');
+    //     $this->assertRedirectsTo('/admin/articles/' . $this->article->id);
+    // }
 
-        // assertions
-
-        $this->assertController('articles');
-        $this->assertAction('post');
-        $this->assertRedirectsTo('/admin/articles');
-    }
-
-    /**
-     * @dataProvider getInvalidArticleData
-     */
-    public function testPostActionWithInvalidParams($postData)
-    {
-        $this->post('/admin/articles', $postData );
-
-        // assertions
-
-        $this->assertController('articles');
-        $this->assertAction('create');
-    }
+    // /**
+    //  * @dataProvider getInvalidArticleData
+    //  */
+    // public function testPostActionWithInvalidParams($postData)
+    // {
+    //     $this->post('/admin/articles', $postData );
+    //
+    //     // assertions
+    //
+    //     $this->assertController('articles');
+    //     $this->assertAction('create');
+    // }
 
 
     // data providers

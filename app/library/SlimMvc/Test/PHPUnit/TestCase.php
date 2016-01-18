@@ -40,7 +40,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function get($path)
     {
-        $this->dispatch($path, 'GET');
+        return $this->dispatch($path, 'GET');
     }
 
     /**
@@ -48,7 +48,33 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      */
     public function post($path, $data=array())
     {
-        $this->dispatch($path, 'POST', $data);
+        return $this->dispatch($path, 'POST', $data);
+    }
+
+    /**
+     * Perform put dispatch
+     */
+    public function put($path, $data=array())
+    {
+        // simulate a PUT by using POST with _METHOD=PUT
+        $data = array_merge($data, array(
+            '_METHOD' => 'PUT',
+        ));
+
+        return $this->post($path, $data);
+    }
+
+    /**
+     * Perform delete dispatch
+     */
+    public function delete($path, $data=array())
+    {
+        // simulate a PUT by using POST with _METHOD=PUT
+        $data = array_merge($data, array(
+            '_METHOD' => 'DELETE',
+        ));
+
+        return $this->post($path, $data);
     }
 
     protected function dispatch($path, $method='GET', $data=array())

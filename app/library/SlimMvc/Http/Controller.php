@@ -94,11 +94,27 @@ abstract class Controller
     }
 
     /**
+     * Return true if XHR request
+     */
+    protected function isXhr()
+    {
+        return $this->request->isXhr();
+    }
+
+    /**
      * Get the POST params
      */
     protected function getPost()
     {
         return $this->request->getParams();
+    }
+
+    /**
+     * Get the POST params
+     */
+    protected function getQueryParams()
+    {
+        return $this->request->getQueryParams();
     }
 
     /**
