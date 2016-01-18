@@ -37,9 +37,10 @@ class ArticlesController extends Controller
         $article = new Article( $this->getPost() );
 
         if ( $article->save() ) {
-            return $this->redirect('/admin/articles');
+            $this->get('flash')->addMessage('success', 'Article created successfully');
+            return $this->redirect('/admin/articles'); // TODO redirect to show action
         } else {
-            // $this->get('flash')->set( $article->getErrors() );
+            $this->get('flash')->addMessage('errors', $article->getErrors());
             return $this->forward('create');
         }
     }
@@ -62,9 +63,25 @@ class ArticlesController extends Controller
         ));
 
         if ( $article->save( $this->getPost() ) ) {
+            $this->get('flash')->addMessage('success', 'Article updated successfully');
             return $this->redirect('/admin/articles/' . $id);
         } else {
-            $this->flash( $article->getErrors() );
+            $this->get('flash')->addMessage('errors', $article->getErrors());
+            return $this->edit($id);
+        }
+    }
+
+    public function delete($id)
+    {
+        $article = $this->get('model.article')->findOneOrFail(array(
+            'id' => (int) $id,
+        ));
+
+        if ( $article->delete() ) {
+            $this->get('flash')->addMessage('success', 'Article deleted successfully');
+            return $this->redirect('/admin/articles/' . $id);
+        } else {
+            $this->get('flash')->addMessage('errors', $article->getErrors());
             return $this->edit($id);
         }
     }

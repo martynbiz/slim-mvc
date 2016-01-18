@@ -3,6 +3,7 @@
 namespace CrSrc\Model;
 
 use MartynBiz\Mongo;
+use MartynBiz\Validator;
 
 /**
  *

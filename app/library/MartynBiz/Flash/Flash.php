@@ -2,10 +2,10 @@
 namespace MartynBiz;
 
 /**
- * Flash messages. Slight variation in that this will store a message until it
- * is accessed - whether that is a next http request, or same request. Simply
- * when get method is called the message is wiped from session.
- * TODO move this to martynbiz\php-flash
+ * Slight variation on flash messages in that 1) it can save to session but doesn't
+ * require a new http request for messages to be available, are accessible as soon as
+ * they are added until they are fetched (flushMessages), and 2) messages are flushed
+ * when they are accessed one time.
  */
 class Flash
 {
@@ -51,9 +51,16 @@ class Flash
     {
         $messages = $this->storage->getArrayCopy();
 
-        // clear storage items
-        foreach ($this->storage as $key => $value) {
-            unset($this->storage[$key]);
+        // clear storage items. will attempt to handle multiple types here as
+        // it seems that some types prefer get_object_vars
+        if ($this->storage instanceof \ArrayObject) {
+            foreach (get_object_vars($this->storage) as $key => $value) {
+                $this->storage->offsetUnset($key);
+            }
+        } else {
+            foreach ($this->storage as $key => $value) {
+                $this->storage->offsetUnset($key);
+            }
         }
 
         return $messages;

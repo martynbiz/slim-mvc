@@ -170,9 +170,14 @@ class ExampleControllerTest extends TestCase
 
 crsrc
 * acl - roles, admin menus
+* admin-lte template - create form: title box, content box, location box, tags
 * article create: slug, approve, ckeditor
-* path_for
-* pagination?
+* homepage - latest
+* route /{region}/{id}/{slug} -- on the fly routes (regions collection), getUrl() eg. /glasgow/123/green-shop
+* route /{tag}
+* map - lat/lng, location box on form
+* path_for all links
+* pagination? $this->service('model.articles')->find(...)->paginate(20);
 * csrf - ask question on SO
 * flash -- my flash isn't working, SO?
 * gulp?
@@ -180,10 +185,15 @@ crsrc
 * create project that can easily be installed (martynbiz/slim3-project)
 v2
 * contributers/ submit articles for approval
-* video, photos
+* homepage - featured, latest
+* photos (dropzone)
+* video -- youtube uploads
 * vagrant
-* zend-like: bootstrap, resources (one for mongo, another for eloquent), -- extend app?
+* zend-like: bootstrap, resources (one for mongo, another for eloquent), -- __construct?
+* popular - google analytics
+* admin-lte homepage (graphs etc)
 
+martynbiz/php-flush-messages
 
 
 
@@ -200,4 +210,5 @@ tests
 martynbiz/php-mongo
 * mongo - how to handle created_at, updated_at
 * mongo - soft deletes, deleted_at
+* paginate
 * access properties like: $user['username'] or $user->username

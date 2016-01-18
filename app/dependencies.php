@@ -62,8 +62,7 @@ $container['auth'] = function ($c) {
 };
 
 $container['flash'] = function ($c) {
-    // TODO get this to work :(
-    $storage = null; //new \Zend\Session\Container('crsrc_flash_messages');
+    $storage = new \Zend\Session\Container('crsrc_flash_messages');
     return new \MartynBiz\Flash($storage);
 };
 
