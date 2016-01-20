@@ -7,7 +7,7 @@ use CrSrc\Model\Article;
 class ArticlesControllerTests extends \CrSrc\Test\PHPUnit\TestCase
 {
     /**
-     * @var Article_stub
+     * @var App's container
      */
     protected $articleMock;
 
@@ -17,11 +17,8 @@ class ArticlesControllerTests extends \CrSrc\Test\PHPUnit\TestCase
 
         $container = $this->app->getContainer();
 
-        // create mock articles
-        // Create a stub for the SomeClass class.
-        $this->articleMock = $this->getMockBuilder('CrSrc\Model\Article')
-                     ->disableOriginalConstructor()
-                     ->getMock();
+        // Create a stub for the Article class.
+        $this->articleMock = $this->generateArticleStub();
 
         $container['model.article'] = $this->articleMock;
     }
@@ -94,14 +91,14 @@ class ArticlesControllerTests extends \CrSrc\Test\PHPUnit\TestCase
     public function testEditAction()
     {
         $article = new Article();
-        $article->id = 1;
+        $article->id = 67;
 
         // Configure the stub.
         $this->articleMock
             ->expects( $this->once() )
             ->method('findOneOrFail')
             ->with(array(
-                'id' => $article->id
+                'id' => $article->id,
             ))
             ->willReturn($article); // empty is fine
 
@@ -114,16 +111,36 @@ class ArticlesControllerTests extends \CrSrc\Test\PHPUnit\TestCase
         $this->assertStatusCode(200);
     }
 
-    // public function testPutActionRedirectsToEdit()
-    // {
-    //     $this->put('/admin/articles/' . $this->article->id, $this->getArticleData());
-    //
-    //     // assertions
-    //
-    //     $this->assertController('articles');
-    //     $this->assertAction('show');
-    //     $this->assertRedirectsTo('/admin/articles/' . $this->article->id);
-    // }
+    public function testPutActionRedirectsToEdit()
+    {
+        // we need to mock $article here because it will call it's save() and
+        // then store in the database.. we'd rather not hit the db where possible
+        $article = $this->generateArticleStub();
+
+        // Mock the model the dependency
+        $this->articleMock
+            ->expects( $this->once() )
+            ->method('findOneOrFail')
+            ->with(array(
+                'id' => 99,
+            ))
+            ->willReturn($article);
+
+        // Mock the response from save of $article
+        $article
+            ->expects( $this->once() )
+            ->method('save')
+            ->with( $this->getArticleData() )
+            ->willReturn(true);
+
+        $this->put('/admin/articles/99', $this->getArticleData());
+
+        // assertions
+
+        $this->assertController('articles');
+        $this->assertAction('update');
+        $this->assertRedirectsTo('/admin/articles/99/edit');
+    }
 
     // /**
     //  * @dataProvider getInvalidArticleData
@@ -147,6 +164,16 @@ class ArticlesControllerTests extends \CrSrc\Test\PHPUnit\TestCase
             'title' => 'A long time ago in a galaxy far far away',
             'description' => '<p>Hello world!</p>',
         ), $data );
+    }
+
+    /**
+     * Will generate an article stub for use in this test
+     */
+    public function generateArticleStub()
+    {
+        return $this->getMockBuilder('CrSrc\Model\Article')
+                     ->disableOriginalConstructor()
+                     ->getMock();
     }
 
     public function getInvalidArticleData()

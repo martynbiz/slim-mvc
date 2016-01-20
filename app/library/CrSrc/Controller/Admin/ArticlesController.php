@@ -43,7 +43,7 @@ class ArticlesController extends Controller
         $article = $this->get('model.article')->create(array(
             'type' => Article::TYPE_ARTICLE,
         ));
-
+var_dump($article); exit;
         if ($article) {
             return $this->redirect('/admin/articles/' . $article->id . '/edit');
         } else {

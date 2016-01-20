@@ -106,7 +106,11 @@ abstract class Controller
      */
     protected function getPost()
     {
-        return $this->request->getParams();
+        $post = array_diff_key($this->request->getParams(), array_flip(array(
+            '_METHOD',
+        )));
+
+        return $post;
     }
 
     /**
