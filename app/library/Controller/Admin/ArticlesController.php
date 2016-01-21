@@ -1,11 +1,10 @@
 <?php
+namespace App\Controller\Admin;
 
-namespace CrSrc\Controller\Admin;
+use App\Controller\BaseController;
+use App\Model\Article;
 
-use SlimMvc\Http\Controller;
-use CrSrc\Model\Article;
-
-class ArticlesController extends Controller
+class ArticlesController extends BaseController
 {
     public function index()
     {

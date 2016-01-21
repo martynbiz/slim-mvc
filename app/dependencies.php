@@ -35,13 +35,13 @@ $container['csrf'] = function ($c) {
 
 // replace request with our own
 $container['request'] = function ($c) {
-    return \SlimMvc\Http\Request::createFromEnvironment($c->get('environment'));
+    return \MartynBiz\Slim3Controller\Http\Request::createFromEnvironment($c->get('environment'));
 };
 
 // replace reponse with our own
 $container['response'] = function ($c) {
     $headers = new \Slim\Http\Headers(['Content-Type' => 'text/html; charset=UTF-8']);
-    $response = new \SlimMvc\Http\Response(200, $headers);
+    $response = new \MartynBiz\Slim3Controller\Http\Response(200, $headers);
 
     return $response->withProtocolVersion($c->get('settings')['httpVersion']);
 };
@@ -56,14 +56,14 @@ $container['auth'] = function ($c) {
     $authService->setStorage( new \Zend\Authentication\Storage\Session('crsrc') );
 
     // create an instance of our AuthInterface implemented class
-    $auth = new \CrSrc\Auth($authService);
+    $auth = new \App\Auth($authService);
 
     return $auth;
 };
 
 $container['flash'] = function ($c) {
     $storage = new \Zend\Session\Container('crsrc_flash_messages');
-    return new \MartynBiz\Flash($storage);
+    return new \MartynBiz\FlashMessage\Flash($storage);
 };
 
 $container['cache'] = function ($c) {
@@ -82,9 +82,9 @@ $container['cache'] = function ($c) {
 // Models
 
 $container['model.article'] = function ($c) {
-    return new \CrSrc\Model\Article();
+    return new \App\Model\Article();
 };
 
 $container['model.user'] = function ($c) {
-    return new \CrSrc\Model\User();
+    return new \App\Model\User();
 };

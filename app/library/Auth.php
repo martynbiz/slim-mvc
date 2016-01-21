@@ -1,6 +1,6 @@
 <?php
 
-namespace CrSrc;
+namespace App;
 
 /**
  * This is a abstract layer between the third-party means we choose to authenticate
@@ -9,10 +9,10 @@ namespace CrSrc;
 
 use Zend\Authentication\Result;
 
-use CrSrc\Auth\AuthInterface;
-use CrSrc\Auth\Adapter\Mongo as AuthAdapter;
+use App\Auth\AuthInterface;
+use App\Auth\Adapter\Mongo as AuthAdapter;
 
-use CrSrc\Model\User;
+use App\Model\User;
 
 class Auth implements AuthInterface
 {

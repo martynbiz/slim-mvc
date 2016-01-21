@@ -1,6 +1,5 @@
 <?php
-
-namespace CrSrc\Controller;
+namespace App\Controller;
 
 use MartynBiz\Slim3Controller\Controller;
 

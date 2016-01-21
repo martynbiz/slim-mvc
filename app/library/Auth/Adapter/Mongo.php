@@ -1,6 +1,5 @@
 <?php
-
-namespace CrSrc\Auth\Adapter;
+namespace App\Auth\Adapter;
 
 use Zend\Authentication\Adapter\AdapterInterface;
 use Zend\Authentication\Result;

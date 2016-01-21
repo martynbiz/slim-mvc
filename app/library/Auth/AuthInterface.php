@@ -1,6 +1,5 @@
 <?php
-
-namespace CrSrc\Auth;
+namespace App\Auth;
 
 interface AuthInterface
 {

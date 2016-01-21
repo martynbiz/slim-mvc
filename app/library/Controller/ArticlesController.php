@@ -1,6 +1,5 @@
 <?php
-
-namespace CrSrc\Controller;
+namespace App\Controller;
 
 class ArticlesController extends BaseController
 {

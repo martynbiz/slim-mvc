@@ -1,8 +1,7 @@
 <?php
+namespace App\Controller;
 
-namespace CrSrc\Controller;
-
-use CrSrc\Model\User;
+use App\Model\User;
 
 class UsersController extends BaseController
 {
