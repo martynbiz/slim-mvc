@@ -47,6 +47,11 @@ class ArticlesController extends BaseController
         // but we can set it via property assignment.
         $article->set('status', Article::STATUS_DRAFT);
 
+        // for security reasons, type isn't on the whitelist for mass assignment
+        // but we can set it via property assignment.
+        // TODO handle more types that ARTICLE
+        $article->set('type', Article::TYPE_ARTICLE);
+
         // if the article saves ok, redirect them to the edit page where they can
         // begin to edit their draft. any errors, forward them back to the index
         // (where they came from)

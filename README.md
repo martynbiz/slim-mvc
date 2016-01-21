@@ -169,8 +169,8 @@ class ExampleControllerTest extends TestCase
 ## TODO
 
 crsrc
-* article create: slug, approve, ckeditor
-* unit test admin/articles/*
+* article create: slug,
+* ckeditor
 * acl - roles, admin menus
 * auth - http://help.slimframework.com/discussions/questions/9050-how-to-access-the-container-within-middleware-class-in-slim-v3
 * admin-lte template - create form: title box, content box, location box, tags

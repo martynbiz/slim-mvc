@@ -97,9 +97,15 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
 
         // Ensure that new articles are initiated as DRAFT articles
         $article
-            ->expects( $this->once() )
+            ->expects( $this->at(0) )
             ->method('set')
             ->with('status', Article::STATUS_DRAFT);
+
+        // Ensure that new articles are initiated with type
+        $article
+            ->expects( $this->at(1) )
+            ->method('set')
+            ->with('type', Article::TYPE_ARTICLE);
 
         // Mock the response from save of $article
         $article
@@ -117,7 +123,7 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // =================================
         // dispatch
 
-        $this->post('/admin/articles?type=article');
+        $this->post('/admin/articles?type=' . Article::TYPE_ARTICLE);
 
         // assertions
 
@@ -147,9 +153,15 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
 
         // Ensure that new articles are initiated as DRAFT articles
         $article
-            ->expects( $this->once() )
+            ->expects( $this->at(0) )
             ->method('set')
             ->with('status', Article::STATUS_DRAFT);
+
+        // Ensure that new articles are initiated with type
+        $article
+            ->expects( $this->at(1) )
+            ->method('set')
+            ->with('type', Article::TYPE_ARTICLE);
 
         // Mock the response from save of $article
         $article

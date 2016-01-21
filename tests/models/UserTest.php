@@ -11,6 +11,29 @@ class UserTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($user instanceof User);
     }
 
+    public function testWhitelist()
+    {
+        $values = array(
+            // whitelisted - e.g. title
+            'first_name' => 'Martyn',
+            'last_name' => 'Bissett',
+            'email' => 'martyn@example.com',
+            'password' => 'mypass',
+
+            // not whitelisted - e.g. status
+            'role' => 'admin',
+        );
+
+        $user = new User($values);
+
+        $this->assertEquals($values['first_name'], $user->first_name);
+        $this->assertEquals($values['last_name'], $user->last_name);
+        $this->assertEquals($values['email'], $user->email);
+        $this->assertEquals($values['password'], $user->password);
+        
+        $this->assertNotEquals($values['role'], @$user->role);
+    }
+
     /**
      * @dataProvider getUserValues
      */
