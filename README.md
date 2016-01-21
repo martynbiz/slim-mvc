@@ -169,9 +169,11 @@ class ExampleControllerTest extends TestCase
 ## TODO
 
 crsrc
-* article create: slug,
 * ckeditor
-* acl - roles, admin menus
+* auth, test -- $container['auth']->getCurrentUser(); // can mock user then easily
+* set author
+* user management - create user, delete, edit (e.g. roles)
+* acl - roles, isAdmin()
 * auth - http://help.slimframework.com/discussions/questions/9050-how-to-access-the-container-within-middleware-class-in-slim-v3
 * admin-lte template - create form: title box, content box, location box, tags
 

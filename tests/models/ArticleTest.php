@@ -21,6 +21,7 @@ class ArticleTest extends PHPUnit_Framework_TestCase
             // not whitelisted - e.g. status
             'status' => 2,
             'type' => 'ARTICLE',
+            'author' => 'Martyn',
         );
 
         $article = new Article($values);
@@ -30,5 +31,6 @@ class ArticleTest extends PHPUnit_Framework_TestCase
 
         $this->assertNotEquals($values['status'], @$article->status);
         $this->assertNotEquals($values['type'], @$article->type);
+        $this->assertNotEquals($values['author'], @$article->author);
     }
 }

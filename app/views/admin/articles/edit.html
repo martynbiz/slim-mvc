@@ -16,10 +16,15 @@
             <th width="20%">Title</th>
             <td><input type="text" name="title" value="{{ article.title }}" class="form-control"></td>
         </tr>
+        {% if current_user.is_admin or current_user.is_editor %}
         <tr>
             <th width="20%">Slug</th>
-            <td><input type="text" name="slug" value="{{ article.slug }}" class="form-control"></td>
+            <td>
+                <input type="text" name="slug" value="{{ article.slug }}" class="form-control">
+                <p>Leave blank to auto-generate slug from title</p>
+            </td>
         </tr>
+        {% endif %}
         <tr>
             <th>Description</th>
             <td><textarea name="description" class="form-control" rows="5">{{ article.description }}</textarea></td>

@@ -25,6 +25,11 @@ class ArticlesController extends BaseController
             'id' => (int) $id,
         ));
 
+        // // ensure that this user can edit this article
+        // if (! $this->currentUser()->canView($article) )) {
+        //
+        // }
+
         return $this->render('admin/articles/show.html', array(
             'article' => $article->toArray(),
         ));
@@ -38,10 +43,7 @@ class ArticlesController extends BaseController
      */
     public function post()
     {
-        // TODO change mongo so that we can insert an empty draft
-        $article = $this->get('model.article')->factory(array(
-            'type' => Article::TYPE_ARTICLE,
-        ));
+        $article = $this->get('model.article')->factory();
 
         // for security reasons, status isn't on the whitelist for mass assignment
         // but we can set it via property assignment.
@@ -74,12 +76,9 @@ class ArticlesController extends BaseController
             'id' => (int) $id,
         ));
 
-        // // as the article is being edited again, it will need re-approved
-        // // if the user is an admin/editor user, set this to SUBMITTED, otherwise
-        // // put it back to DRAFT TODO think this out, unit test too
-        // if ($article->status == Article::APPROVED) {
-        //     $article->status = Article::STATUS_DRAFT;
-        //     $article->save();
+        // // ensure that this user can edit this article
+        // if (! $this->currentUser()->canEdit($article) )) {
+        //
         // }
 
         return $this->render('admin/articles/edit.html', array(
@@ -98,21 +97,17 @@ class ArticlesController extends BaseController
             'id' => (int) $id,
         ));
 
+        // // ensure that this user can edit this article
+        // if (! $this->currentUser()->canEdit($article) )) {
+        //
+        // }
+
         if ( $article->save( $this->getPost() ) ) {
 
-            if ($this->isXhr()) {
+            $this->get('flash')->addMessage('success', 'Draft article saved. Click "submit" when ready to publish.');
 
-                // render
-                return $this->renderJson(array(
-                    'article' => $article->toArray(),
-                ));
-            } else {
-
-                $this->get('flash')->addMessage('success', 'Draft article saved. Click "submit" when ready to publish.');
-
-                // redirect
-                return $this->redirect('/admin/articles/' . $id . '/edit');
-            }
+            // redirect
+            return $this->redirect('/admin/articles/' . $id . '/edit');
         } else {
 
             $this->get('flash')->addMessage('errors', $article->getErrors());
@@ -135,6 +130,11 @@ class ArticlesController extends BaseController
         $article = $this->get('model.article')->findOneOrFail(array(
             'id' => (int) $id,
         ));
+
+        // // only top brass can approve
+        // if (! $this->currentUser()->canSubmit($article) ) {
+        //
+        // }
 
         // set the status of the article to approved, if there are any problems
         // with the data send, save() will fail anyway. Using set() here as it is
@@ -168,6 +168,11 @@ class ArticlesController extends BaseController
             'id' => (int) $id,
         ));
 
+        // // only top brass can approve
+        // if (! $this->currentUser()->canApprove($article) ) {
+        //
+        // }
+
         // set the status of the article to approved, if there are any problems
         // with the data send, save() will fail anyway. Using set() here as it is
         // more testable as a method :)
@@ -196,6 +201,11 @@ class ArticlesController extends BaseController
         $article = $this->get('model.article')->findOneOrFail(array(
             'id' => (int) $id,
         ));
+
+        // // only top brass can delete
+        // if (! $this->currentUser()->canDelete($article) ) {
+        //
+        // }
 
         if ( $article->delete() ) {
             $this->get('flash')->addMessage('success', 'Article deleted successfully');

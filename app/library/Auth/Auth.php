@@ -20,6 +20,11 @@ class Auth implements AuthInterface
     protected $authService;
 
     /**
+     * @var User
+     */
+    protected $currentUser;
+
+    /**
      * We need to pass in the auth library that we're using
      */
     public function __construct($authService)

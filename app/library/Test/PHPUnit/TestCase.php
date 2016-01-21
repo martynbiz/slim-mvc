@@ -85,4 +85,28 @@ abstract class TestCase extends \MartynBiz\Slim3Controller\Test\PHPUnit\TestCase
             ->method('isAuthenticated')
             ->willReturn( true );
     }
+
+    /**
+     * Will generate an article stub for use in this test. Sometimes we want to
+     * mock methods of the model instance such as save, and ensure values
+     * are being set etc
+     * @return Article_mock
+     */
+    public function generateArticleStub()
+    {
+        return $this->getMockBuilder('App\Model\Article')
+                    ->disableOriginalConstructor()
+                    ->getMock();
+    }
+
+    /**
+     * Will generate an user stub for use in this test.
+     * @return User_mock
+     */
+    public function generateUserStub()
+    {
+        return $this->getMockBuilder('App\Model\User')
+                    ->disableOriginalConstructor()
+                    ->getMock();
+    }
 }

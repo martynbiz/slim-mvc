@@ -5,6 +5,8 @@ use App\Auth\AuthInterface;
 
 use Zend\Authentication\Result;
 
+use App\Model\User;
+
 class AuthTest extends PHPUnit_Framework_TestCase
 {
     protected $auth;
@@ -14,11 +16,16 @@ class AuthTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         // mock the zend service
-        $this->authServiceMock = $this->getMockBuilder('Zend\Authentication\AuthenticationService')
+        $this->authServiceMock = $this->getMockBuilder('Zend\\Authentication\\AuthenticationService')
             ->disableOriginalConstructor()
             ->getMock();
-
         $this->auth = new Auth( $this->authServiceMock );
+
+        // mock user model
+        $userMock = $this->getMockBuilder('App\\Model\\User')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->container['model.user'] = $userMock;
     }
 
     public function testInstantiation()
@@ -26,7 +33,7 @@ class AuthTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->auth instanceof AuthInterface);
     }
 
-    public function testIsAuthenticatedWhenGetIdentityReturnsIdetity()
+    public function testIsAuthenticatedReturnsTrueWhenServiceReturnsIdetity()
     {
         $this->authServiceMock
             ->expects( $this->once() )
@@ -36,7 +43,7 @@ class AuthTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->auth->isAuthenticated());
     }
 
-    public function testIsAuthenticatedWhenGetIdentityReturnsReturnsNull()
+    public function testIsAuthenticatedReturnsFalseWhenServiceReturnsReturnsNull()
     {
         $this->authServiceMock
             ->expects( $this->once() )
@@ -46,7 +53,7 @@ class AuthTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->auth->isAuthenticated());
     }
 
-    public function testGetIdentityWhenGetIdentityReturnsIdentity()
+    public function testGetIdentityReturnsIdentityWhenServiceReturnsIdentity()
     {
         $this->authServiceMock
             ->expects( $this->once() )
@@ -56,7 +63,7 @@ class AuthTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('martyn@example.com', $this->auth->getIdentity());
     }
 
-    public function testGetIdentityWhenGetIdentityReturnsNull()
+    public function testGetIdentityReturnsNullWhenServiceReturnsNull()
     {
         $this->authServiceMock
             ->expects( $this->once() )
@@ -66,7 +73,7 @@ class AuthTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(null, $this->auth->getIdentity());
     }
 
-    public function testAuthenticateWhenResultIsSuccess()
+    public function testAuthenticateReturnsTrueWhenResultIsSuccess()
     {
         $this->authServiceMock
             ->expects( $this->once() )
@@ -80,7 +87,7 @@ class AuthTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->auth->authenticate('martyn', 'mypass'));
     }
 
-    public function testAuthenticateWhenResultIsFail()
+    public function testAuthenticateReturnsFalseWhenResultIsFail()
     {
         $this->authServiceMock
             ->expects( $this->once() )

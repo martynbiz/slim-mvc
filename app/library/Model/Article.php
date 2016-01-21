@@ -27,8 +27,6 @@ class Article extends Mongo
         'title',
         'slug',
         'description',
-        'author',
-        // 'type',
     );
 
     public function validate()

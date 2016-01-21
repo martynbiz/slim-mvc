@@ -25,6 +25,12 @@ abstract class BaseController extends Controller
         $currentUser = $this->getCurrentUser();
         if ($currentUser) {
             $data['current_user'] = $currentUser->toArray();
+
+            // roles - could opt for current_user.role == "admin" but
+            // these are much more pleasant in the views :)
+            $data['current_user']['is_admin'] = $currentUser->isAdmin();
+            $data['current_user']['is_editor'] = $currentUser->isEditor();
+            $data['current_user']['is_member'] = $currentUser->isMember();
         }
 
         // attach any flash messages

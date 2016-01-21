@@ -30,7 +30,7 @@ class UserTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($values['last_name'], $user->last_name);
         $this->assertEquals($values['email'], $user->email);
         $this->assertEquals($values['password'], $user->password);
-        
+
         $this->assertNotEquals($values['role'], @$user->role);
     }
 

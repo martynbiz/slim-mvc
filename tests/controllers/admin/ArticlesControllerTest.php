@@ -9,16 +9,16 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
     /**
      * @var App's container
      */
-    protected $articleMock;
+    protected $articleStub;
 
     public function setUp()
     {
         parent::setUp();
 
         // Create a stub for the Article class.
-        $this->articleMock = $this->generateArticleStub();
+        $this->articleStub = $this->generateArticleStub();
 
-        $this->container['model.article'] = $this->articleMock;
+        $this->container['model.article'] = $this->articleStub;
     }
 
     public function testIndexAction()
@@ -26,7 +26,7 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // =================================
         // mock method stack, in order
 
-        $this->articleMock
+        $this->articleStub
             ->expects( $this->once() )
             ->method('find')
             ->willReturn( new MongoIterator() ); // empty is fine
@@ -53,7 +53,7 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // =================================
         // mock method stack, in order
 
-        $this->articleMock
+        $this->articleStub
             ->expects( $this->once() )
             ->method('findOneOrFail')
             ->willReturn($article); // empty is fine
@@ -87,12 +87,9 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // mock method stack, in order
 
         // Configure the stub.
-        $this->articleMock
+        $this->articleStub
             ->expects( $this->once() )
             ->method('factory')
-            ->with( array(
-                'type' => Article::TYPE_ARTICLE,
-            ) )
             ->willReturn($article); // empty is fine
 
         // Ensure that new articles are initiated as DRAFT articles
@@ -143,12 +140,9 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // mock method stack, in order
 
         // Configure the stub.
-        $this->articleMock
+        $this->articleStub
             ->expects( $this->once() )
             ->method('factory')
-            ->with( array(
-                'type' => Article::TYPE_ARTICLE,
-            ) )
             ->willReturn($article); // empty is fine
 
         // Ensure that new articles are initiated as DRAFT articles
@@ -183,7 +177,7 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
 
         // This will be called when we return back to the index action
         // an empty MongoIterator is fine for testing
-        $this->articleMock
+        $this->articleStub
             ->expects( $this->once() )
             ->method('find')
             ->willReturn( new MongoIterator() );
@@ -208,7 +202,7 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // mock method stack, in order
 
         // Configure the stub.
-        $this->articleMock
+        $this->articleStub
             ->expects( $this->once() )
             ->method('findOneOrFail')
             ->with(array(
@@ -238,7 +232,7 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // mock method stack, in order
 
         // Mock the model the dependency
-        $this->articleMock
+        $this->articleStub
             ->expects( $this->once() )
             ->method('findOneOrFail')
             ->with(array(
@@ -280,7 +274,7 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // mock method stack, in order
 
         // Mock the model the dependency
-        $this->articleMock
+        $this->articleStub
             ->expects( $this->exactly(2) ) // in update, and again in edit
             ->method('findOneOrFail')
             ->with(array(
@@ -334,7 +328,7 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // mock method stack, in order
 
         // Mock the model the dependency
-        $this->articleMock
+        $this->articleStub
             ->expects( $this->once() )
             ->method('findOneOrFail')
             ->with(array(
@@ -385,7 +379,7 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // mock method stack, in order
 
         // Mock the model the dependency
-        $this->articleMock
+        $this->articleStub
             ->expects( $this->exactly(2) ) // in approve, and again in edit
             ->method('findOneOrFail')
             ->with(array(
@@ -445,7 +439,7 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // mock method stack, in order
 
         // Mock the model the dependency
-        $this->articleMock
+        $this->articleStub
             ->expects( $this->once() )
             ->method('findOneOrFail')
             ->with(array(
@@ -496,7 +490,7 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // mock method stack, in order
 
         // Mock the model the dependency
-        $this->articleMock
+        $this->articleStub
             ->expects( $this->exactly(2) ) // in approve, and again in edit
             ->method('findOneOrFail')
             ->with(array(
@@ -551,19 +545,6 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
             'title' => 'A long time ago in a galaxy far far away',
             'description' => '<p>Hello world!</p>',
         ), $data );
-    }
-
-    /**
-     * Will generate an article stub for use in this test. Sometimes we want to
-     * mock methods of the model instance such as save, and ensure values
-     * are being set etc
-     * @return Article_mock
-     */
-    public function generateArticleStub()
-    {
-        return $this->getMockBuilder('App\Model\Article')
-                    ->disableOriginalConstructor()
-                    ->getMock();
     }
 
     public function getInvalidArticleData()
