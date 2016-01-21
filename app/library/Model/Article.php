@@ -1,6 +1,6 @@
 <?php
 
-namespace CrSrc\Model;
+namespace App\Model;
 
 use MartynBiz\Mongo;
 use MartynBiz\Validator;

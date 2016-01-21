@@ -2,9 +2,9 @@
 
 use MartynBiz\Mongo\MongoIterator;
 
-use CrSrc\Model\Article;
+use App\Model\Article;
 
-class ArticlesControllerTests extends \CrSrc\Test\PHPUnit\TestCase
+class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
 {
     /**
      * @var App's container
@@ -171,7 +171,7 @@ class ArticlesControllerTests extends \CrSrc\Test\PHPUnit\TestCase
      */
     public function generateArticleStub()
     {
-        return $this->getMockBuilder('CrSrc\Model\Article')
+        return $this->getMockBuilder('App\Model\Article')
                      ->disableOriginalConstructor()
                      ->getMock();
     }

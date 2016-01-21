@@ -1,14 +1,14 @@
 <?php
 
-namespace CrSrc\Test\PHPUnit;
+namespace App\Test\PHPUnit;
 
 use MartynBiz\Mongo\Connection;
 use Zend\Authentication\Result;
 
-use CrSrc\Model\User;
-use CrSrc\Model\Article;
+use App\Model\User;
+use App\Model\Article;
 
-abstract class TestCase extends \SlimMvc\Test\PHPUnit\TestCase
+abstract class TestCase extends \MartynBiz\Slim3Controller\Test\PHPUnit\TestCase
 {
     public function setUp()
     {
@@ -62,7 +62,7 @@ abstract class TestCase extends \SlimMvc\Test\PHPUnit\TestCase
         $container = $this->app->getContainer();
 
         //  auth service
-        $authMock = $this->getMockBuilder('CrSrc\\Auth')
+        $authMock = $this->getMockBuilder('App\\Auth')
             ->disableOriginalConstructor()
             ->getMock();
         $container['auth'] = $authMock;

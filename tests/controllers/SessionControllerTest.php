@@ -1,9 +1,9 @@
 <?php
 
-use CrSrc\Test\PHPUnit\TestCase;
+use App\Test\PHPUnit\TestCase;
 
 use Zend\Authentication\Result;
-use CrSrc\Model\User;
+use App\Model\User;
 
 class SessionControllerTests extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-use CrSrc\Test\PHPUnit\TestCase;
+use App\Test\PHPUnit\TestCase;
 
 class IndexControllerTests extends TestCase
 {

@@ -1,8 +1,8 @@
 <?php
 
-use CrSrc\Test\PHPUnit\TestCase;
+use App\Test\PHPUnit\TestCase;
 
-use CrSrc\Model\User;
+use App\Model\User;
 
 class UsersControllerTests extends TestCase
 {

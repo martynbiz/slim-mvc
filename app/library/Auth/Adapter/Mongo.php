@@ -4,7 +4,7 @@ namespace App\Auth\Adapter;
 use Zend\Authentication\Adapter\AdapterInterface;
 use Zend\Authentication\Result;
 
-use CrSrc\Model\User;
+use App\Model\User;
 
 class Mongo implements AdapterInterface
 {
@@ -19,7 +19,7 @@ class Mongo implements AdapterInterface
     protected $password;
 
     /**
-     * @var CrSrc\Model\User
+     * @var App\Model\User
      */
     protected $model;
 

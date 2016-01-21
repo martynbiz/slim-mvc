@@ -1,6 +1,6 @@
 <?php
 
-use CrSrc\Model\User;
+use App\Model\User;
 
 class UserTest extends PHPUnit_Framework_TestCase
 {

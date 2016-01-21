@@ -1,7 +1,7 @@
 <?php
 
-use CrSrc\Auth;
-use CrSrc\Auth\AuthInterface;
+use App\Auth;
+use App\Auth\AuthInterface;
 
 use Zend\Authentication\Result;
 
