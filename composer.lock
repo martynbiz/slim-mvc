@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7953e221d3762125b0bfe60f572b38ea",
-    "content-hash": "94539195a788e22d65d326bbe65c3928",
+    "hash": "240ea90a120b570183d1d605f8be59c8",
+    "content-hash": "8b86c807e7a4c1a4c6af5b983aaae26e",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -90,24 +90,24 @@
             "time": "2015-10-27 09:58:14"
         },
         {
-            "name": "martynbiz/php-mongo",
+            "name": "martynbiz/php-flash-message",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/martynbiz/php-mongo.git",
-                "reference": "5b330279523e64a8dc31318d8969e6318ad6690c"
+                "url": "https://github.com/martynbiz/php-flash-message.git",
+                "reference": "5f2e3c87cd73f23ff7ddcb93357e800fc64ddc11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/martynbiz/php-mongo/zipball/5b330279523e64a8dc31318d8969e6318ad6690c",
-                "reference": "5b330279523e64a8dc31318d8969e6318ad6690c",
+                "url": "https://api.github.com/repos/martynbiz/php-flash-message/zipball/5f2e3c87cd73f23ff7ddcb93357e800fc64ddc11",
+                "reference": "5f2e3c87cd73f23ff7ddcb93357e800fc64ddc11",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.3.*"
+                "phpunit/phpunit": "4.8.*"
             },
             "type": "library",
             "autoload": {
@@ -119,8 +119,58 @@
             "license": [
                 "MIT"
             ],
+            "authors": [
+                {
+                    "name": "Martyn Bissett",
+                    "email": "martynbissett@yahoo.co.uk",
+                    "homepage": "http://ma.rtyn.biz",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Flash messenger that will keep messages until they are \"flushed\" - current or persistant states.",
+            "homepage": "http://github.com/martynbiz/php-flash",
+            "keywords": [
+                "flash",
+                "message"
+            ],
+            "time": "2016-01-21 01:14:33"
+        },
+        {
+            "name": "martynbiz/php-mongo",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/martynbiz/php-mongo.git",
+                "reference": "6514ce44cc52bfbca477fb1010aba98d39438080"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/martynbiz/php-mongo/zipball/6514ce44cc52bfbca477fb1010aba98d39438080",
+                "reference": "6514ce44cc52bfbca477fb1010aba98d39438080",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.3.*"
+            },
+            "suggest": {
+                "martynbiz/php-validator": "Optional simple to use extendable validator usable with validate() method."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "MartynBiz": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "ODM for MongoDB with auto-incremented IDs, whitelists, soft deletes and save validation configurable.",
             "homepage": "http://github.com/martynbiz/php-mongo",
-            "time": "2016-01-12 15:06:15"
+            "time": "2016-01-20 15:15:10"
         },
         {
             "name": "martynbiz/php-validator",
@@ -169,17 +219,65 @@
             "time": "2016-01-17 01:24:52"
         },
         {
+            "name": "martynbiz/slim3-controller",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/martynbiz/slim3-controller.git",
+                "reference": "f80c9fbb9a695530e1eb0ac1c9713fb708583105"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/martynbiz/slim3-controller/zipball/f80c9fbb9a695530e1eb0ac1c9713fb708583105",
+                "reference": "f80c9fbb9a695530e1eb0ac1c9713fb708583105",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.8.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "MartynBiz\\Slim3Controller\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Martyn Bissett",
+                    "email": "martynbissett@yahoo.co.uk",
+                    "homepage": "http://ma.rtyn.biz",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Provides controller functionality to Slim Framework v3. Also includes PHPUnit TestCase for testing controllers.",
+            "homepage": "http://github.com/martynbiz/slim3-controller",
+            "keywords": [
+                "controller",
+                "mvc",
+                "slim",
+                "slim3"
+            ],
+            "time": "2016-01-21 01:11:27"
+        },
+        {
             "name": "monolog/monolog",
             "version": "1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "592af02d0c9a7f6c8a345958d8db5d068cf51147"
+                "reference": "6a35f7387b1b66121c37436e72378d58125cef90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/592af02d0c9a7f6c8a345958d8db5d068cf51147",
-                "reference": "592af02d0c9a7f6c8a345958d8db5d068cf51147",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/6a35f7387b1b66121c37436e72378d58125cef90",
+                "reference": "6a35f7387b1b66121c37436e72378d58125cef90",
                 "shasum": ""
             },
             "require": {
@@ -244,7 +342,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2015-12-18 18:24:15"
+            "time": "2016-01-20 10:14:19"
         },
         {
             "name": "nikic/fast-route",
@@ -585,100 +683,6 @@
             "time": "2015-12-22 10:13:02"
         },
         {
-            "name": "slim/flash",
-            "version": "0.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/slimphp/Slim-Flash.git",
-                "reference": "1995ed53b77b8eeb67adf032de93c319f76aa5cd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/slimphp/Slim-Flash/zipball/1995ed53b77b8eeb67adf032de93c319f76aa5cd",
-                "reference": "1995ed53b77b8eeb67adf032de93c319f76aa5cd",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Slim\\Flash\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Josh Lockhart",
-                    "email": "hello@joshlockhart.com",
-                    "homepage": "http://joshlockhart.com"
-                }
-            ],
-            "description": "Slim Framework Flash message service provider",
-            "homepage": "http://slimframework.com",
-            "keywords": [
-                "flash",
-                "framework",
-                "message",
-                "provider",
-                "slim"
-            ],
-            "time": "2015-08-16 22:49:06"
-        },
-        {
-            "name": "slim/php-view",
-            "version": "2.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/slimphp/PHP-View.git",
-                "reference": "a4dcd7e64b56b0c1875a8cd48daf065e6066c7f9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/slimphp/PHP-View/zipball/a4dcd7e64b56b0c1875a8cd48daf065e6066c7f9",
-                "reference": "a4dcd7e64b56b0c1875a8cd48daf065e6066c7f9",
-                "shasum": ""
-            },
-            "require": {
-                "psr/http-message": "^1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.0",
-                "slim/slim": "^3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Slim\\Views\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Glenn Eggleton",
-                    "email": "geggleto@gmail.com"
-                }
-            ],
-            "description": "Render PHP view scripts into a PSR-7 Response object.",
-            "keywords": [
-                "framework",
-                "php",
-                "phtml",
-                "renderer",
-                "slim",
-                "template",
-                "view"
-            ],
-            "time": "2015-12-08 13:06:39"
-        },
-        {
             "name": "slim/slim",
             "version": "3.x-dev",
             "source": {
@@ -796,185 +800,17 @@
             "time": "2015-08-17 08:45:48"
         },
         {
-            "name": "symfony/css-selector",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/css-selector.git",
-                "reference": "388683e63e4d02be9c1ed7c520eb3a251147fdb6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/388683e63e4d02be9c1ed7c520eb3a251147fdb6",
-                "reference": "388683e63e4d02be9c1ed7c520eb3a251147fdb6",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5.9"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\CssSelector\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jean-François Simon",
-                    "email": "jeanfrancois.simon@sensiolabs.com"
-                },
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony CssSelector Component",
-            "homepage": "https://symfony.com",
-            "time": "2016-01-03 15:35:40"
-        },
-        {
-            "name": "symfony/dom-crawler",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "7af4c27e6a0f31338b627c11e731c8b4b78fbcf8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/7af4c27e6a0f31338b627c11e731c8b4b78fbcf8",
-                "reference": "7af4c27e6a0f31338b627c11e731c8b4b78fbcf8",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5.9",
-                "symfony/polyfill-mbstring": "~1.0"
-            },
-            "require-dev": {
-                "symfony/css-selector": "~2.8|~3.0"
-            },
-            "suggest": {
-                "symfony/css-selector": ""
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\DomCrawler\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony DomCrawler Component",
-            "homepage": "https://symfony.com",
-            "time": "2016-01-03 15:35:40"
-        },
-        {
-            "name": "symfony/polyfill-mbstring",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "d7f01c96a4dde264682cf36c28e62086c77a09d4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/d7f01c96a4dde264682cf36c28e62086c77a09d4",
-                "reference": "d7f01c96a4dde264682cf36c28e62086c77a09d4",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "suggest": {
-                "ext-mbstring": "For best performance"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Mbstring\\": ""
-                },
-                "files": [
-                    "bootstrap.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill for the Mbstring extension",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "mbstring",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "time": "2016-01-13 07:16:33"
-        },
-        {
             "name": "twig/twig",
             "version": "1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "24d9266d0f1c2b4426ad8f931be30718cace4180"
+                "reference": "eb6e05e7ddc0382cae3ba82d4f519db235a09d4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/24d9266d0f1c2b4426ad8f931be30718cace4180",
-                "reference": "24d9266d0f1c2b4426ad8f931be30718cace4180",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/eb6e05e7ddc0382cae3ba82d4f519db235a09d4d",
+                "reference": "eb6e05e7ddc0382cae3ba82d4f519db235a09d4d",
                 "shasum": ""
             },
             "require": {
@@ -1022,7 +858,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-01-11 14:50:45"
+            "time": "2016-01-19 12:28:04"
         },
         {
             "name": "zendframework/zend-authentication",
@@ -1202,12 +1038,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-session.git",
-                "reference": "9d439eec4f0d484548da7fc00df8de9940224ada"
+                "reference": "bcb435c60d55ece4c8d52b6a54d2b4dc44512aa0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-session/zipball/9d439eec4f0d484548da7fc00df8de9940224ada",
-                "reference": "9d439eec4f0d484548da7fc00df8de9940224ada",
+                "url": "https://api.github.com/repos/zendframework/zend-session/zipball/bcb435c60d55ece4c8d52b6a54d2b4dc44512aa0",
+                "reference": "bcb435c60d55ece4c8d52b6a54d2b4dc44512aa0",
                 "shasum": ""
             },
             "require": {
@@ -1255,7 +1091,7 @@
                 "session",
                 "zf2"
             ],
-            "time": "2015-12-14 16:17:14"
+            "time": "2016-01-19 21:57:01"
         },
         {
             "name": "zendframework/zend-stdlib",
@@ -1263,12 +1099,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-stdlib.git",
-                "reference": "9ccac573dff16d76ded168ac9708df3b7382ff43"
+                "reference": "e79f817ff3e82a63172c5dac3e42c1904391408c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/9ccac573dff16d76ded168ac9708df3b7382ff43",
-                "reference": "9ccac573dff16d76ded168ac9708df3b7382ff43",
+                "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/e79f817ff3e82a63172c5dac3e42c1904391408c",
+                "reference": "e79f817ff3e82a63172c5dac3e42c1904391408c",
                 "shasum": ""
             },
             "require": {
@@ -1313,7 +1149,7 @@
                 "stdlib",
                 "zf2"
             ],
-            "time": "2015-10-15 15:59:16"
+            "time": "2016-01-19 21:52:47"
         }
     ],
     "packages-dev": [
@@ -1728,12 +1564,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "7f0787732c8472b4ade576236cf19e0e4f1c5e55"
+                "reference": "acbb9e4fdcb27a9b65426b3d09770db671296a40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7f0787732c8472b4ade576236cf19e0e4f1c5e55",
-                "reference": "7f0787732c8472b4ade576236cf19e0e4f1c5e55",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/acbb9e4fdcb27a9b65426b3d09770db671296a40",
+                "reference": "acbb9e4fdcb27a9b65426b3d09770db671296a40",
                 "shasum": ""
             },
             "require": {
@@ -1792,7 +1628,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-01-13 10:07:55"
+            "time": "2016-01-19 11:59:02"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2275,8 +2111,10 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "martynbiz/slim3-controller": 20,
         "martynbiz/php-mongo": 20,
-        "martynbiz/php-validator": 20
+        "martynbiz/php-validator": 20,
+        "martynbiz/php-flash-message": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -2,7 +2,7 @@
 
 namespace CrSrc\Controller;
 
-use SlimMvc\Http\Controller;
+use MartynBiz\Slim3Controller\Controller;
 
 abstract class BaseController extends Controller
 {

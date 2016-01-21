@@ -1,5 +1,5 @@
 {
-    "name": "martynbiz/slim-controllers",
+    "name": "martynbiz/slim-mvc",
     "description": "Controller for Slim Framework v3",
     "homepage": "http://github.com/martynbiz/slim-controllers",
     "license": "MIT",
@@ -14,17 +14,15 @@
     "require": {
         "php": ">=5.5.0",
         "slim/slim": "~3.0",
-        "slim/php-view": "^2.0",
+        "martynbiz/slim3-controller": "dev-master",
         "monolog/monolog": "^1.17",
         "slim/twig-view": "^2.0",
-        "symfony/dom-crawler": "^3.0",
-        "symfony/css-selector": "^3.0",
         "slim/csrf": "^0.6.0",
         "zendframework/zend-authentication": "^2.5",
         "zendframework/zend-session": "^2.5",
         "martynbiz/php-mongo": "dev-master",
         "martynbiz/php-validator": "dev-master",
-        "slim/flash": "^0.1.0",
+        "martynbiz/php-flash-message": "dev-master",
         "desarrolla2/cache": "^2.0",
         "predis/predis": "^1.0"
     },
