@@ -54,6 +54,8 @@ $app->group('/admin', function () use ($app) {
 
         $app->post('', $controller('post'))->setName('admin_articles_post');
         $app->put('/{id:[0-9]+}', $controller('update'))->setName('admin_articles_update');
+        $app->put('/{id:[0-9]+}/submit', $controller('submit'))->setName('admin_articles_submit');
+        $app->put('/{id:[0-9]+}/approve', $controller('approve'))->setName('admin_articles_approve');
         $app->delete('/{id:[0-9]+}', $controller('delete'))->setName('admin_articles_delete');
     });
 })->add( new \App\Middleware\Auth() );

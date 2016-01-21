@@ -1,6 +1,6 @@
 <?php
 
-use App\Auth;
+use App\Auth\Auth;
 use App\Auth\AuthInterface;
 
 use Zend\Authentication\Result;

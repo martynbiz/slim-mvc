@@ -10,6 +10,11 @@ use App\Model\Article;
 
 abstract class TestCase extends \MartynBiz\Slim3Controller\Test\PHPUnit\TestCase
 {
+    /**
+     * @var Slim\Container
+     */
+    protected $container;
+
     public function setUp()
     {
         // =========================
@@ -59,32 +64,24 @@ abstract class TestCase extends \MartynBiz\Slim3Controller\Test\PHPUnit\TestCase
         // =========================
         // Create test stubs
 
-        $container = $this->app->getContainer();
+        $this->container = $this->app->getContainer();
 
         //  auth service
-        $authMock = $this->getMockBuilder('App\\Auth')
+        $authMock = $this->getMockBuilder('App\\Auth\\Auth')
             ->disableOriginalConstructor()
             ->getMock();
-        $container['auth'] = $authMock;
-    }
-
-    public function tearDown()
-    {
-        // // create fixtures
-        // Connection::getInstance()->delete('articles', array());
+        $this->container['auth'] = $authMock;
     }
 
     public function login()
     {
-        $container = $this->app->getContainer();
-
         // by defaut, we'll make getIdentity return a null
-        $container['auth']
+        $this->container['auth']
             ->method('getIdentity')
             ->willReturn( $this->user->email );
 
         // by defaut, we'll make isAuthenticated return a false
-        $container['auth']
+        $this->container['auth']
             ->method('isAuthenticated')
             ->willReturn( true );
     }

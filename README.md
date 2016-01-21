@@ -197,7 +197,7 @@ v2
 * admin-lte homepage (graphs etc)
 
 martynbiz/php-flash-message
-
+* has('success')
 
 
 
@@ -212,6 +212,7 @@ tests
 * validate json
 
 martynbiz/php-mongo
+* does save() return true or false?
 * make find() and findOne() callable statically
 * paginate - test limit/skip in integrated
 * access properties like: $user['username'] or $user->username
@@ -219,3 +220,4 @@ martynbiz/php-mongo
 * SO is it better to update few name/values with $set, or just overwrite all with $this->data?
 * test Mongo::update()
 * get human readable date
+* allow us to insert an empty draft

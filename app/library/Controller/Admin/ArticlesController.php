@@ -39,12 +39,21 @@ class ArticlesController extends BaseController
     public function post()
     {
         // TODO change mongo so that we can insert an empty draft
-        $article = $this->get('model.article')->create(array(
+        $article = $this->get('model.article')->factory(array(
             'type' => Article::TYPE_ARTICLE,
         ));
-var_dump($article); exit;
-        if ($article) {
-            return $this->redirect('/admin/articles/' . $article->id . '/edit');
+
+        // for security reasons, status isn't on the whitelist for mass assignment
+        // but we can set it via property assignment.
+        $article->set('status', Article::STATUS_DRAFT);
+
+        // if the article saves ok, redirect them to the edit page where they can
+        // begin to edit their draft. any errors, forward them back to the index
+        // (where they came from)
+        if ( $article->save() ) {
+
+            // using get('id') here so we can mock $article during testing
+            return $this->redirect('/admin/articles/' . $article->get('id') . '/edit');
         } else {
             $this->get('flash')->addMessage('errors', $article->getErrors());
             return $this->forward('index');
@@ -60,11 +69,13 @@ var_dump($article); exit;
             'id' => (int) $id,
         ));
 
-        // as the article is being edited again, it will need re-approved
-        // if the user is an admin/editor user, set this to SUBMITTED, otherwise
-        // put it back to DRAFT TODO think this out, unit test too
-        $article->status = Article::STATUS_DRAFT;
-        $article->save();
+        // // as the article is being edited again, it will need re-approved
+        // // if the user is an admin/editor user, set this to SUBMITTED, otherwise
+        // // put it back to DRAFT TODO think this out, unit test too
+        // if ($article->status == Article::APPROVED) {
+        //     $article->status = Article::STATUS_DRAFT;
+        //     $article->save();
+        // }
 
         return $this->render('admin/articles/edit.html', array(
             'article' => array_merge($article->toArray(), $this->getPost()),
@@ -83,7 +94,6 @@ var_dump($article); exit;
         ));
 
         if ( $article->save( $this->getPost() ) ) {
-            $this->get('flash')->addMessage('success', 'Article updated successfully');
 
             if ($this->isXhr()) {
 
@@ -92,12 +102,14 @@ var_dump($article); exit;
                     'article' => $article->toArray(),
                 ));
             } else {
+
                 $this->get('flash')->addMessage('success', 'Draft article saved. Click "submit" when ready to publish.');
 
                 // redirect
                 return $this->redirect('/admin/articles/' . $id . '/edit');
             }
         } else {
+
             $this->get('flash')->addMessage('errors', $article->getErrors());
 
             // forward
@@ -119,23 +131,58 @@ var_dump($article); exit;
             'id' => (int) $id,
         ));
 
-        // we're also gonna set the status here to SUBMITTED
-        $article->status = Article::STATUS_SUBMITTED;
-        $article->submitted_at = date('Y-m-d H:i:s');
+        // set the status of the article to approved, if there are any problems
+        // with the data send, save() will fail anyway. Using set() here as it is
+        // more testable as a method :)
+        $article->set('status', Article::STATUS_SUBMITTED);
 
         if ( $article->save( $this->getPost() ) ) {
-            $this->get('flash')->addMessage('success', 'Article updated successfully');
 
-            if ($this->isXhr()) {
-                return $this->renderJson(array(
-                    'article' => $article->toArray(),
-                ));
-            } else {
-                return $this->redirect('/admin/articles/' . $id);
-            }
+            $this->get('flash')->addMessage('success', 'Article has been submitted and will be reviewed by an editor shortly.');
+
+            // redirect
+            return $this->redirect('/admin/articles/' . $id);
+
         } else {
+
             $this->get('flash')->addMessage('errors', $article->getErrors());
-            return $this->edit($id);
+
+            // forward
+            return $this->forward('edit', array(
+                'id' => $id,
+            ));
+        }
+    }
+
+    /**
+     * Only editor and admin users can approve articles
+     */
+    public function approve($id)
+    {
+        $article = $this->get('model.article')->findOneOrFail(array(
+            'id' => (int) $id,
+        ));
+
+        // set the status of the article to approved, if there are any problems
+        // with the data send, save() will fail anyway. Using set() here as it is
+        // more testable as a method :)
+        $article->set('status', Article::STATUS_APPROVED);
+
+        if ( $article->save( $this->getPost() ) ) {
+
+            $this->get('flash')->addMessage('success', 'Article has been approved.');
+
+            // redirect
+            return $this->redirect('/admin/articles/' . $id);
+
+        } else {
+
+            $this->get('flash')->addMessage('errors', $article->getErrors());
+
+            // forward
+            return $this->forward('edit', array(
+                'id' => $id,
+            ));
         }
     }
 

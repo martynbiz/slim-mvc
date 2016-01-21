@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Auth;
 
 /**
  * This is a abstract layer between the third-party means we choose to authenticate
@@ -8,8 +8,6 @@ namespace App;
  */
 
 use Zend\Authentication\Result;
-
-use App\Auth\AuthInterface;
 use App\Auth\Adapter\Mongo as AuthAdapter;
 
 use App\Model\User;

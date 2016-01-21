@@ -30,6 +30,7 @@
 
     <input type="hidden" name="_METHOD" value="PUT">
 
+    <button type="submit" formaction="/admin/articles/{{ article.id }}/approve" class="btn btn-primary">Approve</button>
     <button type="submit" class="btn btn-primary">Submit for approval</button>
     <button type="submit" formaction="/admin/articles/{{ article.id }}" class="btn btn-default">Save draft</button>
 </form>

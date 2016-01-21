@@ -4,25 +4,33 @@
 <ol class="breadcrumb">
     <li><a href="/admin">Admin</a></li>
     <li><a href="/admin/articles">Articles</a></li>
-    <li class="active">{{ article.title|e }}</li>
+    <li class="active">{{ article.title }}</li>
 </ol>
 
 <table class="table table-striped">
     <tr>
         <th width="20%">Title</th>
-        <td>{{ article.title|e }}</td>
+        <td>{{ article.title }}</td>
+    </tr>
+    <tr>
+        <th>Slug</th>
+        <td>{{ article.slug }}</td>
     </tr>
     <tr>
         <th>Description</th>
-        <td>{{ article.description|e }}</td>
+        <td>{{ article.description }}</td>
     </tr>
     <tr>
         <th>Type</th>
-        <td>{{ article.type|e }}</td>
+        <td>{{ article.type }}</td>
+    </tr>
+    <tr>
+        <th>Status</th>
+        <td>{{ article.status }}</td>
     </tr>
     <tr>
         <th>Data created</th>
-        <td>{{ article.created_at|e }}</td>
+        <td>{{ article.created_at }}</td>
     </tr>
 </table>
 {% endblock %}

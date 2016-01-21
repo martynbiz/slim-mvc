@@ -29,8 +29,7 @@ abstract class BaseController extends Controller
 
         // attach any flash messages
         $data['flash_messages'] = $this->get('flash')->flushMessages();
-// var_dump($_SESSION); exit;
-// var_dump($data['flash_messages']); exit;
+
         return parent::render($filepath, $data);
     }
 

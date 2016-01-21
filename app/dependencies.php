@@ -56,7 +56,7 @@ $container['auth'] = function ($c) {
     $authService->setStorage( new \Zend\Authentication\Storage\Session('crsrc') );
 
     // create an instance of our AuthInterface implemented class
-    $auth = new \App\Auth($authService);
+    $auth = new \App\Auth\Auth($authService);
 
     return $auth;
 };
