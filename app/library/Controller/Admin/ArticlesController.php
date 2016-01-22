@@ -43,6 +43,7 @@ class ArticlesController extends BaseController
      */
     public function post()
     {
+        $user = $this->get('auth')->getCurrentUser();
         $article = $this->get('model.article')->factory();
 
         // for security reasons, status isn't on the whitelist for mass assignment
@@ -53,6 +54,11 @@ class ArticlesController extends BaseController
         // but we can set it via property assignment.
         // TODO handle more types that ARTICLE
         $article->set('type', Article::TYPE_ARTICLE);
+
+        // for security reasons, type isn't on the whitelist for mass assignment
+        // but we can set it via property assignment.
+        // TODO handle more types that ARTICLE
+        $article->set('author', $user);
 
         // if the article saves ok, redirect them to the edit page where they can
         // begin to edit their draft. any errors, forward them back to the index

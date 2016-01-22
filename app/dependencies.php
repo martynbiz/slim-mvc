@@ -57,9 +57,7 @@ $container['auth'] = function ($c) {
 
     // create an instance of our AuthInterface implemented class
     // pass in our User model for getCurrentUser method
-    $auth = new \App\Auth\Auth($authService, $container['model.user']);
-
-    return $auth;
+    return new \App\Auth\Auth($authService, $c['model.user']);
 };
 
 $container['flash'] = function ($c) {

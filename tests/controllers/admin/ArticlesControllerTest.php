@@ -6,37 +6,79 @@ use App\Model\Article;
 
 class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
 {
-    /**
-     * @var App's container
-     */
-    protected $articleStub;
 
-    public function setUp()
+    // ======================================
+    // test routes when not authenticated redirect to login page
+
+    public function testIndexActionWhenNotAuthenticatedRedirectsToLogin()
     {
-        parent::setUp();
-
-        // Create a stub for the Article class.
-        $this->articleStub = $this->generateArticleStub();
-
-        $this->container['model.article'] = $this->articleStub;
+        $this->get('/admin/articles');
+        $this->assertRedirectsTo('/session/login');
     }
 
-    public function testIndexAction()
+    public function testShowActionWhenNotAuthenticatedRedirectsToLogin()
     {
+        $this->get('/admin/articles/1');
+        $this->assertRedirectsTo('/session/login');
+    }
+
+    public function testPostActionWhenNotAuthenticatedRedirectsToLogin()
+    {
+        $this->post('/admin/articles');
+        $this->assertRedirectsTo('/session/login');
+    }
+
+    public function testEditActionWhenNotAuthenticatedRedirectsToLogin()
+    {
+        $this->get('/admin/articles/1/edit');
+        $this->assertRedirectsTo('/session/login');
+    }
+
+    public function testUpdateActionWhenNotAuthenticatedRedirectsToLogin()
+    {
+        $this->put('/admin/articles/1');
+        $this->assertRedirectsTo('/session/login');
+    }
+
+    public function testSubmitActionWhenNotAuthenticatedRedirectsToLogin()
+    {
+        $this->put('/admin/articles/1/submit');
+        $this->assertRedirectsTo('/session/login');
+    }
+
+    public function testApproveActionWhenNotAuthenticatedRedirectsToLogin()
+    {
+        $this->put('/admin/articles/1/approve');
+        $this->assertRedirectsTo('/session/login');
+    }
+
+    public function testDeleteActionWhenNotAuthenticatedRedirectsToLogin()
+    {
+        $this->delete('/admin/articles/1');
+        $this->assertRedirectsTo('/session/login');
+    }
+
+
+    // ======================================
+    // test routes when authenticated
+
+    public function testIndexActionWhenAuthenticatedReturns200()
+    {
+        // login the user
+        $this->login( $this->generateUserStub() );
+
         // =================================
         // mock method stack, in order
 
-        $this->articleStub
+        $this->container['model.article']
             ->expects( $this->once() )
             ->method('find')
             ->willReturn( new MongoIterator() ); // empty is fine
-
 
         // =================================
         // dispatch
 
         $this->get('/admin/articles');
-
 
         // =================================
         // assertions
@@ -46,24 +88,23 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         $this->assertStatusCode(200);
     }
 
-    public function testShowAction()
+    public function testShowActionWhenAuthenticatedReturns200()
     {
-        $article = $this->generateArticleStub();
+        // login the user
+        $this->login( $this->generateUserStub() );
 
         // =================================
         // mock method stack, in order
 
-        $this->articleStub
+        $this->container['model.article']
             ->expects( $this->once() )
             ->method('findOneOrFail')
-            ->willReturn($article); // empty is fine
-
+            ->willReturn( $this->generateArticleStub() ); // empty is fine
 
         // =================================
         // dispatch
 
         $this->get('/admin/articles/1');
-
 
         // =================================
         // assertions
@@ -81,13 +122,16 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // we need to mock $article here because it will call it's save() and
         // then store in the database.. we'd rather not hit the db where possible
         $article = $this->generateArticleStub();
+        $user = $this->generateUserStub();
 
+        // login the user
+        $this->login( $this->generateUserStub() );
 
         // =================================
         // mock method stack, in order
 
         // Configure the stub.
-        $this->articleStub
+        $this->container['model.article']
             ->expects( $this->once() )
             ->method('factory')
             ->willReturn($article); // empty is fine
@@ -104,6 +148,16 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
             ->method('set')
             ->with('type', Article::TYPE_ARTICLE);
 
+        // Ensure that new articles are initiated with type
+        $article
+            ->expects( $this->at(2) )
+            ->method('set')
+            ->with('author', $user);
+
+        $user
+            ->method('getDBRef')
+            ->willReturn( \MongoDBRef::create("users", new MongoId('51b14c2de8e185801f000006')) );
+
         // Mock the response from save of $article
         $article
             ->expects( $this->once() )
@@ -117,11 +171,14 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
             ->with('id')
             ->willReturn(99);
 
+
         // =================================
         // dispatch
 
         $this->post('/admin/articles?type=' . Article::TYPE_ARTICLE);
 
+
+        // =================================
         // assertions
 
         $this->assertController('articles');
@@ -135,12 +192,14 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // then store in the database.. we'd rather not hit the db where possible
         $article = $this->generateArticleStub();
 
+        // login the user
+        $this->login( $this->generateUserStub() );
 
         // =================================
         // mock method stack, in order
 
         // Configure the stub.
-        $this->articleStub
+        $this->container['model.article']
             ->expects( $this->once() )
             ->method('factory')
             ->willReturn($article); // empty is fine
@@ -177,16 +236,19 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
 
         // This will be called when we return back to the index action
         // an empty MongoIterator is fine for testing
-        $this->articleStub
+        $this->container['model.article']
             ->expects( $this->once() )
             ->method('find')
             ->willReturn( new MongoIterator() );
+
 
         // =================================
         // dispatch
 
         $this->post('/admin/articles?type=article');
 
+
+        // =================================
         // assertions
 
         $this->assertController('articles');
@@ -198,11 +260,14 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         $article = new Article();
         $article->id = 67;
 
+        // login the user
+        $this->login( $this->generateUserStub() );
+
         // =================================
         // mock method stack, in order
 
         // Configure the stub.
-        $this->articleStub
+        $this->container['model.article']
             ->expects( $this->once() )
             ->method('findOneOrFail')
             ->with(array(
@@ -215,6 +280,7 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
 
         $this->get('/admin/articles/' . $article->id . '/edit');
 
+        // =================================
         // assertions
 
         $this->assertController('articles');
@@ -228,11 +294,14 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // then store in the database.. we'd rather not hit the db where possible
         $article = $this->generateArticleStub();
 
+        // login the user
+        $this->login( $this->generateUserStub() );
+
         // =================================
         // mock method stack, in order
 
         // Mock the model the dependency
-        $this->articleStub
+        $this->container['model.article']
             ->expects( $this->once() )
             ->method('findOneOrFail')
             ->with(array(
@@ -247,11 +316,14 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
             ->with( $this->getArticleData() )
             ->willReturn(true); // <------ success
 
+
         // =================================
         // dispatch
 
         $this->put('/admin/articles/99', $this->getArticleData());
 
+
+        // =================================
         // assertions
 
         $this->assertController('articles');
@@ -269,12 +341,14 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // then store in the database.. we'd rather not hit the db where possible
         $article = $this->generateArticleStub();
 
+        // login the user
+        $this->login( $this->generateUserStub() );
 
         // =================================
         // mock method stack, in order
 
         // Mock the model the dependency
-        $this->articleStub
+        $this->container['model.article']
             ->expects( $this->exactly(2) ) // in update, and again in edit
             ->method('findOneOrFail')
             ->with(array(
@@ -300,12 +374,10 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
             ->method('toArray')
             ->willReturn( $this->getArticleData() );
 
-
         // =================================
         // dispatch
 
         $this->put('/admin/articles/99', $this->getArticleData());
-
 
         // =================================
         // assertions
@@ -323,12 +395,14 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // then store in the database.. we'd rather not hit the db where possible
         $article = $this->generateArticleStub();
 
+        // login the user
+        $this->login( $this->generateUserStub() );
 
         // =================================
         // mock method stack, in order
 
         // Mock the model the dependency
-        $this->articleStub
+        $this->container['model.article']
             ->expects( $this->once() )
             ->method('findOneOrFail')
             ->with(array(
@@ -374,12 +448,14 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // then store in the database.. we'd rather not hit the db where possible
         $article = $this->generateArticleStub();
 
+        // login the user
+        $this->login( $this->generateUserStub() );
 
         // =================================
         // mock method stack, in order
 
         // Mock the model the dependency
-        $this->articleStub
+        $this->container['model.article']
             ->expects( $this->exactly(2) ) // in approve, and again in edit
             ->method('findOneOrFail')
             ->with(array(
@@ -434,12 +510,14 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // then store in the database.. we'd rather not hit the db where possible
         $article = $this->generateArticleStub();
 
+        // login the user
+        $this->login( $this->generateUserStub() );
 
         // =================================
         // mock method stack, in order
 
         // Mock the model the dependency
-        $this->articleStub
+        $this->container['model.article']
             ->expects( $this->once() )
             ->method('findOneOrFail')
             ->with(array(
@@ -460,12 +538,10 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
             ->with( $this->getArticleData() )
             ->willReturn(true); // <------ success
 
-
         // =================================
         // dispatch
 
         $this->put('/admin/articles/99/approve', $this->getArticleData());
-
 
         // =================================
         // assertions
@@ -485,12 +561,14 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         // then store in the database.. we'd rather not hit the db where possible
         $article = $this->generateArticleStub();
 
+        // login the user
+        $this->login( $this->generateUserStub() );
 
         // =================================
         // mock method stack, in order
 
         // Mock the model the dependency
-        $this->articleStub
+        $this->container['model.article']
             ->expects( $this->exactly(2) ) // in approve, and again in edit
             ->method('findOneOrFail')
             ->with(array(
@@ -522,12 +600,10 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
             ->method('toArray')
             ->willReturn( $this->getArticleData() );
 
-
         // =================================
         // dispatch
 
         $this->put('/admin/articles/99/approve', $this->getArticleData());
-
 
         // =================================
         // assertions
@@ -545,23 +621,5 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
             'title' => 'A long time ago in a galaxy far far away',
             'description' => '<p>Hello world!</p>',
         ), $data );
-    }
-
-    public function getInvalidArticleData()
-    {
-        return array(
-            array(
-                array(
-                    'title' => 'A long time ago in a galaxy far far away',
-                    // 'description' => '<p>Hello world!</p>', // missing description
-                ),
-            ),
-            array(
-                array(
-                    // 'title' => 'A long time ago in a galaxy far far away', // missing title
-                    'description' => '<p>Hello world!</p>',
-                ),
-            ),
-        );
     }
 }

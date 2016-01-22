@@ -17,10 +17,29 @@ class UsersControllerTests extends TestCase
         $this->assertStatusCode(200);
     }
 
-    public function testPostActionWithValidParams()
+    public function testPostActionRedirectsToHomeWhenCreateSuccess()
     {
+        $user = $this->generateUserStub();
+
+
+        // =================================
+        // mock method stack, in order
+
+        // Configure the stub.
+        $this->container['model.user']
+            ->expects( $this->once() )
+            ->method('create')
+            ->with( $this->getUserData() )
+            ->willReturn($user); // <--------- success
+
+
+        // =================================
+        // dispatch
+
         $this->post('/users', $this->getUserData() );
 
+
+        // =================================
         // assertions
 
         $this->assertController('users');
@@ -28,13 +47,26 @@ class UsersControllerTests extends TestCase
         $this->assertRedirectsTo('/');
     }
 
-    /**
-     * @dataProvider getInvalidArticleData
-     */
-    public function testPostActionWithInvalidParams($postData)
+    public function testPostActionForwardsToCreateWhenCreateFails()
     {
-        $this->post('/users', $postData );
+        // =================================
+        // mock method stack, in order
 
+        // Configure the stub.
+        $this->container['model.user']
+            ->expects( $this->once() )
+            ->method('create')
+            ->with( $this->getUserData() )
+            ->willReturn(false); // <--------- failed
+
+
+        // =================================
+        // dispatch
+
+        $this->post('/users', $this->getUserData() );
+
+
+        // =================================
         // assertions
 
         $this->assertController('users');
@@ -49,43 +81,5 @@ class UsersControllerTests extends TestCase
             'email' => 'martyn@example.com',
             'password' => 'mypass',
         ), $data );
-    }
-
-    public function getInvalidArticleData()
-    {
-        return array(
-            array(
-                array(
-                    // 'first_name' => 'Martyn',
-                    'last_name' => 'Bissett',
-                    'email' => 'martyn@example.com',
-                    'password' => 'mypass',
-                ),
-            ),
-            array(
-                array(
-                    'first_name' => 'Martyn',
-                    // 'last_name' => 'Bissett',
-                    'email' => 'martyn@example.com',
-                    'password' => 'mypass',
-                ),
-            ),
-            array(
-                array(
-                    'first_name' => 'Martyn',
-                    'last_name' => 'Bissett',
-                    // 'email' => 'martyn@example.com',
-                    'password' => 'mypass',
-                ),
-            ),
-            array(
-                array(
-                    'first_name' => 'Martyn',
-                    'last_name' => 'Bissett',
-                    'email' => 'martyn@example.com',
-                    // 'password' => 'mypass',
-                ),
-            ),
-        );
     }
 }

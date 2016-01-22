@@ -19,9 +19,9 @@ class UsersController extends BaseController
 
     public function post()
     {
-        $user = new User( $this->getPost() );
+        $user = $this->get('model.user')->create( $this->getPost() );
 
-        if ( $user->save() ) {
+        if ($user) {
             return $this->redirect('/');
         } else {
             return $this->forward('create');

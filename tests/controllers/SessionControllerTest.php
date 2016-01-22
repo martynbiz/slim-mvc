@@ -11,6 +11,8 @@ class SessionControllerTests extends TestCase
     {
         $this->get('/session/login');
 
+
+        // =================================
         // assertions
 
         $this->assertController('session');
@@ -18,13 +20,32 @@ class SessionControllerTests extends TestCase
         $this->assertStatusCode(200);
     }
 
-    public function testPostActionWhenAuthReturnsSuccess()
+    public function testPostActionRedirectsToHomeWhenAuthenticates()
     {
-        // user is authenticated
-        $this->login( $this->user );
+        $user = $this->generateUserStub();
+        $userData = $this->getLoginData();
+
+
+        // =================================
+        // mock method stack, in order
+
+        // assert authenticate is called with email/password
+        $this->container['auth']
+            ->expects( $this->once() )
+            ->method('authenticate')
+            ->with($userData['email'], $userData['password']);
+
+        // this will create a simulated authenticated session
+        $this->login($user);
+
+
+        // =================================
+        // dispatch
 
         $this->post('/session', $this->getLoginData() );
 
+
+        // =================================
         // assertions
 
         $this->assertController('session');
@@ -32,30 +53,55 @@ class SessionControllerTests extends TestCase
         $this->assertRedirectsTo('/');
     }
 
-    public function testPostActionWhenAuthReturnsFail()
+    public function testPostActionForwardsToLoginWhenAuthenticateFails()
     {
+        $user = $this->generateUserStub();
+        $userData = $this->getLoginData();
+
+
+        // =================================
+        // mock method stack, in order
+
+        // assert authenticate is called with email/password
+        $this->container['auth']
+            ->expects( $this->once() )
+            ->method('authenticate')
+            ->with($userData['email'], $userData['password']);
+
+
+        // =================================
+        // dispatch
+
         $this->post('/session', $this->getLoginData() );
 
+
+        // =================================
         // assertions
 
         $this->assertController('session');
         $this->assertAction('login');
-        $this->assertStatusCode(200);
     }
 
-    public function testLogoutCallsAuthClearIdentityThenRedirects()
+    public function testLogoutClearsIdentityThenRedirects()
     {
-        $container = $this->app->getContainer();
 
-        // by defaut, we'll make getIdentity return a null
-        $container['auth']
+        // =================================
+        // mock method stack, in order
+
+        $this->container['auth']
             ->expects( $this->once() )
             ->method('clearIdentity');
+
+
+        // =================================
+        // dispatch
 
         $this->post('/session', array(
             '_METHOD' => 'DELETE',
         ) );
 
+
+        // =================================
         // assertions
 
         $this->assertController('session');

@@ -1,6 +1,8 @@
 <?php
 // Routes
 
+$container = $app->getContainer();
+
 // index routes (homepage, about, etc)
 $app->group('', function () use ($app) {
 
@@ -58,4 +60,4 @@ $app->group('/admin', function () use ($app) {
         $app->put('/{id:[0-9]+}/approve', $controller('approve'))->setName('admin_articles_approve');
         $app->delete('/{id:[0-9]+}', $controller('delete'))->setName('admin_articles_delete');
     });
-})->add( new \App\Middleware\Auth() );
+})->add( new \App\Middleware\Auth( $container['auth'] ) );

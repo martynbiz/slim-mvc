@@ -1,8 +1,20 @@
 <?php
 namespace App\Middleware;
 
+use App\Auth\AuthInterface;
+
 class Auth
 {
+    /**
+     * @var App\Auth\Auth
+     */
+    protected $auth;
+
+    public function __construct(AuthInterface $auth)
+    {
+        $this->auth = $auth;
+    }
+
     /**
      * Example middleware invokable class
      *
@@ -14,19 +26,14 @@ class Auth
      */
     public function __invoke($request, $response, $next)
     {
-        // before
-
-
-        if (false) {
-            // Not authenticated and must be authenticated to access this resource
-            return $response->withStatus(401);
+        // check if user is authenticated, otherwise return 401/ redirect/ etc
+        if (! $this->auth->isAuthenticated() ) {
+            // return $response->withStatus(401);
+            return $response->withRedirect('/session/login', 401);
         }
 
         // pass onto the next callable
         $response = $next($request, $response);
-
-        // after
-
 
         return $response;
     }
