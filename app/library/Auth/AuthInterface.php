@@ -17,7 +17,14 @@ interface AuthInterface
 
     /**
      * Authenticate a user by their credentials
+     * @param string $username Whatever the identity of the user
      * @return boolean
      */
-    public function authenticate($username, $password);
+    public function authenticate($identity, $password);
+
+    /**
+     * Authenticate a user by their credentials
+     * @return User
+     */
+    public function getCurrentUser();
 }

@@ -22,7 +22,9 @@ abstract class BaseController extends Controller
         // set some useful variables for the view (e.g. currently logged in user)
 
         // attach the current user to the view variables
-        $currentUser = $this->getCurrentUser();
+        $currentUser = $this->container['auth']->getCurrentUser();
+
+        // if the user is authenticated attach some additional data to the views
         if ($currentUser) {
             $data['current_user'] = $currentUser->toArray();
 
@@ -37,26 +39,5 @@ abstract class BaseController extends Controller
         $data['flash_messages'] = $this->get('flash')->flushMessages();
 
         return parent::render($filepath, $data);
-    }
-
-    /**
-     * Get the currently authentication user (if authenticated)
-     * @return User\null
-     */
-    protected function getCurrentUser()
-    {
-        // get the identity (email) from the auth service
-        // return null if not set
-        $identity = $this->get('auth')->getIdentity();
-        if (! $identity) {
-            return null;
-        }
-
-        // lookup the user by identity
-        $this->currentUser = $this->get('model.user')->findOne(array(
-            'email' => $identity,
-        ));
-
-        return $this->currentUser;
     }
 }

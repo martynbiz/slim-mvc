@@ -25,11 +25,20 @@ class Auth implements AuthInterface
     protected $currentUser;
 
     /**
+     * @var User
+     */
+    protected $userModel;
+
+    /**
      * We need to pass in the auth library that we're using
      */
-    public function __construct($authService)
+    public function __construct($authService, $userModel)
     {
+        // authService will interact with the session (e.g. get identity)
         $this->authService = $authService;
+
+        // user model will be used to retreive the user from the users collections
+        $this->userModel = $userModel;
     }
 
 
@@ -66,9 +75,9 @@ class Auth implements AuthInterface
      * This is the identity (e.g. username) stored for this user
      * @return string
      */
-    public function authenticate($username, $password)
+    public function authenticate($identity, $password)
     {
-        $adapter = new AuthAdapter($username, $password, new User());
+        $adapter = new AuthAdapter($identity, $password, new User());
         $result = $this->authService->authenticate($adapter);
 
         if ($result->getCode() === Result::SUCCESS) {
@@ -76,5 +85,28 @@ class Auth implements AuthInterface
         } else {
             return false;
         }
+    }
+
+    /**
+     * This is the identity (e.g. username) stored for this user
+     * @return string
+     */
+    public function getCurrentUser()
+    {
+        if (! $this->currentUser) {
+            // get the identity (email) from the auth service
+            // return null if not set
+            $identity = $this->getIdentity();
+            if (! $identity) {
+                return null;
+            }
+
+            // lookup the user by identity
+            $this->currentUser = $this->userModel->findOne(array(
+                'email' => $identity,
+            ));
+        }
+
+        return $this->currentUser;
     }
 }

@@ -13,19 +13,21 @@ class AuthTest extends PHPUnit_Framework_TestCase
 
     protected $authServiceMock;
 
+    protected $userModelMock;
+
     public function setUp()
     {
         // mock the zend service
         $this->authServiceMock = $this->getMockBuilder('Zend\\Authentication\\AuthenticationService')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->auth = new Auth( $this->authServiceMock );
 
         // mock user model
-        $userMock = $this->getMockBuilder('App\\Model\\User')
+        $this->userModelMock = $this->getMockBuilder('App\\Model\\User')
             ->disableOriginalConstructor()
             ->getMock();
-        $this->container['model.user'] = $userMock;
+
+        $this->auth = new Auth( $this->authServiceMock, $this->userModelMock );
     }
 
     public function testInstantiation()
@@ -101,6 +103,9 @@ class AuthTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($this->auth->authenticate('martyn', 'mypass'));
     }
 
+
+    // clearIdentity
+
     public function testClearIdentityCallsServicesClearIdentity()
     {
         $this->authServiceMock
@@ -108,5 +113,69 @@ class AuthTest extends PHPUnit_Framework_TestCase
             ->method('clearIdentity');
 
         $this->auth->clearIdentity();
+    }
+
+
+    // getCurrentUser
+
+    public function testGetCurrentUserReturnsUserWhenServiceReturnsIdentity()
+    {
+        $user = new User();
+
+        $this->authServiceMock
+            ->method('getIdentity')
+            ->willReturn('martyn@example.com');
+
+        $this->userModelMock
+            ->expects( $this->once() ) // one time hit the db
+            ->method('findOne')
+            ->with( array(
+                'email' => 'martyn@example.com',
+            ) )
+            ->willReturn($user);
+
+        $result = $this->auth->getCurrentUser();
+
+        $this->assertEquals($user, $result);
+
+        // run the getCurrentUser again now shouldn't call findOne again (or getIdentity)
+        $result = $this->auth->getCurrentUser();
+    }
+
+    public function testGetCurrentUserReturnsNullWhenServiceReturnsNull()
+    {
+        $this->authServiceMock
+            ->method('getIdentity')
+            ->willReturn(null);
+
+        $this->userModelMock
+            ->expects( $this->never() )
+            ->method('findOne');
+
+        $result = $this->auth->getCurrentUser();
+
+        $this->assertNull($result);
+
+        // run the getCurrentUser again now shouldn't call findOne again (or getIdentity)
+        $result = $this->auth->getCurrentUser();
+    }
+
+    public function testGetCurrentUserReturnsNullWhenModelReturnsNull()
+    {
+        $this->authServiceMock
+            ->method('getIdentity')
+            ->willReturn('martyn@example.com');
+
+        $this->userModelMock
+            ->expects( $this->once() )
+            ->method('findOne')
+            ->with( array(
+                'email' => 'martyn@example.com',
+            ) )
+            ->willReturn(null);
+
+        $result = $this->auth->getCurrentUser();
+
+        $this->assertNull($result);
     }
 }
