@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8ba7fcbac92b0978d790e97d9317149f",
-    "content-hash": "2a1a7e706a6e42085dd961833beb6dda",
+    "hash": "cfdcb8aeec9983af0666f7e8277ab61c",
+    "content-hash": "0b134f69b85b0c69911b212f24e6b1f1",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -178,13 +178,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/martynbiz/php-validator.git",
-                "reference": "629fcd5a9d2d89a5beb8a02ec6c8d9a68802a88c"
+                "url": "git@github.com:martynbiz/php-validator.git",
+                "reference": "70ecea299cf9abb6c8e659095798ed9c8aaa3edd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/martynbiz/php-validator/zipball/629fcd5a9d2d89a5beb8a02ec6c8d9a68802a88c",
-                "reference": "629fcd5a9d2d89a5beb8a02ec6c8d9a68802a88c",
+                "url": "https://api.github.com/repos/martynbiz/php-validator/zipball/70ecea299cf9abb6c8e659095798ed9c8aaa3edd",
+                "reference": "70ecea299cf9abb6c8e659095798ed9c8aaa3edd",
                 "shasum": ""
             },
             "require": {
@@ -217,7 +217,7 @@
                 "form",
                 "validation"
             ],
-            "time": "2016-01-17 01:24:52"
+            "time": "2016-01-22 10:52:00"
         },
         {
             "name": "martynbiz/slim3-controller",
@@ -1095,6 +1095,60 @@
             "time": "2015-06-15 19:37:39"
         },
         {
+            "name": "zendframework/zend-eventmanager",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-eventmanager.git",
+                "reference": "a22dd6b26d0cc201c3df9cbc576a5da0f271b25e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-eventmanager/zipball/a22dd6b26d0cc201c3df9cbc576a5da0f271b25e",
+                "reference": "a22dd6b26d0cc201c3df9cbc576a5da0f271b25e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5 || ^7.0"
+            },
+            "require-dev": {
+                "athletic/athletic": "^0.1",
+                "container-interop/container-interop": "^1.1.0",
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "^2.0",
+                "zendframework/zend-stdlib": "^2.7.3"
+            },
+            "suggest": {
+                "container-interop/container-interop": "^1.1.0, to use the lazy listeners feature",
+                "zendframework/zend-stdlib": "^2.7.3, to use the FilterChain feature"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev",
+                    "dev-develop": "3.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\EventManager\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Trigger and listen to events within a PHP application",
+            "homepage": "https://github.com/zendframework/zend-eventmanager",
+            "keywords": [
+                "event",
+                "eventmanager",
+                "events",
+                "zf2"
+            ],
+            "time": "2016-01-12 23:29:27"
+        },
+        {
             "name": "zendframework/zend-hydrator",
             "version": "1.0.0",
             "source": {
@@ -1149,6 +1203,67 @@
                 "zf2"
             ],
             "time": "2015-09-17 14:06:43"
+        },
+        {
+            "name": "zendframework/zend-session",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-session.git",
+                "reference": "bcb435c60d55ece4c8d52b6a54d2b4dc44512aa0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-session/zipball/bcb435c60d55ece4c8d52b6a54d2b4dc44512aa0",
+                "reference": "bcb435c60d55ece4c8d52b6a54d2b4dc44512aa0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5",
+                "zendframework/zend-eventmanager": "dev-develop as 2.7",
+                "zendframework/zend-stdlib": "~2.5"
+            },
+            "require-dev": {
+                "container-interop/container-interop": "^1.1",
+                "fabpot/php-cs-fixer": "1.7.*",
+                "phpunit/phpunit": "~4.0",
+                "zendframework/zend-cache": "~2.5",
+                "zendframework/zend-db": "~2.5",
+                "zendframework/zend-http": "~2.5",
+                "zendframework/zend-servicemanager": "dev-develop as 2.5",
+                "zendframework/zend-validator": "~2.5"
+            },
+            "suggest": {
+                "zendframework/zend-cache": "Zend\\Cache component",
+                "zendframework/zend-db": "Zend\\Db component",
+                "zendframework/zend-eventmanager": "Zend\\EventManager component",
+                "zendframework/zend-http": "Zend\\Http component",
+                "zendframework/zend-servicemanager": "Zend\\ServiceManager component",
+                "zendframework/zend-validator": "Zend\\Validator component"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.5-dev",
+                    "dev-develop": "2.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\Session\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "manage and preserve session data, a logical complement of cookie data, across multiple page requests by the same client",
+            "homepage": "https://github.com/zendframework/zend-session",
+            "keywords": [
+                "session",
+                "zf2"
+            ],
+            "time": "2016-01-19 21:57:01"
         },
         {
             "name": "zendframework/zend-stdlib",
@@ -2121,12 +2236,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "a8940bc022a7af0ce2601dc46376fe9dbee2d9f6"
+                "reference": "25d01edb35f3d5902f612eff297385e9b4d9a8b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/a8940bc022a7af0ce2601dc46376fe9dbee2d9f6",
-                "reference": "a8940bc022a7af0ce2601dc46376fe9dbee2d9f6",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/25d01edb35f3d5902f612eff297385e9b4d9a8b4",
+                "reference": "25d01edb35f3d5902f612eff297385e9b4d9a8b4",
                 "shasum": ""
             },
             "require": {
@@ -2162,7 +2277,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-01-21 10:01:50"
+            "time": "2016-01-22 06:37:40"
         }
     ],
     "aliases": [],

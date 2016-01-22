@@ -168,9 +168,9 @@ class ExampleControllerTest extends TestCase
 
 ## TODO
 
-crsrc
+buy wordup.com
+* martynbiz/wordup -- core stuff
 * ckeditor
-* auth, test -- $container['auth']->getCurrentUser(); // can mock user then easily
 * set author
 * user management - create user, delete, edit (e.g. roles)
 * acl - roles, isAdmin()
