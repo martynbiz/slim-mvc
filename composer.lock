@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "240ea90a120b570183d1d605f8be59c8",
-    "content-hash": "8b86c807e7a4c1a4c6af5b983aaae26e",
+    "hash": "8ba7fcbac92b0978d790e97d9317149f",
+    "content-hash": "2a1a7e706a6e42085dd961833beb6dda",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -95,19 +95,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/martynbiz/php-flash-message.git",
-                "reference": "852559dfbc1dc76c1424ea7fcd655992ebfab5d2"
+                "reference": "8fc99d21789b23aa0ce7a5171c18b345bb15332a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/martynbiz/php-flash-message/zipball/852559dfbc1dc76c1424ea7fcd655992ebfab5d2",
-                "reference": "852559dfbc1dc76c1424ea7fcd655992ebfab5d2",
+                "url": "https://api.github.com/repos/martynbiz/php-flash-message/zipball/8fc99d21789b23aa0ce7a5171c18b345bb15332a",
+                "reference": "8fc99d21789b23aa0ce7a5171c18b345bb15332a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.8.*"
+                "phpunit/phpunit": "4.8.*",
+                "zendframework/zend-session": "^2.5"
             },
             "type": "library",
             "autoload": {
@@ -133,7 +134,7 @@
                 "flash",
                 "message"
             ],
-            "time": "2016-01-21 05:53:57"
+            "time": "2016-01-21 12:37:48"
         },
         {
             "name": "martynbiz/php-mongo",
@@ -141,12 +142,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/martynbiz/php-mongo.git",
-                "reference": "6514ce44cc52bfbca477fb1010aba98d39438080"
+                "reference": "eb2a7f469f5f91bc6ec35cc5e981cda14166cd63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/martynbiz/php-mongo/zipball/6514ce44cc52bfbca477fb1010aba98d39438080",
-                "reference": "6514ce44cc52bfbca477fb1010aba98d39438080",
+                "url": "https://api.github.com/repos/martynbiz/php-mongo/zipball/eb2a7f469f5f91bc6ec35cc5e981cda14166cd63",
+                "reference": "eb2a7f469f5f91bc6ec35cc5e981cda14166cd63",
                 "shasum": ""
             },
             "require": {
@@ -170,7 +171,7 @@
             ],
             "description": "ODM for MongoDB with auto-incremented IDs, whitelists, soft deletes and save validation configurable.",
             "homepage": "http://github.com/martynbiz/php-mongo",
-            "time": "2016-01-20 15:15:10"
+            "time": "2016-01-21 13:43:02"
         },
         {
             "name": "martynbiz/php-validator",
@@ -224,17 +225,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/martynbiz/slim3-controller.git",
-                "reference": "10cbd89195534bb7143b0eaac2df8d7bbd5ae9c5"
+                "reference": "d52ebbe501171f9c7cae28937fda2344678eb521"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/martynbiz/slim3-controller/zipball/10cbd89195534bb7143b0eaac2df8d7bbd5ae9c5",
-                "reference": "10cbd89195534bb7143b0eaac2df8d7bbd5ae9c5",
+                "url": "https://api.github.com/repos/martynbiz/slim3-controller/zipball/d52ebbe501171f9c7cae28937fda2344678eb521",
+                "reference": "d52ebbe501171f9c7cae28937fda2344678eb521",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0",
-                "slim/slim": "~3.0"
+                "slim/slim": "~3.0",
+                "symfony/css-selector": "^3.0",
+                "symfony/dom-crawler": "^3.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "4.8.*"
@@ -265,7 +268,7 @@
                 "slim",
                 "slim3"
             ],
-            "time": "2016-01-21 05:46:36"
+            "time": "2016-01-21 12:16:26"
         },
         {
             "name": "monolog/monolog",
@@ -801,17 +804,185 @@
             "time": "2015-08-17 08:45:48"
         },
         {
+            "name": "symfony/css-selector",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/css-selector.git",
+                "reference": "388683e63e4d02be9c1ed7c520eb3a251147fdb6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/388683e63e4d02be9c1ed7c520eb3a251147fdb6",
+                "reference": "388683e63e4d02be9c1ed7c520eb3a251147fdb6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\CssSelector\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jean-François Simon",
+                    "email": "jeanfrancois.simon@sensiolabs.com"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony CssSelector Component",
+            "homepage": "https://symfony.com",
+            "time": "2016-01-03 15:35:40"
+        },
+        {
+            "name": "symfony/dom-crawler",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/dom-crawler.git",
+                "reference": "7af4c27e6a0f31338b627c11e731c8b4b78fbcf8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/7af4c27e6a0f31338b627c11e731c8b4b78fbcf8",
+                "reference": "7af4c27e6a0f31338b627c11e731c8b4b78fbcf8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9",
+                "symfony/polyfill-mbstring": "~1.0"
+            },
+            "require-dev": {
+                "symfony/css-selector": "~2.8|~3.0"
+            },
+            "suggest": {
+                "symfony/css-selector": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\DomCrawler\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony DomCrawler Component",
+            "homepage": "https://symfony.com",
+            "time": "2016-01-03 15:35:40"
+        },
+        {
+            "name": "symfony/polyfill-mbstring",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-mbstring.git",
+                "reference": "d7f01c96a4dde264682cf36c28e62086c77a09d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/d7f01c96a4dde264682cf36c28e62086c77a09d4",
+                "reference": "d7f01c96a4dde264682cf36c28e62086c77a09d4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-mbstring": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for the Mbstring extension",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "mbstring",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "time": "2016-01-13 07:16:33"
+        },
+        {
             "name": "twig/twig",
             "version": "1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "eb6e05e7ddc0382cae3ba82d4f519db235a09d4d"
+                "reference": "57cc04b0f61504b9fad6b04946d2d44351019353"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/eb6e05e7ddc0382cae3ba82d4f519db235a09d4d",
-                "reference": "eb6e05e7ddc0382cae3ba82d4f519db235a09d4d",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/57cc04b0f61504b9fad6b04946d2d44351019353",
+                "reference": "57cc04b0f61504b9fad6b04946d2d44351019353",
                 "shasum": ""
             },
             "require": {
@@ -859,7 +1030,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-01-19 12:28:04"
+            "time": "2016-01-21 14:45:18"
         },
         {
             "name": "zendframework/zend-authentication",
@@ -924,60 +1095,6 @@
             "time": "2015-06-15 19:37:39"
         },
         {
-            "name": "zendframework/zend-eventmanager",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-eventmanager.git",
-                "reference": "a22dd6b26d0cc201c3df9cbc576a5da0f271b25e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-eventmanager/zipball/a22dd6b26d0cc201c3df9cbc576a5da0f271b25e",
-                "reference": "a22dd6b26d0cc201c3df9cbc576a5da0f271b25e",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.5 || ^7.0"
-            },
-            "require-dev": {
-                "athletic/athletic": "^0.1",
-                "container-interop/container-interop": "^1.1.0",
-                "phpunit/phpunit": "~4.0",
-                "squizlabs/php_codesniffer": "^2.0",
-                "zendframework/zend-stdlib": "^2.7.3"
-            },
-            "suggest": {
-                "container-interop/container-interop": "^1.1.0, to use the lazy listeners feature",
-                "zendframework/zend-stdlib": "^2.7.3, to use the FilterChain feature"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.0-dev",
-                    "dev-develop": "3.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\EventManager\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Trigger and listen to events within a PHP application",
-            "homepage": "https://github.com/zendframework/zend-eventmanager",
-            "keywords": [
-                "event",
-                "eventmanager",
-                "events",
-                "zf2"
-            ],
-            "time": "2016-01-12 23:29:27"
-        },
-        {
             "name": "zendframework/zend-hydrator",
             "version": "1.0.0",
             "source": {
@@ -1032,67 +1149,6 @@
                 "zf2"
             ],
             "time": "2015-09-17 14:06:43"
-        },
-        {
-            "name": "zendframework/zend-session",
-            "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-session.git",
-                "reference": "bcb435c60d55ece4c8d52b6a54d2b4dc44512aa0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-session/zipball/bcb435c60d55ece4c8d52b6a54d2b4dc44512aa0",
-                "reference": "bcb435c60d55ece4c8d52b6a54d2b4dc44512aa0",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5",
-                "zendframework/zend-eventmanager": "dev-develop as 2.7",
-                "zendframework/zend-stdlib": "~2.5"
-            },
-            "require-dev": {
-                "container-interop/container-interop": "^1.1",
-                "fabpot/php-cs-fixer": "1.7.*",
-                "phpunit/phpunit": "~4.0",
-                "zendframework/zend-cache": "~2.5",
-                "zendframework/zend-db": "~2.5",
-                "zendframework/zend-http": "~2.5",
-                "zendframework/zend-servicemanager": "dev-develop as 2.5",
-                "zendframework/zend-validator": "~2.5"
-            },
-            "suggest": {
-                "zendframework/zend-cache": "Zend\\Cache component",
-                "zendframework/zend-db": "Zend\\Db component",
-                "zendframework/zend-eventmanager": "Zend\\EventManager component",
-                "zendframework/zend-http": "Zend\\Http component",
-                "zendframework/zend-servicemanager": "Zend\\ServiceManager component",
-                "zendframework/zend-validator": "Zend\\Validator component"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.5-dev",
-                    "dev-develop": "2.6-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\Session\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "manage and preserve session data, a logical complement of cookie data, across multiple page requests by the same client",
-            "homepage": "https://github.com/zendframework/zend-session",
-            "keywords": [
-                "session",
-                "zf2"
-            ],
-            "time": "2016-01-19 21:57:01"
         },
         {
             "name": "zendframework/zend-stdlib",
@@ -2065,12 +2121,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "82287b794641153ae1837b9288c3ae90cecdf5c4"
+                "reference": "a8940bc022a7af0ce2601dc46376fe9dbee2d9f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/82287b794641153ae1837b9288c3ae90cecdf5c4",
-                "reference": "82287b794641153ae1837b9288c3ae90cecdf5c4",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/a8940bc022a7af0ce2601dc46376fe9dbee2d9f6",
+                "reference": "a8940bc022a7af0ce2601dc46376fe9dbee2d9f6",
                 "shasum": ""
             },
             "require": {
@@ -2106,7 +2162,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-01-13 16:23:43"
+            "time": "2016-01-21 10:01:50"
         }
     ],
     "aliases": [],
