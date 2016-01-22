@@ -22,7 +22,7 @@ abstract class BaseController extends Controller
         // set some useful variables for the view (e.g. currently logged in user)
 
         // attach the current user to the view variables
-        $currentUser = $this->container['auth']->getCurrentUser();
+        $currentUser = $this->get('auth')->getCurrentUser();
 
         // if the user is authenticated attach some additional data to the views
         if ($currentUser) {

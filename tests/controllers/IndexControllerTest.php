@@ -13,12 +13,12 @@ class IndexControllerTests extends TestCase
         $this->assertStatusCode(200);
     }
 
-    // public function testContactRoute()
-    // {
-    //     $this->dispatch('/contact');
-    //
-    //     $this->assertController('index');
-    //     $this->assertAction('contact');
-    //     $this->assertStatusCode(200);
-    // }
+    public function testContactRoute()
+    {
+        $this->dispatch('/contact');
+
+        $this->assertController('index');
+        $this->assertAction('contact');
+        $this->assertStatusCode(200);
+    }
 }
