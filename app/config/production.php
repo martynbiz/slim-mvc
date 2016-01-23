@@ -8,6 +8,7 @@ return [
         ],
     ],
     'mongo' => [
+        'db' => 'wordup',
         // 'username' => 'myuser',
         // 'password' => 'mypass',
     ],

@@ -1,57 +1,43 @@
 {% extends "admin.html" %}
 
-{% block title %}Edit article{% endblock %}
+{% block title %}Edit user{% endblock %}
 
 {% block body %}
 <ol class="breadcrumb">
     <li><a href="/admin">Admin</a></li>
-    <li><a href="/admin/articles">Articles</a></li>
-    <!-- li><a href="/admin/articles/{{ article.id }}">{{ article.title|e }}</a></li-->
-    <li class="active">Draft</li>
+    <li><a href="/admin/users">Users</a></li>
+    <li class="active">Edit user</li>
 </ol>
 
-<form method="post" action="/admin/articles/{{ article.id }}/submit">
-    <table class="table table-striped">
-        <tr>
-            <th width="20%">Title</th>
-            <td><input type="text" name="title" value="{{ article.title }}" class="form-control"></td>
-        </tr>
-        {% if current_user.is_admin or current_user.is_editor %}
-        <tr>
-            <th width="20%">Slug</th>
-            <td>
-                <input type="text" name="slug" value="{{ article.slug }}" class="form-control">
-                <p>Leave blank to auto-generate slug from title</p>
-            </td>
-        </tr>
-        {% endif %}
-        <tr>
-            <th>Description</th>
-            <td><textarea id="description" name="description" class="form-control" rows="5">{{ article.description }}</textarea></td>
-        </tr>
-        <tr>
-            <th>File upload</th>
-            <td><div class="fallback">
-                <input name="file[]" type="file" multiple />
-                <input name="file[]" type="file" multiple />
-                <input name="file[]" type="file" multiple />
-            </div></td>
-        </tr>
-    </table>
+<form method="post" action="/admin/users/{{ user.id }}">
+    <div class="form-group">
+        <label for="first_name">First name</label>
+        <input type="text" value="{{ user.first_name }}" class="form-control" name="first_name" id="first_name" placeholder="First name">
+    </div>
+    <div class="form-group">
+        <label for="last_name">Last name</label>
+        <input type="text" value="{{ user.last_name }}" class="form-control" name="last_name" id="last_name" placeholder="Last name">
+    </div>
+    <div class="form-group">
+        <label for="role">Role</label>
+        <select name="role" id="role" class="form-control">
+            <option value="member" {% if user.role == 'member' %}selected="selected"{% endif %}>Member</option>
+            <option value="editor" {% if user.role == 'editor' %}selected="selected"{% endif %}>Editor</option>
+            <option value="admin" {% if user.role == 'admin' %}selected="selected"{% endif %}>Admin</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" class="form-control" rows="5">{{ user.description }}</textarea>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" value="{{ user.email }}" class="form-control" name="email" id="email" placeholder="Email">
+    </div>
 
     <input type="hidden" name="_METHOD" value="PUT">
 
-    <button type="submit" formaction="/admin/articles/{{ article.id }}/approve" class="btn btn-primary">Approve</button>
-    <button type="submit" class="btn btn-primary">Submit for approval</button>
-    <button type="submit" formaction="/admin/articles/{{ article.id }}" class="btn btn-default">Save draft</button>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="{{ path_for('admin_users_index') }}" class="btn btn-default">Cancel</a>
 </form>
-{% endblock %}
-
-{% block scripts %}
-<script src="//cdn.ckeditor.com/4.5.6/standard/ckeditor.js"></script>
-<script>
-    // Replace the <textarea id="editor1"> with a CKEditor
-    // instance, using default configuration.
-    CKEDITOR.replace( 'description' );
-</script>
 {% endblock %}

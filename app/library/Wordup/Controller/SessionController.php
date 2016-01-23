@@ -19,7 +19,9 @@ class SessionController extends BaseController
             $this->get('flash')->addMessage('success', 'You have successfully logged in.');
             return $this->redirect('/');
         } else {
-            $this->get('flash')->addMessage('errors', 'Invalid username/password. Please try again.');
+            $this->get('flash')->addMessage('errors', array(
+                'Invalid username/password. Please try again.'
+            ));
             return $this->forward('login');
         }
     }

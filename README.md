@@ -80,17 +80,20 @@ $ gulp watch
 ## TODO
 
 martynbiz/martynbiz
-* user management - create user, delete, edit (e.g. roles), .. int testing,
-* bug: escape html
+* encrypt password, salt
 * admin-lte template - create form: title box, content box, location box, tags
 * paginate - test limit/skip in integrated
-* psr-4, move controllers to library
+
 *
 * bootstrap - gulp
-* copy my design over
+* give nice design
 * homepage - latest
 * csrf - ask question on SO
 * gulp?
+
+test - validate role types in admin/users, setting roles,
+
+bug: flash message not persisting across redirect?
 
 * register - no duplicate emails, username
 
@@ -139,6 +142,7 @@ martynbiz/slim3-contoller
 * assertViewReceives
 
 martynbiz/php-mongo
+* custom getter setters getCreatedAt, setPassword
 * does save() return true or false?
 * paginate - test limit/skip in integrated
 * access properties like: $user['username'] or $user->username

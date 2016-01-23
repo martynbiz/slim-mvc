@@ -50,7 +50,13 @@ class UsersController extends BaseController
             'id' => (int) $id,
         ));
 
-        if ( $user->save( $this->getPost() ) ) {
+        $params = $this->getPost();
+
+        // for security reasons, some properties are not on the whitelist but
+        // we can directly assign them by this way
+        if (isset($params['role'])) $user->role = $params['role'];
+
+        if ( $user->save($params) ) {
             $this->get('flash')->addMessage('success', 'User saved.');
             return $this->redirect('/admin/users');
         } else {

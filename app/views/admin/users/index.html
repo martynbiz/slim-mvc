@@ -3,24 +3,31 @@
 {% block body %}
 <ol class="breadcrumb">
     <li><a href="/admin">Admin</a></li>
-    <li class="active">Articles</li>
+    <li class="active">Users</li>
 </ol>
-
-<form action="{{ path_for('admin_articles_post') }}" method="post">
-<button href="{{ path_for('admin_articles_create') }}" class="btn btn-default">New article</button>
-</form>
 
 <table class="table table-striped">
     <tr>
-        <th>Title</th>
-        <th>Type</th>
-        <th>Data created</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Role</th>
+        <th>Email</th>
+        <th>Created</th>
+        <th>&nbsp;</th>
     </tr>
-    {% for article in articles %}
+    {% for user in users %}
     <tr>
-        <td><a href="/admin/articles/{{ article.id }}">{{ article.title|e }}</a></td>
-        <td>{{ article.type|e }}</td>
-        <td>{{ article.created_at|e }}</td>
+        <td>{{ user.first_name }}</td>
+        <td>{{ user.last_name }}</td>
+        <td>{{ user.role }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.created_at }}</td>
+        <td width="10%" class="text-right">
+            <form method="POST" action="{{ path_for('admin_users_delete', { 'id': user.id }) }}">
+                <a href="{{ path_for('admin_users_edit', { 'id': user.id }) }}"><i class="glyphicon glyphicon-edit"></i></a>
+                <a href="#"><i class="glyphicon glyphicon-trash"></i></a>
+            </form>
+        </td>
     </tr>
     {% endfor %}
 </table>
