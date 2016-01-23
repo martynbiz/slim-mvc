@@ -1,6 +1,7 @@
 <?php
+namespace Tests\Controllers;
 
-class IndexControllerTest extends TestCase
+class IndexControllerTest extends \TestCase
 {
     public function testIndexRoute()
     {

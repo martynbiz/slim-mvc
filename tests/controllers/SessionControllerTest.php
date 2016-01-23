@@ -1,9 +1,10 @@
 <?php
+namespace Tests\Controllers;
 
 // use Zend\Authentication\Result;
 // use Wordup\Model\User;
 
-class SessionControllerTest extends TestCase
+class SessionControllerTest extends \TestCase
 {
     public function testLoginAction()
     {

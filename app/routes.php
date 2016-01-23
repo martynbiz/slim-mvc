@@ -47,7 +47,6 @@ $app->group('/admin', function () use ($app) {
     $app->group('/articles', function () use ($app) {
 
         $controller = new Wordup\Controller\Admin\ArticlesController($app);
-        $container = $app->getContainer();
 
         $app->get('', $controller('index'))->setName('admin_articles_index');
         $app->get('/{id:[0-9]+}', $controller('show'))->setName('admin_articles_show');
@@ -56,8 +55,21 @@ $app->group('/admin', function () use ($app) {
 
         $app->post('', $controller('post'))->setName('admin_articles_post');
         $app->put('/{id:[0-9]+}', $controller('update'))->setName('admin_articles_update');
+        $app->delete('/{id:[0-9]+}', $controller('delete'))->setName('admin_articles_delete');
+
         $app->put('/{id:[0-9]+}/submit', $controller('submit'))->setName('admin_articles_submit');
         $app->put('/{id:[0-9]+}/approve', $controller('approve'))->setName('admin_articles_approve');
-        $app->delete('/{id:[0-9]+}', $controller('delete'))->setName('admin_articles_delete');
+    });
+
+    // admin/users routes
+    $app->group('/users', function () use ($app) {
+
+        $controller = new Wordup\Controller\Admin\UsersController($app);
+
+        $app->get('', $controller('index'))->setName('admin_users_index');
+        $app->get('/{id:[0-9]+}/edit', $controller('edit'))->setName('admin_users_edit');
+
+        $app->put('/{id:[0-9]+}', $controller('update'))->setName('admin_users_update');
+        $app->delete('/{id:[0-9]+}', $controller('delete'))->setName('admin_users_delete');
     });
 })->add( new \Wordup\Middleware\Auth( $container['auth'] ) );

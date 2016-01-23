@@ -80,7 +80,6 @@ $ gulp watch
 ## TODO
 
 martynbiz/martynbiz
-* martynbiz/wordup -- core stuff
 * user management - create user, delete, edit (e.g. roles), .. int testing,
 * bug: escape html
 * admin-lte template - create form: title box, content box, location box, tags

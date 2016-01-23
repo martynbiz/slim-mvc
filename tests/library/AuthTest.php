@@ -1,4 +1,5 @@
 <?php
+namespace Tests\Library;
 
 use Wordup\Auth\Auth;
 use Wordup\Auth\AuthInterface;
@@ -7,7 +8,7 @@ use Zend\Authentication\Result;
 
 use Wordup\Model\User;
 
-class AuthTest extends PHPUnit_Framework_TestCase
+class AuthTest extends \PHPUnit_Framework_TestCase
 {
     protected $auth;
 

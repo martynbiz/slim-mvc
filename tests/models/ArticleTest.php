@@ -1,8 +1,9 @@
 <?php
+namespace Tests\Models;
 
 use Wordup\Model\Article;
 
-class ArticleTest extends PHPUnit_Framework_TestCase
+class ArticleTest extends \PHPUnit_Framework_TestCase
 {
     public function testInstantiation()
     {

@@ -1,8 +1,9 @@
 <?php
+namespace Tests\Controllers;
 
 use Wordup\Model\User;
 
-class UsersControllerTest extends TestCase
+class UsersControllerTest extends \TestCase
 {
     public function testCreateAction()
     {

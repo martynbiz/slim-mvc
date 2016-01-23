@@ -1,8 +1,9 @@
 <?php
+namespace Tests\Controllers\Admin;
 
 use Wordup\Model\Article;
 
-class ArticlesControllerTest extends TestCase
+class ArticlesControllerTest extends \TestCase
 {
 
     // ======================================
