@@ -80,7 +80,6 @@ $ gulp watch
 ## TODO
 
 martynbiz/martynbiz
-* re-write controller tests - without mocking models etc
 * martynbiz/wordup -- core stuff
 * user management - create user, delete, edit (e.g. roles), .. int testing,
 * bug: escape html

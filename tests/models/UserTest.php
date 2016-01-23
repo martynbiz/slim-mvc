@@ -1,7 +1,7 @@
 <?php
 
-use App\Model\User;
-use App\Model\Article; // used for testing permission methods (e.g. canView)
+use Wordup\Model\User;
+use Wordup\Model\Article; // used for testing permission methods (e.g. canView)
 
 class UserTest extends PHPUnit_Framework_TestCase
 {

@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller;
+namespace Wordup\Controller;
 
 class SessionController extends BaseController
 {

@@ -1,8 +1,6 @@
 <?php
 
-// use App\Test\PHPUnit\TestCase;
-
-use App\Model\User;
+use Wordup\Model\User;
 
 class UsersControllerTest extends TestCase
 {

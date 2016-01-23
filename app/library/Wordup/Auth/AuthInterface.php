@@ -1,5 +1,5 @@
 <?php
-namespace App\Auth;
+namespace Wordup\Auth;
 
 interface AuthInterface
 {

@@ -2,8 +2,8 @@
 
 use MartynBiz\Mongo\Connection;
 //
-use App\Model\User;
-use App\Model\Article;
+use Wordup\Model\User;
+use Wordup\Model\Article;
 
 abstract class TestCase extends \MartynBiz\Slim3Controller\Test\PHPUnit\TestCase
 {
@@ -32,7 +32,7 @@ abstract class TestCase extends \MartynBiz\Slim3Controller\Test\PHPUnit\TestCase
         // mocks before they are loaded
 
         //  auth service
-        $authMock = $this->getMockBuilder('App\\Auth\\Auth')
+        $authMock = $this->getMockBuilder('Wordup\\Auth\\Auth')
             ->disableOriginalConstructor()
             ->getMock();
         $this->container['auth'] = $authMock;
@@ -136,7 +136,7 @@ abstract class TestCase extends \MartynBiz\Slim3Controller\Test\PHPUnit\TestCase
      */
     public function generateArticleStub()
     {
-        return $this->getMockBuilder('App\Model\Article')
+        return $this->getMockBuilder('Wordup\Model\Article')
                     ->disableOriginalConstructor()
                     ->getMock();
     }
@@ -147,7 +147,7 @@ abstract class TestCase extends \MartynBiz\Slim3Controller\Test\PHPUnit\TestCase
      */
     public function generateUserStub()
     {
-        return $this->getMockBuilder('App\Model\User')
+        return $this->getMockBuilder('Wordup\Model\User')
                     ->disableOriginalConstructor()
                     ->getMock();
     }

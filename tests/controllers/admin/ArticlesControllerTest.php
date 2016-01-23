@@ -1,6 +1,6 @@
 <?php
 
-use App\Model\Article;
+use Wordup\Model\Article;
 
 class ArticlesControllerTest extends TestCase
 {
@@ -122,7 +122,7 @@ class ArticlesControllerTest extends TestCase
     }
 
     /**
-     * @expectedException App\Exception\PermissionDenied
+     * @expectedException Wordup\Exception\PermissionDenied
      */
     public function testShowActionWhenLoggedInAsRandomUserThrowsException()
     {
@@ -184,7 +184,7 @@ class ArticlesControllerTest extends TestCase
     }
 
     /**
-     * @expectedException App\Exception\PermissionDenied
+     * @expectedException Wordup\Exception\PermissionDenied
      */
     public function testEditActionWhenLoggedInAsRandomUserThrowsException()
     {
@@ -246,7 +246,7 @@ class ArticlesControllerTest extends TestCase
     }
 
     /**
-     * @expectedException App\Exception\PermissionDenied
+     * @expectedException Wordup\Exception\PermissionDenied
      */
     public function testUpdateActionRedirectsToEditWhenLoggedInAsRandom()
     {
@@ -308,7 +308,7 @@ class ArticlesControllerTest extends TestCase
     }
 
     /**
-     * @expectedException App\Exception\PermissionDenied
+     * @expectedException Wordup\Exception\PermissionDenied
      */
     public function testDeleteActionWhenLoggedInAsRandomUserThrowsException()
     {
@@ -370,7 +370,7 @@ class ArticlesControllerTest extends TestCase
     }
 
     /**
-     * @expectedException App\Exception\PermissionDenied
+     * @expectedException Wordup\Exception\PermissionDenied
      */
     public function testSubmitActionWhenLoggedInAsRandomUserThrowsException()
     {
@@ -432,7 +432,7 @@ class ArticlesControllerTest extends TestCase
     }
 
     /**
-     * @expectedException App\Exception\PermissionDenied
+     * @expectedException Wordup\Exception\PermissionDenied
      */
     public function testApproveActionWhenLoggedInAsRandomUserThrowsException()
     {

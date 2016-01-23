@@ -21,15 +21,15 @@ $settings = [
     'mongo' => [
         'db' => 'crsrc',
         'classmap' => [
-            'articles' => '\\App\\Model\\Article',
-            'users' => '\\App\\Model\\User',
+            'articles' => '\\Wordup\\Model\\Article',
+            'users' => '\\Wordup\\Model\\User',
         ]
     ],
     'mongo_testing' => [
         'db' => 'crsrc_testing',
         'classmap' => [
-            'articles' => '\\App\\Model\\Article',
-            'users' => '\\App\\Model\\User',
+            'articles' => '\\Wordup\\Model\\Article',
+            'users' => '\\Wordup\\Model\\User',
         ]
     ],
 ];

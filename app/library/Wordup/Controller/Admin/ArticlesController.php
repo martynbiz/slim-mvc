@@ -1,9 +1,9 @@
 <?php
-namespace App\Controller\Admin;
+namespace Wordup\Controller\Admin;
 
-use App\Controller\BaseController;
-use App\Model\Article;
-use App\Exception\PermissionDenied;
+use Wordup\Controller\BaseController;
+use Wordup\Model\Article;
+use Wordup\Exception\PermissionDenied;
 
 class ArticlesController extends BaseController
 {
@@ -47,30 +47,18 @@ class ArticlesController extends BaseController
     public function post()
     {
         $currentUser = $this->get('auth')->getCurrentUser();
-
         $article = $this->get('model.article')->factory();
 
-        // for security reasons, status isn't on the whitelist for mass assignment
-        // but we can set it via property assignment.
-        $article->set('status', Article::STATUS_DRAFT);
-
-        // for security reasons, type isn't on the whitelist for mass assignment
-        // but we can set it via property assignment.
-        // TODO handle more types than ARTICLE
-        $article->set('type', Article::TYPE_ARTICLE);
-
-        // for security reasons, type isn't on the whitelist for mass assignment
-        // but we can set it via property assignment.
-        // TODO handle more types that ARTICLE
-        $article->set('author', $currentUser->getDBRef());
+        // for security reasons, some properties are not on the whitelist but
+        // we can directly assign them by this way
+        $article->status = Article::STATUS_DRAFT;
+        $article->type = Article::TYPE_ARTICLE;
+        $article->author = $currentUser->getDBRef();
 
         // if the article saves ok, redirect them to the edit page where they can
         // begin to edit their draft. any errors, forward them back to the index
-        // (where they came from)
         if ( $article->save() ) {
-
-            // using get('id') here so we can mock $article during testing
-            return $this->redirect('/admin/articles/' . $article->get('id') . '/edit');
+            return $this->redirect('/admin/articles/' . $article->id . '/edit');
         } else {
             $this->get('flash')->addMessage('errors', $article->getErrors());
             return $this->forward('index');
@@ -117,16 +105,10 @@ class ArticlesController extends BaseController
         }
 
         if ( $article->save( $this->getPost() ) ) {
-
             $this->get('flash')->addMessage('success', 'Draft article saved. Click "submit" when ready to publish.');
-
-            // redirect
             return $this->redirect('/admin/articles/' . $id . '/edit');
         } else {
-
             $this->get('flash')->addMessage('errors', $article->getErrors());
-
-            // forward
             return $this->forward('edit', array(
                 'id' => $id,
             ));
@@ -158,17 +140,10 @@ class ArticlesController extends BaseController
         $article->set('status', Article::STATUS_SUBMITTED);
 
         if ( $article->save( $this->getPost() ) ) {
-
             $this->get('flash')->addMessage('success', 'Article has been submitted and will be reviewed by an editor shortly.');
-
-            // redirect
             return $this->redirect('/admin/articles/' . $id);
-
         } else {
-
             $this->get('flash')->addMessage('errors', $article->getErrors());
-
-            // forward
             return $this->forward('edit', array(
                 'id' => $id,
             ));
@@ -197,17 +172,10 @@ class ArticlesController extends BaseController
         $article->set('status', Article::STATUS_APPROVED);
 
         if ( $article->save( $this->getPost() ) ) {
-
             $this->get('flash')->addMessage('success', 'Article has been approved.');
-
-            // redirect
             return $this->redirect('/admin/articles/' . $id);
-
         } else {
-
             $this->get('flash')->addMessage('errors', $article->getErrors());
-
-            // forward
             return $this->forward('edit', array(
                 'id' => $id,
             ));

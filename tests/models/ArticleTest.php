@@ -1,6 +1,6 @@
 <?php
 
-use App\Model\Article;
+use Wordup\Model\Article;
 
 class ArticleTest extends PHPUnit_Framework_TestCase
 {

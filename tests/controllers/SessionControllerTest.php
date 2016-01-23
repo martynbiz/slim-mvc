@@ -1,7 +1,7 @@
 <?php
 
 // use Zend\Authentication\Result;
-// use App\Model\User;
+// use Wordup\Model\User;
 
 class SessionControllerTest extends TestCase
 {

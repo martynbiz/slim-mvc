@@ -1,10 +1,10 @@
 <?php
-namespace App\Auth\Adapter;
+namespace Wordup\Auth\Adapter;
 
 use Zend\Authentication\Adapter\AdapterInterface;
 use Zend\Authentication\Result;
 
-use App\Model\User;
+use Wordup\Model\User;
 
 class Mongo implements AdapterInterface
 {
@@ -19,7 +19,7 @@ class Mongo implements AdapterInterface
     protected $password;
 
     /**
-     * @var App\Model\User
+     * @var Wordup\Model\User
      */
     protected $model;
 

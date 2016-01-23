@@ -6,7 +6,7 @@ $container = $app->getContainer();
 // index routes (homepage, about, etc)
 $app->group('', function () use ($app) {
 
-    $controller = new App\Controller\IndexController($app);
+    $controller = new Wordup\Controller\IndexController($app);
 
     $app->get('/', $controller('index'))->setName('index');
     $app->get('/contact', $controller('contact'))->setName('contact');
@@ -15,7 +15,7 @@ $app->group('', function () use ($app) {
 // index routes (homepage, about, etc)
 $app->group('/session', function () use ($app) {
 
-    $controller = new App\Controller\SessionController($app);
+    $controller = new Wordup\Controller\SessionController($app);
 
     $app->get('/login', $controller('login'))->setName('session_login');
     $app->post('', $controller('post'))->setName('session_post');
@@ -25,7 +25,7 @@ $app->group('/session', function () use ($app) {
 // create resource method for Slim::resource($route, $name)
 $app->group('/articles', function () use ($app) {
 
-    $controller = new App\Controller\ArticlesController($app);
+    $controller = new Wordup\Controller\ArticlesController($app);
 
     $app->get('/{id:[0-9]+}', $controller('show'))->setName('articles_show');
     $app->get('/{id:[0-9]+}/{slug}', $controller('show'))->setName('articles_show_wslug');
@@ -34,7 +34,7 @@ $app->group('/articles', function () use ($app) {
 // users routes (eg. register)
 $app->group('/users', function () use ($app) {
 
-    $controller = new App\Controller\UsersController($app);
+    $controller = new Wordup\Controller\UsersController($app);
 
     $app->get('/create', $controller('create'))->setName('users_create');
     $app->post('', $controller('post'))->setName('users_post');
@@ -46,7 +46,7 @@ $app->group('/admin', function () use ($app) {
     // admin/articles routes
     $app->group('/articles', function () use ($app) {
 
-        $controller = new App\Controller\Admin\ArticlesController($app);
+        $controller = new Wordup\Controller\Admin\ArticlesController($app);
         $container = $app->getContainer();
 
         $app->get('', $controller('index'))->setName('admin_articles_index');
@@ -60,4 +60,4 @@ $app->group('/admin', function () use ($app) {
         $app->put('/{id:[0-9]+}/approve', $controller('approve'))->setName('admin_articles_approve');
         $app->delete('/{id:[0-9]+}', $controller('delete'))->setName('admin_articles_delete');
     });
-})->add( new \App\Middleware\Auth( $container['auth'] ) );
+})->add( new \Wordup\Middleware\Auth( $container['auth'] ) );

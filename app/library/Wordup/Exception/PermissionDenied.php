@@ -1,5 +1,5 @@
 <?php
-namespace App\Exception;
+namespace Wordup\Exception;
 
 class PermissionDenied extends \Exception
 {

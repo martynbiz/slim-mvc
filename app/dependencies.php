@@ -57,7 +57,7 @@ $container['auth'] = function ($c) {
 
     // create an instance of our AuthInterface implemented class
     // pass in our User model for getCurrentUser method
-    return new \App\Auth\Auth($authService, $c['model.user']);
+    return new \Wordup\Auth\Auth($authService, $c['model.user']);
 };
 
 $container['flash'] = function ($c) {
@@ -81,9 +81,9 @@ $container['cache'] = function ($c) {
 // Models
 
 $container['model.article'] = function ($c) {
-    return new \App\Model\Article();
+    return new \Wordup\Model\Article();
 };
 
 $container['model.user'] = function ($c) {
-    return new \App\Model\User();
+    return new \Wordup\Model\User();
 };

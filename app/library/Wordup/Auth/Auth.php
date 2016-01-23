@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Auth;
+namespace Wordup\Auth;
 
 /**
  * This is a abstract layer between the third-party means we choose to authenticate
@@ -8,9 +8,9 @@ namespace App\Auth;
  */
 
 use Zend\Authentication\Result;
-use App\Auth\Adapter\Mongo as AuthAdapter;
+use Wordup\Auth\Adapter\Mongo as AuthAdapter;
 
-use App\Model\User;
+use Wordup\Model\User;
 
 class Auth implements AuthInterface
 {

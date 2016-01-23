@@ -1,11 +1,11 @@
 <?php
 
-use App\Auth\Auth;
-use App\Auth\AuthInterface;
+use Wordup\Auth\Auth;
+use Wordup\Auth\AuthInterface;
 
 use Zend\Authentication\Result;
 
-use App\Model\User;
+use Wordup\Model\User;
 
 class AuthTest extends PHPUnit_Framework_TestCase
 {
@@ -23,7 +23,7 @@ class AuthTest extends PHPUnit_Framework_TestCase
             ->getMock();
 
         // mock user model
-        $this->userModelMock = $this->getMockBuilder('App\\Model\\User')
+        $this->userModelMock = $this->getMockBuilder('Wordup\\Model\\User')
             ->disableOriginalConstructor()
             ->getMock();
 

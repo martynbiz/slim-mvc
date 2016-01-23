@@ -1,12 +1,12 @@
 <?php
-namespace App\Middleware;
+namespace Wordup\Middleware;
 
-use App\Auth\AuthInterface;
+use Wordup\Auth\AuthInterface;
 
 class Auth
 {
     /**
-     * @var App\Auth\Auth
+     * @var Wordup\Auth\Auth
      */
     protected $auth;
 

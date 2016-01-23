@@ -1,7 +1,7 @@
 <?php
-namespace App\Controller;
+namespace Wordup\Controller;
 
-use App\Model\User;
+use Wordup\Model\User;
 
 class UsersController extends BaseController
 {
