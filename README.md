@@ -80,7 +80,7 @@ $ gulp watch
 ## TODO
 
 martynbiz/martynbiz
-* branch heavy mock controller tests,
+* re-write controller tests - without mocking models etc
 * martynbiz/wordup -- core stuff
 * user management - create user, delete, edit (e.g. roles), .. int testing,
 * bug: escape html
@@ -94,6 +94,7 @@ martynbiz/martynbiz
 * csrf - ask question on SO
 * gulp?
 
+* register - no duplicate emails, username
 
 buy wordup.com
 

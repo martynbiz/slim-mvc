@@ -19,4 +19,7 @@ if (PHP_SAPI == 'cli-server') {
 
 require APPLICATION_PATH . '/../vendor/autoload.php';
 
+// include our TestCase for all tests
+require 'TestCase.php';
+
 session_start();

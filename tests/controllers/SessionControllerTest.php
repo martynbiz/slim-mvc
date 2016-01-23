@@ -1,11 +1,9 @@
 <?php
 
-use App\Test\PHPUnit\TestCase;
+// use Zend\Authentication\Result;
+// use App\Model\User;
 
-use Zend\Authentication\Result;
-use App\Model\User;
-
-class SessionControllerTests extends TestCase
+class SessionControllerTest extends TestCase
 {
     public function testLoginAction()
     {

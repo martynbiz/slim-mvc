@@ -3,6 +3,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\BaseController;
 use App\Model\Article;
+use App\Exception\PermissionDenied;
 
 class ArticlesController extends BaseController
 {
@@ -29,7 +30,7 @@ class ArticlesController extends BaseController
 
         // ensure that this user can edit this article
         if (! $currentUser->canView($article) ) {
-            throw new \Exception('Permission denied to current user to view this article.');
+            throw new PermissionDenied('Permission denied to current user to view this article.');
         }
 
         return $this->render('admin/articles/show.html', array(
@@ -89,7 +90,7 @@ class ArticlesController extends BaseController
 
         // ensure that this user can edit this article
         if (! $currentUser->canEdit($article) ) {
-            throw new \Exception('Permission denied to current user to edit this article.');
+            throw new PermissionDenied('Permission denied to current user to edit this article.');
         }
 
         return $this->render('admin/articles/edit.html', array(
@@ -112,7 +113,7 @@ class ArticlesController extends BaseController
 
         // ensure that this user can edit this article
         if (! $currentUser->canEdit($article) ) {
-            throw new \Exception('Permission denied to current user to edit this article.');
+            throw new PermissionDenied('Permission denied to current user to edit this article.');
         }
 
         if ( $article->save( $this->getPost() ) ) {
@@ -148,7 +149,7 @@ class ArticlesController extends BaseController
 
         // only top brass can approve
         if (! $currentUser->canSubmit($article) ) {
-            throw new \Exception('Permission denied to current user to submit this article.');
+            throw new PermissionDenied('Permission denied to current user to submit this article.');
         }
 
         // set the status of the article to approved, if there are any problems
@@ -187,7 +188,7 @@ class ArticlesController extends BaseController
 
         // only top brass can approve
         if (! $currentUser->canApprove($article) ) {
-            throw new \Exception('Permission denied to current user to approve this article.');
+            throw new PermissionDenied('Permission denied to current user to approve this article.');
         }
 
         // set the status of the article to approved, if there are any problems
@@ -223,12 +224,12 @@ class ArticlesController extends BaseController
 
         // only top brass can delete
         if (! $currentUser->canDelete($article) ) {
-            throw new \Exception('Permission denied to current user to delete this article.');
+            throw new PermissionDenied('Permission denied to current user to delete this article.');
         }
 
         if ( $article->delete() ) {
             $this->get('flash')->addMessage('success', 'Article deleted successfully');
-            return $this->redirect('/admin/articles/' . $id);
+            return $this->redirect('/admin/articles');
         } else {
             $this->get('flash')->addMessage('errors', $article->getErrors());
             return $this->edit($id);

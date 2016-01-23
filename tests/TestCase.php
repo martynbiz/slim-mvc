@@ -1,10 +1,7 @@
 <?php
 
-namespace App\Test\PHPUnit;
-
 use MartynBiz\Mongo\Connection;
-use Zend\Authentication\Result;
-
+//
 use App\Model\User;
 use App\Model\Article;
 
@@ -34,16 +31,11 @@ abstract class TestCase extends \MartynBiz\Slim3Controller\Test\PHPUnit\TestCase
         // In some cases, where services have become "frozen", we need to define
         // mocks before they are loaded
 
-
         //  auth service
         $authMock = $this->getMockBuilder('App\\Auth\\Auth')
             ->disableOriginalConstructor()
             ->getMock();
         $this->container['auth'] = $authMock;
-
-        // models
-        $this->container['model.article'] = $this->generateArticleStub();
-        $this->container['model.user'] = $this->generateUserStub();
 
 
         // =========================
@@ -58,33 +50,64 @@ abstract class TestCase extends \MartynBiz\Slim3Controller\Test\PHPUnit\TestCase
         $this->app = $app;
 
 
-        // // =========================
-        // // Init mongo
-        //
-        // Connection::getInstance()->init($settings['mongo_testing']);
+        // =========================
+        // Init mongo
+
+        Connection::getInstance()->init($settings['mongo_testing']);
 
 
-        // // =========================
-        // // create fixtures
-        //
-        // $this->user = new User( array(
-        //     'first_name' => 'Martyn',
-        //     'last_name' => 'Bissett',
-        //     'email' => 'martyn@example.com',
-        //     'password' => 'mypass',
-        // ) );
-        //
-        // $this->user->save();
-        //
-        // $this->article = new Article( array(
-        //     'title' => 'A long time ago in a galaxy far far away...',
-        //     'description' => '...',
-        //     'author' => $this->user->getDBRef(),
-        // ) );
-        //
-        // $this->article->save();
+        // =========================
+        // create fixtures
 
-        // $this->container['auth'] = $authMock;
+        $this->adminUser = new User( array(
+            'first_name' => 'Martyn',
+            'last_name' => 'Bissett',
+            'email' => 'martyn@example.com',
+            'password' => 'mypass',
+        ) );
+        $this->adminUser->role = User::ROLE_ADMIN;
+        $this->adminUser->save();
+
+        $this->editorUser = new User( array(
+            'first_name' => 'Neil',
+            'last_name' => 'McInness',
+            'email' => 'neil@example.com',
+            'password' => 'mypass',
+        ) );
+        $this->editorUser->role = User::ROLE_EDITOR;
+        $this->editorUser->save();
+
+        $this->ownerUser = new User( array(
+            'first_name' => 'Louise',
+            'last_name' => 'McInness',
+            'email' => 'louise@example.com',
+            'password' => 'mypass',
+        ) );
+        $this->ownerUser->role = User::ROLE_MEMBER;
+        $this->ownerUser->save();
+
+        $this->randomUser = new User( array(
+            'first_name' => 'Moses',
+            'last_name' => 'Cat',
+            'email' => 'moses@example.com',
+            'password' => 'mypass',
+        ) );
+        $this->randomUser->role = User::ROLE_MEMBER;
+        $this->randomUser->save();
+
+        $this->article = new Article( array(
+            'title' => 'A long time ago in a galaxy far far away...',
+            'description' => '...',
+        ) );
+        $this->article->author = $this->ownerUser;
+        $this->article->save();
+    }
+
+    public function tearDown()
+    {
+        // clear fixtures
+        User::remove();
+        Article::remove();
     }
 
     public function login($user)

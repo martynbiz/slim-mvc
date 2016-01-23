@@ -1,5 +1,5 @@
 <?php
-
+/*
 abstract class Model
 {
     //...
@@ -51,4 +51,4 @@ class ExampleTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($user, $example->create());
     }
-}
+}*/

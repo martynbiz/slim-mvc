@@ -1,15 +1,19 @@
 <?php
 
-use App\Test\PHPUnit\TestCase;
+// use App\Test\PHPUnit\TestCase;
 
 use App\Model\User;
 
-class UsersControllerTests extends TestCase
+class UsersControllerTest extends TestCase
 {
     public function testCreateAction()
     {
+        // =================================
+        // dispatch
+
         $this->get('/users/create');
 
+        // =================================
         // assertions
 
         $this->assertController('users');
@@ -17,26 +21,12 @@ class UsersControllerTests extends TestCase
         $this->assertStatusCode(200);
     }
 
-    public function testPostActionRedirectsToHomeWhenCreateSuccess()
+    public function testPostActionRedirectsToHomeWithValidParams()
     {
-        $user = $this->generateUserStub();
-
-
-        // =================================
-        // mock method stack, in order
-
-        // Configure the stub.
-        $this->container['model.user']
-            ->expects( $this->once() )
-            ->method('create')
-            ->with( $this->getUserData() )
-            ->willReturn($user); // <--------- success
-
-
         // =================================
         // dispatch
 
-        $this->post('/users', $this->getUserData() );
+        $this->post('/users', $this->getPostData() );
 
 
         // =================================
@@ -47,23 +37,15 @@ class UsersControllerTests extends TestCase
         $this->assertRedirectsTo('/');
     }
 
-    public function testPostActionForwardsToCreateWhenCreateFails()
+    /**
+     * @dataProvider getInvalidPostData
+     */
+    public function testPostActionForwardsToCreateWithInvalidParams($params)
     {
-        // =================================
-        // mock method stack, in order
-
-        // Configure the stub.
-        $this->container['model.user']
-            ->expects( $this->once() )
-            ->method('create')
-            ->with( $this->getUserData() )
-            ->willReturn(false); // <--------- failed
-
-
         // =================================
         // dispatch
 
-        $this->post('/users', $this->getUserData() );
+        $this->post('/users', $params);
 
 
         // =================================
@@ -73,7 +55,7 @@ class UsersControllerTests extends TestCase
         $this->assertAction('create');
     }
 
-    public function getUserData($data=array())
+    public function getPostData($data=array())
     {
         return array_merge( array(
             'first_name' => 'Martyn',
@@ -81,5 +63,51 @@ class UsersControllerTests extends TestCase
             'email' => 'martyn@example.com',
             'password' => 'mypass',
         ), $data );
+    }
+
+    public function getInvalidPostData()
+    {
+        return array(
+            array(
+                array(
+                    // 'first_name' => 'Martyn',
+                    'last_name' => 'Bissett',
+                    'email' => 'martyn@example.com',
+                    'password' => 'mypass',
+                ),
+            ),
+            array(
+                array(
+                    'first_name' => 'Martyn',
+                    // 'last_name' => 'Bissett',
+                    'email' => 'martyn@example.com',
+                    'password' => 'mypass',
+                ),
+            ),
+            array(
+                array(
+                    'first_name' => 'Martyn',
+                    'last_name' => 'Bissett',
+                    // 'email' => 'martyn@example.com',
+                    'password' => 'mypass',
+                ),
+            ),
+            array(
+                array(
+                    'first_name' => 'Martyn',
+                    'last_name' => 'Bissett',
+                    'email' => 'martyn@example.com',
+                    // 'password' => 'mypass',
+                ),
+            ),
+            array(
+                array(
+                    'first_name' => 'Martyn',
+                    'last_name' => 'Bissett',
+                    'email' => 'martyn@example', // invalid email
+                    'password' => 'mypass',
+                ),
+            ),
+        );
     }
 }

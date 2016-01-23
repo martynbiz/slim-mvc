@@ -1,10 +1,8 @@
 <?php
 
-use MartynBiz\Mongo\MongoIterator;
-
 use App\Model\Article;
 
-class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
+class ArticlesControllerTest extends TestCase
 {
 
     // ======================================
@@ -64,552 +62,407 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
 
     public function testIndexActionWhenAuthenticatedReturns200()
     {
-        // login the user
-        $this->login( $this->generateUserStub() );
+        $currentUser = $this->ownerUser;
+        $this->login($currentUser);
 
-        // =================================
-        // mock method stack, in order
-
-        $this->container['model.article']
-            ->expects( $this->once() )
-            ->method('find')
-            ->willReturn( new MongoIterator() ); // empty is fine
-
-        // =================================
         // dispatch
-
         $this->get('/admin/articles');
 
-        // =================================
         // assertions
-
         $this->assertController('articles');
         $this->assertAction('index');
         $this->assertStatusCode(200);
     }
 
-    public function testShowActionWhenAuthenticatedReturns200()
+
+    // test permissions (e.g. can view article)
+
+    // show
+
+    public function testShowActionWhenLoggedInAsAdminUserShowsArticle()
     {
-        // login the user
-        $this->login( $this->generateUserStub() );
+        $currentUser = $this->adminUser;
+        $this->login($currentUser);
 
-        // =================================
-        // mock method stack, in order
-
-        $this->container['model.article']
-            ->expects( $this->once() )
-            ->method('findOneOrFail')
-            ->willReturn( $this->generateArticleStub() ); // empty is fine
-
-        // =================================
         // dispatch
+        $this->get('/admin/articles/' . $this->article->id);
 
-        $this->get('/admin/articles/1');
-
-        // =================================
         // assertions
+        $this->assertController('articles');
+        $this->assertAction('show');
+        $this->assertStatusCode(200);
+    }
 
+    public function testShowActionWhenLoggedInAsEditorUserShowsArticle()
+    {
+        $currentUser = $this->editorUser;
+        $this->login($currentUser);
+
+        // dispatch
+        $this->get('/admin/articles/' . $this->article->id);
+
+        // assertions
+        $this->assertController('articles');
+        $this->assertAction('show');
+        $this->assertStatusCode(200);
+    }
+
+    public function testShowActionWhenLoggedInAsOwnerUserShowsArticle()
+    {
+        $currentUser = $this->ownerUser;
+        $this->login($currentUser);
+
+        // dispatch
+        $this->get('/admin/articles/' . $this->article->id);
+
+        // assertions
+        $this->assertController('articles');
+        $this->assertAction('show');
+        $this->assertStatusCode(200);
+    }
+
+    /**
+     * @expectedException App\Exception\PermissionDenied
+     */
+    public function testShowActionWhenLoggedInAsRandomUserThrowsException()
+    {
+        $currentUser = $this->randomUser;
+        $this->login($currentUser);
+
+        // dispatch
+        $this->get('/admin/articles/' . $this->article->id);
+
+        // assertions
         $this->assertController('articles');
         $this->assertAction('show');
         $this->assertStatusCode(200);
     }
 
 
-    // post
+    // edit
 
-    public function testPostCreateArticleRedirectsToEditWhenSaveSuccess()
+    public function testEditActionWhenLoggedInAsAdminUserShowsArticle()
     {
-        // we need to mock $article here because it will call it's save() and
-        // then store in the database.. we'd rather not hit the db where possible
-        $article = $this->generateArticleStub();
-        $user = $this->generateUserStub();
+        $currentUser = $this->adminUser;
+        $this->login($currentUser);
 
-        // login the user
-        $this->login($user);
-
-        // =================================
-        // mock method stack, in order
-
-        // Configure the stub.
-        $this->container['model.article']
-            ->expects( $this->once() )
-            ->method('factory')
-            ->willReturn($article); // empty is fine
-
-        // Ensure that new articles are initiated as DRAFT articles
-        $article
-            ->expects( $this->at(0) )
-            ->method('set')
-            ->with('status', Article::STATUS_DRAFT);
-
-        // Ensure that new articles are initiated with type
-        $article
-            ->expects( $this->at(1) )
-            ->method('set')
-            ->with('type', Article::TYPE_ARTICLE);
-
-        // Ensure that new articles are initiated with type
-        $article
-            ->expects( $this->at(2) )
-            ->method('set')
-            ->with('author', '__dbRef__');
-
-        $user
-            ->method('getDBRef')
-            ->willReturn('__dbRef__');
-
-        // Mock the response from save of $article
-        $article
-            ->expects( $this->once() )
-            ->method('save')
-            ->with()
-            ->willReturn(true); // <------ success
-
-        // Mock the response from save of $article
-        $article
-            ->method('get')
-            ->with('id')
-            ->willReturn(99);
-
-
-        // =================================
         // dispatch
+        $this->get('/admin/articles/' . $this->article->id . '/edit');
 
-        $this->post('/admin/articles?type=' . Article::TYPE_ARTICLE);
-
-
-        // =================================
         // assertions
-
-        $this->assertController('articles');
-        $this->assertAction('post');
-        $this->assertRedirectsTo('/admin/articles/99/edit');
-    }
-
-    public function testPostCreateArticleForwardsToIndexWhenSaveFails()
-    {
-        // we need to mock $article here because it will call it's save() and
-        // then store in the database.. we'd rather not hit the db where possible
-        $article = $this->generateArticleStub();
-
-        // login the user
-        $this->login( $this->generateUserStub() );
-
-        // =================================
-        // mock method stack, in order
-
-        // Configure the stub.
-        $this->container['model.article']
-            ->expects( $this->once() )
-            ->method('factory')
-            ->willReturn($article); // empty is fine
-
-        // Ensure that new articles are initiated as DRAFT articles
-        $article
-            ->expects( $this->at(0) )
-            ->method('set')
-            ->with('status', Article::STATUS_DRAFT);
-
-        // Ensure that new articles are initiated with type
-        $article
-            ->expects( $this->at(1) )
-            ->method('set')
-            ->with('type', Article::TYPE_ARTICLE);
-
-        // Mock the response from save of $article
-        $article
-            ->expects( $this->once() )
-            ->method('save')
-            ->with()
-            ->willReturn(false); // <------ failed
-
-        // getErrors will be called after the fail, return some/any array
-        $article
-            ->method('getErrors')
-            ->willReturn( array('example' => 'Bad example') );
-
-        // toArray will be called when we forward to index action
-        // we can simply return $this->getArticleData()
-        $article
-            ->method('toArray')
-            ->willReturn( $this->getArticleData() );
-
-        // This will be called when we return back to the index action
-        // an empty MongoIterator is fine for testing
-        $this->container['model.article']
-            ->expects( $this->once() )
-            ->method('find')
-            ->willReturn( new MongoIterator() );
-
-
-        // =================================
-        // dispatch
-
-        $this->post('/admin/articles?type=article');
-
-
-        // =================================
-        // assertions
-
-        $this->assertController('articles');
-        $this->assertAction('index');
-    }
-
-    public function testEditAction()
-    {
-        $article = new Article();
-        $article->id = 67;
-
-        // login the user
-        $this->login( $this->generateUserStub() );
-
-        // =================================
-        // mock method stack, in order
-
-        // Configure the stub.
-        $this->container['model.article']
-            ->expects( $this->once() )
-            ->method('findOneOrFail')
-            ->with(array(
-                'id' => $article->id,
-            ))
-            ->willReturn($article); // empty is fine
-
-        // =================================
-        // dispatch
-
-        $this->get('/admin/articles/' . $article->id . '/edit');
-
-        // =================================
-        // assertions
-
         $this->assertController('articles');
         $this->assertAction('edit');
         $this->assertStatusCode(200);
     }
 
-    public function testPutActionRedirectsToEditWhenSaveSuccess()
+    public function testEditActionWhenLoggedInAsEditorUserShowsArticle()
     {
-        // we need to mock $article here because it will call it's save() and
-        // then store in the database.. we'd rather not hit the db where possible
-        $article = $this->generateArticleStub();
+        $currentUser = $this->editorUser;
+        $this->login($currentUser);
 
-        // login the user
-        $this->login( $this->generateUserStub() );
-
-        // =================================
-        // mock method stack, in order
-
-        // Mock the model the dependency
-        $this->container['model.article']
-            ->expects( $this->once() )
-            ->method('findOneOrFail')
-            ->with(array(
-                'id' => 99,
-            ))
-            ->willReturn($article);
-
-        // Mock the response from save of $article
-        $article
-            ->expects( $this->once() )
-            ->method('save')
-            ->with( $this->getArticleData() )
-            ->willReturn(true); // <------ success
-
-
-        // =================================
         // dispatch
+        $this->get('/admin/articles/' . $this->article->id . '/edit');
 
-        $this->put('/admin/articles/99', $this->getArticleData());
-
-
-        // =================================
         // assertions
-
-        $this->assertController('articles');
-        $this->assertAction('update');
-        $this->assertRedirectsTo('/admin/articles/99/edit');
-
-        // as this is a redirect, we haven't flushed the messages yet. another
-        // thing we can test :)
-        $this->assertTrue( $this->container['flash']->has('success') );
-    }
-
-    public function testPutActionForwardsToEditWhenSaveFails()
-    {
-        // we need to mock $article here because it will call it's save() and
-        // then store in the database.. we'd rather not hit the db where possible
-        $article = $this->generateArticleStub();
-
-        // login the user
-        $this->login( $this->generateUserStub() );
-
-        // =================================
-        // mock method stack, in order
-
-        // Mock the model the dependency
-        $this->container['model.article']
-            ->expects( $this->exactly(2) ) // in update, and again in edit
-            ->method('findOneOrFail')
-            ->with(array(
-                'id' => 99,
-            ))
-            ->willReturn($article);
-
-        // Mock the response from save of $article
-        $article
-            ->expects( $this->once() )
-            ->method('save')
-            ->with( $this->getArticleData() )
-            ->willReturn(false); // <------ failed
-
-        // getErrors will be called after the fail, return some/any array
-        $article
-            ->method('getErrors')
-            ->willReturn( array('example' => 'Bad example') );
-
-        // toArray will be called when we forward to edit action
-        // we can simply return $this->getArticleData()
-        $article
-            ->method('toArray')
-            ->willReturn( $this->getArticleData() );
-
-        // =================================
-        // dispatch
-
-        $this->put('/admin/articles/99', $this->getArticleData());
-
-        // =================================
-        // assertions
-
         $this->assertController('articles');
         $this->assertAction('edit');
+        $this->assertStatusCode(200);
+    }
+
+    public function testEditActionWhenLoggedInAsOwnerUserShowsArticle()
+    {
+        $currentUser = $this->ownerUser;
+        $this->login($currentUser);
+
+        // dispatch
+        $this->get('/admin/articles/' . $this->article->id . '/edit');
+
+        // assertions
+        $this->assertController('articles');
+        $this->assertAction('edit');
+        $this->assertStatusCode(200);
+    }
+
+    /**
+     * @expectedException App\Exception\PermissionDenied
+     */
+    public function testEditActionWhenLoggedInAsRandomUserThrowsException()
+    {
+        $currentUser = $this->randomUser;
+        $this->login($currentUser);
+
+        // dispatch
+        $this->get('/admin/articles/' . $this->article->id . '/edit');
+
+        // assertions
+        $this->assertController('articles');
+        $this->assertAction('edit');
+        $this->assertStatusCode(200);
+    }
+
+
+    // update
+
+    public function testUpdateActionRedirectsToEditWhenLoggedInAsAdmin()
+    {
+        $currentUser = $this->adminUser;
+        $this->login($currentUser);
+
+        // dispatch
+        $this->put('/admin/articles/' . $this->article->id, $this->getArticleData());
+
+        // assertions
+        $this->assertController('articles');
+        $this->assertAction('update');
+        $this->assertRedirectsTo('/admin/articles/' . $this->article->id . '/edit');
+    }
+
+    public function testUpdateActionRedirectsToEditWhenLoggedInAsMember()
+    {
+        $currentUser = $this->editorUser;
+        $this->login($currentUser);
+
+        // dispatch
+        $this->put('/admin/articles/' . $this->article->id, $this->getArticleData());
+
+        // assertions
+        $this->assertController('articles');
+        $this->assertAction('update');
+        $this->assertRedirectsTo('/admin/articles/' . $this->article->id . '/edit');
+    }
+
+    public function testUpdateActionRedirectsToEditWhenLoggedInAsOwner()
+    {
+        $currentUser = $this->ownerUser;
+        $this->login($currentUser);
+
+        // dispatch
+        $this->put('/admin/articles/' . $this->article->id, $this->getArticleData());
+
+        // assertions
+        $this->assertController('articles');
+        $this->assertAction('update');
+        $this->assertRedirectsTo('/admin/articles/' . $this->article->id . '/edit');
+    }
+
+    /**
+     * @expectedException App\Exception\PermissionDenied
+     */
+    public function testUpdateActionRedirectsToEditWhenLoggedInAsRandom()
+    {
+        $currentUser = $this->randomUser;
+        $this->login($currentUser);
+
+        // dispatch
+        $this->put('/admin/articles/' . $this->article->id, $this->getArticleData());
+
+        // assertions
+        $this->assertController('articles');
+        $this->assertAction('update');
+        $this->assertRedirectsTo('/admin/articles/' . $this->article->id . '/edit');
+    }
+
+
+    // delete
+
+    public function testDeleteActionWhenLoggedInAsAdminUserShowsArticle()
+    {
+        $currentUser = $this->adminUser;
+        $this->login($currentUser);
+
+        // dispatch
+        $this->delete('/admin/articles/' . $this->article->id);
+
+        // assertions
+        $this->assertController('articles');
+        $this->assertAction('delete');
+        $this->assertRedirectsTo('/admin/articles');
+    }
+
+    public function testDeleteActionWhenLoggedInAsEditorUserShowsArticle()
+    {
+        $currentUser = $this->editorUser;
+        $this->login($currentUser);
+
+        // dispatch
+        $this->delete('/admin/articles/' . $this->article->id);
+
+        // assertions
+        $this->assertController('articles');
+        $this->assertAction('delete');
+        $this->assertRedirectsTo('/admin/articles');
+    }
+
+    public function testDeleteActionWhenLoggedInAsOwnerUserShowsArticle()
+    {
+        $currentUser = $this->ownerUser;
+        $this->login($currentUser);
+
+        // dispatch
+        $this->delete('/admin/articles/' . $this->article->id);
+
+        // assertions
+        $this->assertController('articles');
+        $this->assertAction('delete');
+        $this->assertRedirectsTo('/admin/articles');
+    }
+
+    /**
+     * @expectedException App\Exception\PermissionDenied
+     */
+    public function testDeleteActionWhenLoggedInAsRandomUserThrowsException()
+    {
+        $currentUser = $this->randomUser;
+        $this->login($currentUser);
+
+        // dispatch
+        $this->delete('/admin/articles/' . $this->article->id);
+
+        // assertions
+        $this->assertController('articles');
+        $this->assertAction('delete');
+        $this->assertRedirectsTo('/admin/articles');
     }
 
 
     // submit
 
-    public function testSubmitActionRedirectsToShowWhenSaveSuccess()
+    public function testSubmitActionWhenLoggedInAsAdminUserShowsArticle()
     {
-        // we need to mock $article here because it will call it's save() and
-        // then store in the database.. we'd rather not hit the db where possible
-        $article = $this->generateArticleStub();
+        $currentUser = $this->adminUser;
+        $this->login($currentUser);
 
-        // login the user
-        $this->login( $this->generateUserStub() );
-
-        // =================================
-        // mock method stack, in order
-
-        // Mock the model the dependency
-        $this->container['model.article']
-            ->expects( $this->once() )
-            ->method('findOneOrFail')
-            ->with(array(
-                'id' => 99,
-            ))
-            ->willReturn($article);
-
-        // We want to confirm that status is set to approved
-        $article
-            ->expects( $this->once() )
-            ->method('set')
-            ->with( 'status', Article::STATUS_SUBMITTED );
-
-        // Mock the response from save of $article
-        $article
-            ->expects( $this->once() )
-            ->method('save')
-            ->with( $this->getArticleData() )
-            ->willReturn(true); // <------ success
-
-
-        // =================================
         // dispatch
+        $this->put('/admin/articles/' . $this->article->id . '/submit');
 
-        $this->put('/admin/articles/99/submit', $this->getArticleData());
-
-
-        // =================================
         // assertions
-
         $this->assertController('articles');
         $this->assertAction('submit');
-        $this->assertRedirectsTo('/admin/articles/99');
-
-        // as this is a redirect, we haven't flushed the messages yet. another
-        // thing we can test :)
-        $this->assertTrue( $this->container['flash']->has('success') );
+        $this->assertRedirectsTo('/admin/articles/' . $this->article->id);
     }
 
-    public function testSubmitActionRedirectsToEditWhenSaveFails()
+    public function testSubmitActionWhenLoggedInAsEditorUserShowsArticle()
     {
-        // we need to mock $article here because it will call it's save() and
-        // then store in the database.. we'd rather not hit the db where possible
-        $article = $this->generateArticleStub();
+        $currentUser = $this->editorUser;
+        $this->login($currentUser);
 
-        // login the user
-        $this->login( $this->generateUserStub() );
-
-        // =================================
-        // mock method stack, in order
-
-        // Mock the model the dependency
-        $this->container['model.article']
-            ->expects( $this->exactly(2) ) // in approve, and again in edit
-            ->method('findOneOrFail')
-            ->with(array(
-                'id' => 99,
-            ))
-            ->willReturn($article);
-
-        // We want to confirm that status is set to approved
-        $article
-            ->expects( $this->once() )
-            ->method('set')
-            ->with( 'status', Article::STATUS_SUBMITTED );
-
-        // Mock the response from save of $article
-        $article
-            ->expects( $this->once() )
-            ->method('save')
-            ->with( $this->getArticleData() )
-            ->willReturn(false); // <------ failed
-
-        // getErrors will be called after the fail, return some/any array
-        $article
-            ->method('getErrors')
-            ->willReturn( array('example' => 'Bad example') );
-
-        // toArray will be called when we forward to edit action
-        // we can simply return $this->getArticleData()
-        $article
-            ->method('toArray')
-            ->willReturn( $this->getArticleData() );
-
-
-        // =================================
         // dispatch
+        $this->put('/admin/articles/' . $this->article->id . '/submit');
 
-        $this->put('/admin/articles/99/submit', $this->getArticleData());
-
-
-        // =================================
         // assertions
-
         $this->assertController('articles');
-        $this->assertAction('edit');
+        $this->assertAction('submit');
+        $this->assertRedirectsTo('/admin/articles/' . $this->article->id);
+    }
+
+    public function testSubmitActionWhenLoggedInAsOwnerUserShowsArticle()
+    {
+        $currentUser = $this->ownerUser;
+        $this->login($currentUser);
+
+        // dispatch
+        $this->put('/admin/articles/' . $this->article->id . '/submit');
+
+        // assertions
+        $this->assertController('articles');
+        $this->assertAction('submit');
+        $this->assertRedirectsTo('/admin/articles/' . $this->article->id);
+    }
+
+    /**
+     * @expectedException App\Exception\PermissionDenied
+     */
+    public function testSubmitActionWhenLoggedInAsRandomUserThrowsException()
+    {
+        $currentUser = $this->randomUser;
+        $this->login($currentUser);
+
+        // dispatch
+        $this->put('/admin/articles/' . $this->article->id . '/submit');
+
+        // assertions
+        $this->assertController('articles');
+        $this->assertAction('submit');
+        $this->assertRedirectsTo('/admin/articles/' . $this->article->id);
     }
 
 
     // approve
 
-    public function testApproveActionRedirectsToShowWhenSaveSuccess()
+    public function testApproveActionWhenLoggedInAsAdminUserShowsArticle()
     {
-        // we need to mock $article here because it will call it's save() and
-        // then store in the database.. we'd rather not hit the db where possible
-        $article = $this->generateArticleStub();
+        $currentUser = $this->adminUser;
+        $this->login($currentUser);
 
-        // login the user
-        $this->login( $this->generateUserStub() );
-
-        // =================================
-        // mock method stack, in order
-
-        // Mock the model the dependency
-        $this->container['model.article']
-            ->expects( $this->once() )
-            ->method('findOneOrFail')
-            ->with(array(
-                'id' => 99,
-            ))
-            ->willReturn($article);
-
-        // We want to confirm that status is set to approved
-        $article
-            ->expects( $this->once() )
-            ->method('set')
-            ->with( 'status', Article::STATUS_APPROVED );
-
-        // Mock the response from save of $article
-        $article
-            ->expects( $this->once() )
-            ->method('save')
-            ->with( $this->getArticleData() )
-            ->willReturn(true); // <------ success
-
-        // =================================
         // dispatch
+        $this->put('/admin/articles/' . $this->article->id . '/approve');
 
-        $this->put('/admin/articles/99/approve', $this->getArticleData());
-
-        // =================================
         // assertions
-
         $this->assertController('articles');
         $this->assertAction('approve');
-        $this->assertRedirectsTo('/admin/articles/99');
-
-        // as this is a redirect, we haven't flushed the messages yet. another
-        // thing we can test :)
-        $this->assertTrue( $this->container['flash']->has('success') );
+        $this->assertRedirectsTo('/admin/articles/' . $this->article->id);
     }
 
-    public function testApproveActionRedirectsToEditWhenSaveFails()
+    public function testApproveActionWhenLoggedInAsEditorUserShowsArticle()
     {
-        // we need to mock $article here because it will call it's save() and
-        // then store in the database.. we'd rather not hit the db where possible
-        $article = $this->generateArticleStub();
+        $currentUser = $this->editorUser;
+        $this->login($currentUser);
 
-        // login the user
-        $this->login( $this->generateUserStub() );
-
-        // =================================
-        // mock method stack, in order
-
-        // Mock the model the dependency
-        $this->container['model.article']
-            ->expects( $this->exactly(2) ) // in approve, and again in edit
-            ->method('findOneOrFail')
-            ->with(array(
-                'id' => 99,
-            ))
-            ->willReturn($article);
-
-        // We want to confirm that status is set to approved
-        $article
-            ->expects( $this->once() )
-            ->method('set')
-            ->with( 'status', Article::STATUS_APPROVED );
-
-        // Mock the response from save of $article
-        $article
-            ->expects( $this->once() )
-            ->method('save')
-            ->with( $this->getArticleData() )
-            ->willReturn(false); // <------ failed
-
-        // getErrors will be called after the fail, return some/any array
-        $article
-            ->method('getErrors')
-            ->willReturn( array('example' => 'Bad example') );
-
-        // toArray will be called when we forward to edit action
-        // we can simply return $this->getArticleData()
-        $article
-            ->method('toArray')
-            ->willReturn( $this->getArticleData() );
-
-        // =================================
         // dispatch
+        $this->put('/admin/articles/' . $this->article->id . '/approve');
 
-        $this->put('/admin/articles/99/approve', $this->getArticleData());
-
-        // =================================
         // assertions
-
         $this->assertController('articles');
-        $this->assertAction('edit');
+        $this->assertAction('approve');
+        $this->assertRedirectsTo('/admin/articles/' . $this->article->id);
+    }
+
+    public function testApproveActionWhenLoggedInAsOwnerUserShowsArticle()
+    {
+        $currentUser = $this->ownerUser;
+        $this->login($currentUser);
+
+        // dispatch
+        $this->put('/admin/articles/' . $this->article->id . '/approve');
+
+        // assertions
+        $this->assertController('articles');
+        $this->assertAction('approve');
+        $this->assertRedirectsTo('/admin/articles/' . $this->article->id);
+    }
+
+    /**
+     * @expectedException App\Exception\PermissionDenied
+     */
+    public function testApproveActionWhenLoggedInAsRandomUserThrowsException()
+    {
+        $currentUser = $this->randomUser;
+        $this->login($currentUser);
+
+        // dispatch
+        $this->put('/admin/articles/' . $this->article->id . '/approve');
+
+        // assertions
+        $this->assertController('articles');
+        $this->assertAction('approve');
+        $this->assertRedirectsTo('/admin/articles/' . $this->article->id);
+    }
+
+
+    // post
+
+    public function testPostCreateArticleRedirects()
+    {
+        $currentUser = $this->ownerUser;
+        $this->login($currentUser);
+
+        // dispatch
+        $this->post('/admin/articles?type=' . Article::TYPE_ARTICLE);
+
+        // assertions
+        $this->assertController('articles');
+        $this->assertAction('post');
+        $this->assertRedirects(); // difficult to obtain new article id for url
     }
 
 

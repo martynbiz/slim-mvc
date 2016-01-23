@@ -32,7 +32,7 @@ class UsersController extends BaseController
         // but we can set it via property assignment. Default to ROLE_MEMBER
         $user->set('role', User::ROLE_MEMBER);
 
-        if ($user) {
+        if ($user->save()) {
             // auto sign in
             $this->get('auth')->authenticate($params['email'], $params['password']);
 

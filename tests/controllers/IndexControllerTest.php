@@ -1,8 +1,6 @@
 <?php
 
-use App\Test\PHPUnit\TestCase;
-
-class IndexControllerTests extends TestCase
+class IndexControllerTest extends TestCase
 {
     public function testIndexRoute()
     {
