@@ -79,14 +79,28 @@ $ gulp watch
 
 ## TODO
 
+martynbiz/martynbiz
+* branch heavy mock controller tests,
+* martynbiz/wordup -- core stuff
+* user management - create user, delete, edit (e.g. roles), .. int testing,
+* bug: escape html
+* admin-lte template - create form: title box, content box, location box, tags
+* paginate - test limit/skip in integrated
+* psr-4, move controllers to library
+*
+* bootstrap - gulp
+* copy my design over
+* homepage - latest
+* csrf - ask question on SO
+* gulp?
+
+
 buy wordup.com
 
-* acl - canEdit(...)
-* martynbiz/wordup -- core stuff
-* ckeditor
-* set author
-* user management - create user, delete, edit (e.g. roles)
-* admin-lte template - create form: title box, content box, location box, tags
+
+* file uploads
+
+
 * Maybe we don't need to pass in $container stuff after all http://stackoverflow.com/questions/34839399/how-to-access-the-container-within-middleware-class-in-slim-v3/34930473#34930473
 
 testing alternatives - admin/articles with acl method calls mocked, register is setting id/_id?, setting role on register,
@@ -95,16 +109,14 @@ testing alternatives - admin/articles with acl method calls mocked, register is 
 * mockery
 * phpspec
 
-* homepage - latest
+martynbiz\localmap
 * route /{region}/{id}/{slug} -- on the fly routes (regions collection), getUrl() eg. /glasgow/123/green-shop
 * route /{tag}
 * map - lat/lng, location box on form
 * path_for all links
 * pagination? $this->service('model.articles')->find(...)->paginate(20);
-* csrf - ask question on SO
-* flash -- my flash isn't working, SO?
-* gulp?
-* psr-4, move controllers to library
+
+
 * create project that can easily be installed (martynbiz/slim3-project)
 v2
 * contributers/ submit articles for approval
@@ -116,27 +128,21 @@ v2
 * popular - google analytics
 * admin-lte homepage (graphs etc)
 
-martynbiz/php-flash-message
-* has('success')
+
 
 
 
 martynbiz/slim3-contoller
-* update README - installation/ usage notes
-* package up controller lib (slim3-controller)
-tests
 * can we run tests with run() instead? then we can use App for bootstrap (eg. routes)
-* crud: update, delete
 * query
 * more appropriate error messages for TestCase's assert* methods
 * validate json
+* assertViewReceives
 
 martynbiz/php-mongo
 * does save() return true or false?
 * paginate - test limit/skip in integrated
 * access properties like: $user['username'] or $user->username
-* write description for packagist
 * SO is it better to update few name/values with $set, or just overwrite all with $this->data?
-* test Mongo::update()
 * get human readable date
 * allow us to insert an empty draft
