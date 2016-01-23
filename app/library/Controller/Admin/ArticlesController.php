@@ -21,14 +21,16 @@ class ArticlesController extends BaseController
      */
     public function show($id)
     {
+        $currentUser = $this->get('auth')->getCurrentUser();
+
         $article = $this->get('model.article')->findOneOrFail(array(
             'id' => (int) $id,
         ));
 
-        // // ensure that this user can edit this article
-        // if (! $this->currentUser()->canView($article) )) {
-        //
-        // }
+        // ensure that this user can edit this article
+        if (! $currentUser->canView($article) ) {
+            throw new \Exception('Permission denied to current user to view this article.');
+        }
 
         return $this->render('admin/articles/show.html', array(
             'article' => $article->toArray(),
@@ -43,7 +45,8 @@ class ArticlesController extends BaseController
      */
     public function post()
     {
-        $user = $this->get('auth')->getCurrentUser();
+        $currentUser = $this->get('auth')->getCurrentUser();
+
         $article = $this->get('model.article')->factory();
 
         // for security reasons, status isn't on the whitelist for mass assignment
@@ -52,13 +55,13 @@ class ArticlesController extends BaseController
 
         // for security reasons, type isn't on the whitelist for mass assignment
         // but we can set it via property assignment.
-        // TODO handle more types that ARTICLE
+        // TODO handle more types than ARTICLE
         $article->set('type', Article::TYPE_ARTICLE);
 
         // for security reasons, type isn't on the whitelist for mass assignment
         // but we can set it via property assignment.
         // TODO handle more types that ARTICLE
-        $article->set('author', $user->getDBRef());
+        $article->set('author', $currentUser->getDBRef());
 
         // if the article saves ok, redirect them to the edit page where they can
         // begin to edit their draft. any errors, forward them back to the index
@@ -78,14 +81,16 @@ class ArticlesController extends BaseController
      */
     public function edit($id)
     {
+        $currentUser = $this->get('auth')->getCurrentUser();
+
         $article = $this->get('model.article')->findOneOrFail(array(
             'id' => (int) $id,
         ));
 
-        // // ensure that this user can edit this article
-        // if (! $this->currentUser()->canEdit($article) )) {
-        //
-        // }
+        // ensure that this user can edit this article
+        if (! $currentUser->canEdit($article) ) {
+            throw new \Exception('Permission denied to current user to edit this article.');
+        }
 
         return $this->render('admin/articles/edit.html', array(
             'article' => array_merge($article->toArray(), $this->getPost()),
@@ -99,14 +104,16 @@ class ArticlesController extends BaseController
      */
     public function update($id)
     {
+        $currentUser = $this->get('auth')->getCurrentUser();
+
         $article = $this->get('model.article')->findOneOrFail(array(
             'id' => (int) $id,
         ));
 
-        // // ensure that this user can edit this article
-        // if (! $this->currentUser()->canEdit($article) )) {
-        //
-        // }
+        // ensure that this user can edit this article
+        if (! $currentUser->canEdit($article) ) {
+            throw new \Exception('Permission denied to current user to edit this article.');
+        }
 
         if ( $article->save( $this->getPost() ) ) {
 
@@ -133,14 +140,16 @@ class ArticlesController extends BaseController
      */
     public function submit($id)
     {
+        $currentUser = $this->get('auth')->getCurrentUser();
+
         $article = $this->get('model.article')->findOneOrFail(array(
             'id' => (int) $id,
         ));
 
-        // // only top brass can approve
-        // if (! $this->currentUser()->canSubmit($article) ) {
-        //
-        // }
+        // only top brass can approve
+        if (! $currentUser->canSubmit($article) ) {
+            throw new \Exception('Permission denied to current user to submit this article.');
+        }
 
         // set the status of the article to approved, if there are any problems
         // with the data send, save() will fail anyway. Using set() here as it is
@@ -170,14 +179,16 @@ class ArticlesController extends BaseController
      */
     public function approve($id)
     {
+        $currentUser = $this->get('auth')->getCurrentUser();
+
         $article = $this->get('model.article')->findOneOrFail(array(
             'id' => (int) $id,
         ));
 
-        // // only top brass can approve
-        // if (! $this->currentUser()->canApprove($article) ) {
-        //
-        // }
+        // only top brass can approve
+        if (! $currentUser->canApprove($article) ) {
+            throw new \Exception('Permission denied to current user to approve this article.');
+        }
 
         // set the status of the article to approved, if there are any problems
         // with the data send, save() will fail anyway. Using set() here as it is
@@ -204,14 +215,16 @@ class ArticlesController extends BaseController
 
     public function delete($id)
     {
+        $currentUser = $this->get('auth')->getCurrentUser();
+
         $article = $this->get('model.article')->findOneOrFail(array(
             'id' => (int) $id,
         ));
 
-        // // only top brass can delete
-        // if (! $this->currentUser()->canDelete($article) ) {
-        //
-        // }
+        // only top brass can delete
+        if (! $currentUser->canDelete($article) ) {
+            throw new \Exception('Permission denied to current user to delete this article.');
+        }
 
         if ( $article->delete() ) {
             $this->get('flash')->addMessage('success', 'Article deleted successfully');

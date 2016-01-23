@@ -3,7 +3,6 @@
 // default settings
 $settings = [
     'settings' => [
-        'displayErrorDetails' => true,
 
         // Renderer settings
         'renderer' => [

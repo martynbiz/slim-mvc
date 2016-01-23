@@ -81,11 +81,6 @@ $ gulp watch
 
 buy wordup.com
 
-testing - admin/articles with acl method calls mocked
-* codeception
-* mockery
-* phpspec
-
 * acl - canEdit(...)
 * martynbiz/wordup -- core stuff
 * ckeditor
@@ -93,7 +88,12 @@ testing - admin/articles with acl method calls mocked
 * user management - create user, delete, edit (e.g. roles)
 * admin-lte template - create form: title box, content box, location box, tags
 * Maybe we don't need to pass in $container stuff after all http://stackoverflow.com/questions/34839399/how-to-access-the-container-within-middleware-class-in-slim-v3/34930473#34930473
-* test alternatives to phpunit
+
+testing alternatives - admin/articles with acl method calls mocked, register is setting id/_id?, setting role on register,
+  auto signin after register,
+* codeception
+* mockery
+* phpspec
 
 * homepage - latest
 * route /{region}/{id}/{slug} -- on the fly routes (regions collection), getUrl() eg. /glasgow/123/green-shop

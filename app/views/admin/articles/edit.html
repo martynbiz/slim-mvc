@@ -27,12 +27,14 @@
         {% endif %}
         <tr>
             <th>Description</th>
-            <td><textarea name="description" class="form-control" rows="5">{{ article.description }}</textarea></td>
+            <td><textarea id="description" name="description" class="form-control" rows="5">{{ article.description }}</textarea></td>
         </tr>
         <tr>
             <th>File upload</th>
             <td><div class="fallback">
-                <input name="file" type="file" multiple />
+                <input name="file[]" type="file" multiple />
+                <input name="file[]" type="file" multiple />
+                <input name="file[]" type="file" multiple />
             </div></td>
         </tr>
     </table>
@@ -43,4 +45,13 @@
     <button type="submit" class="btn btn-primary">Submit for approval</button>
     <button type="submit" formaction="/admin/articles/{{ article.id }}" class="btn btn-default">Save draft</button>
 </form>
+{% endblock %}
+
+{% block scripts %}
+<script src="//cdn.ckeditor.com/4.5.6/standard/ckeditor.js"></script>
+<script>
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace( 'description' );
+</script>
 {% endblock %}
