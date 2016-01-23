@@ -58,7 +58,7 @@ class ArticlesController extends BaseController
         // for security reasons, type isn't on the whitelist for mass assignment
         // but we can set it via property assignment.
         // TODO handle more types that ARTICLE
-        $article->set('author', $user);
+        $article->set('author', $user->getDBRef());
 
         // if the article saves ok, redirect them to the edit page where they can
         // begin to edit their draft. any errors, forward them back to the index

@@ -1,181 +1,99 @@
 # SlimMVC #
 
-Easily add controllers to a Slim Framework v3 application.
+Slim Framework v3 with the help of some friends to make a base project.
 
-## Controller ##
+## Installation ##
 
-/app/routes.php
+The following commands will bring all the required files to your local machine:
 
-```php
-<?php
-
-// index routes (homepage, about, etc)
-$app->group('', function () use ($app) {
-
-    $controller = new App\Controller\IndexController($app);
-
-    $app->get('/', $controller('index'));
-    $app->get('/contact', $controller('contact'));
-});
-
-// create resource method for Slim::resource($route, $name)
-$app->group('/articles', function () use ($app) {
-
-    $controller = new App\Controller\ExampleController($app);
-
-    $app->get('/{id:[0-9]+}', $controller('show'));
-    $app->get('/{id:[0-9]+}/{slug}', $controller('show'));
-});
+```
+$ git clone ... myproject
+$ cd myproject
+$ composer install
 ```
 
-/app/controllers/ExampleController.php
+The easiest way to run the application is to use the built-in PHP server:
 
-```php
-<?php
-
-namespace App\Controller;
-
-use SlimMvc\Http\Controller;
-
-class ExampleController extends Controller
-{
-    public function index()
-    {
-        return $this->render('admin/example/index.html', array(
-            // data to pass to the view
-        ));
-    }
-
-    public function show($id)
-    {
-        return $this->render('admin/example/show.html', array(
-            // data to pass to the view
-        ));
-    }
-
-    public function create()
-    {
-        return $this->render('admin/example/create.html');
-    }
-
-    public function post()
-    {
-        // handle create
-
-        return $this->redirect('/admin/example');
-    }
-
-    public function edit($id)
-    {
-        return $this->render('admin/example/edit.html', array(
-            // data to pass to the view
-        ));
-    }
-
-    public function update($id)
-    {
-        // handle update
-
-        return $this->redirect('/admin/example/' . $id);
-    }
-}
+```
+$ php -S localhost:8080 -t public
 ```
 
-## Dependencies within controllers ##
+## Controllers ##
 
-/app/dependencies.php
+Controllers use Slim3Controller:
 
-```php
-$container['model.example'] = function ($container) {
-    return new App\Model\Example();
-};
+https://github.com/martynbiz/slim3-controller
+
+## Views ##
+
+Views use twig templates:
+
+https://github.com/slimphp/Twig-View
+http://twig.sensiolabs.org/documentation
+
+## Assets ##
+
+Assets are managed by Gulp. Gulp tasks are defined in /gulpfile.js
+
+To compile css/js, run:
+
+```
+$ npm install
 ```
 
-/app/controllers/ExampleController.php
+Once changes have been made to the LESS or JavaScript files, run to compile:
 
-```php
-.
-.
-.
-class ExampleController extends Controller
-{
-    public function index()
-    {
-        $examples = $this->get('model.example')->find();
-
-        return $this->render('admin/example/index.html', array(
-            'examples' => $examples,
-        ));
-    }
-    .
-    .
-    .
+```
+$ gulp
 ```
 
+To compile individually, run:
 
-## Testing controllers ##
-
-/phpunit.xml
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="false"
-         bootstrap="tests/bootstrap.php">
-    <testsuites>
-        <testsuite name="Application Test Suite">
-            <directory>./tests/</directory>
-        </testsuite>
-    </testsuites>
-</phpunit>
+```
+$ gulp css
+$ gulp js
 ```
 
-/tests/bootstrap.php
+To watch for changes and not have to worry about manually compiling, run:
 
-```php
-// coming soon, still a little bloated
+```
+$ gulp watch
 ```
 
-/tests/application/controllers/ExampleControllerTest.php
+## Models ##
 
-```php
-<?php
+## Cache ##
 
-use SlimMvc\Test\PHPUnit\TestCase;
+## Testing ##
 
-class ExampleControllerTest extends TestCase
-{
-    .
-    .
-    .
-    public function testApp()
-    {
-        $this->dispatch('/articles');
+## Flash messages ##
 
-        // mock dependencies (optional)
-        $container = $this->app->getContainer();
-        container->set('model.article', $articleMock);
+## Sessions ##
 
-        $this->assertController('articles');
-        $this->assertAction('index');
-        $this->assertStatusCode(200);
-        $this->assertQuery('table#examples');
-        $this->assertQueryCount('div.errors', 0);
-        // $this->assertRedirects();
-        // $this->assertRedirectsTo('...');
-    }
-}
-```
+## Authentication ##
+
+
+
+
+
 
 ## TODO
 
 buy wordup.com
+
+testing - admin/articles with acl method calls mocked
+* codeception
+* mockery
+* phpspec
+
+* acl - canEdit(...)
 * martynbiz/wordup -- core stuff
 * ckeditor
 * set author
 * user management - create user, delete, edit (e.g. roles)
-* acl - roles, isAdmin()
-* auth - http://help.slimframework.com/discussions/questions/9050-how-to-access-the-container-within-middleware-class-in-slim-v3
 * admin-lte template - create form: title box, content box, location box, tags
+* Maybe we don't need to pass in $container stuff after all http://stackoverflow.com/questions/34839399/how-to-access-the-container-within-middleware-class-in-slim-v3/34930473#34930473
+* test alternatives to phpunit
 
 * homepage - latest
 * route /{region}/{id}/{slug} -- on the fly routes (regions collection), getUrl() eg. /glasgow/123/green-shop
@@ -215,7 +133,6 @@ tests
 
 martynbiz/php-mongo
 * does save() return true or false?
-* make find() and findOne() callable statically
 * paginate - test limit/skip in integrated
 * access properties like: $user['username'] or $user->username
 * write description for packagist

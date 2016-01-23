@@ -10,11 +10,15 @@ use MartynBiz\Validator;
  */
 class User extends Mongo
 {
+    const ROLE_ADMIN = 'admin';
+    const ROLE_EDITOR = 'editor';
+    const ROLE_MEMBER = 'member';
+
     // collection this model refers to
-    protected $collection = 'users';
+    protected static $collection = 'users';
 
     // define on the fields that can be saved
-    protected $whitelist = array(
+    protected static $whitelist = array(
         'first_name',
         'last_name',
         'email',
@@ -60,8 +64,7 @@ class User extends Mongo
      */
     public function isAdmin()
     {
-        // TODO when implemented, test
-        return true;
+        return (isset($this->data['role']) and $this->data['role'] == static::ROLE_ADMIN);
     }
 
     /**
@@ -70,8 +73,7 @@ class User extends Mongo
      */
     public function isEditor()
     {
-        // TODO when implemented, test
-        return false;
+        return (isset($this->data['role']) and $this->data['role'] == static::ROLE_EDITOR);
     }
 
     /**
@@ -80,49 +82,112 @@ class User extends Mongo
      */
     public function isMember()
     {
-        // TODO when implemented, test
-        return false;
+        return (isset($this->data['role']) and $this->data['role'] == static::ROLE_MEMBER);
     }
 
     // permissions
+    // TODO use Zend\Acl
+    // TODO create Ownable interface for $resource with getOwner()
+
+    /**
+     * Return true if user is owner of resource
+     * @param Ownable $resource
+     * @return boolean
+     */
+    public function isOwnerOf($resource)
+    {
+        // no id, no life
+        if (! isset($this->data['id']))
+            return false;
+
+        // this will fetch objects so we know what we're working with rather
+        // than possibly messing about with DBRefs
+        $author = $resource->author;
+
+        if ($author instanceof Mongo) {
+            return ($author->id == $this->data['id']);
+        }
+
+        return false;
+    }
 
     /**
      * Return true if user can view a given resource
+     * @param Ownable $resource
+     * @return boolean
      */
     public function canView($resource)
     {
-        return true;
+        if ($this->isAdmin())
+            return true;
+
+        if ($this->isEditor())
+            return true; //$this->isEditorFor($resource->author);
+
+        return $this->isOwnerOf($resource);
     }
 
     /**
      * Return true if user can view a given resource
+     * @param Ownable $resource
+     * @return boolean
      */
     public function canEdit($resource)
     {
-        return true;
+        if ($this->isAdmin())
+            return true;
+
+        if ($this->isEditor())
+            return true;
+
+        return $this->isOwnerOf($resource);
     }
 
     /**
      * Return true if user can view a given resource
+     * @param Ownable $resource
+     * @return boolean
      */
     public function canDelete($resource)
     {
-        return true;
+        if ($this->isAdmin())
+            return true;
+
+        if ($this->isEditor())
+            return true;
+
+        return $this->isOwnerOf($resource);
     }
 
     /**
      * Return true if user can view a given resource
+     * @param Article $article
+     * @return boolean
      */
     public function canSubmit($article)
     {
-        return true;
+        if ($this->isAdmin())
+            return true;
+
+        if ($this->isEditor())
+            return true;
+
+        return $this->isOwnerOf($article);
     }
 
     /**
      * Return true if user can view a given resource
+     * @param Article $article
+     * @return boolean
      */
     public function canApprove($article)
     {
-        return true;
+        if ($this->isAdmin())
+            return true;
+
+        if ($this->isEditor())
+            return true;
+
+        return $this->isOwnerOf($article);
     }
 }

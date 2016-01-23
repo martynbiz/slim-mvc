@@ -125,7 +125,7 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         $user = $this->generateUserStub();
 
         // login the user
-        $this->login( $this->generateUserStub() );
+        $this->login($user);
 
         // =================================
         // mock method stack, in order
@@ -152,11 +152,11 @@ class ArticlesControllerTests extends \App\Test\PHPUnit\TestCase
         $article
             ->expects( $this->at(2) )
             ->method('set')
-            ->with('author', $user);
+            ->with('author', '__dbRef__');
 
         $user
             ->method('getDBRef')
-            ->willReturn( \MongoDBRef::create("users", new MongoId('51b14c2de8e185801f000006')) );
+            ->willReturn('__dbRef__');
 
         // Mock the response from save of $article
         $article

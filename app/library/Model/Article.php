@@ -20,10 +20,10 @@ class Article extends Mongo
     const STATUS_APPROVED = 2;
 
     // collection this model refers to
-    protected $collection = 'articles';
+    protected static $collection = 'articles';
 
     // define on the fields that can be saved
-    protected $whitelist = array(
+    protected static $whitelist = array(
         'title',
         'slug',
         'description',
