@@ -80,7 +80,6 @@ $ gulp watch
 ## TODO
 
 martynbiz/martynbiz
-* encrypt password, salt
 * admin-lte template - create form: title box, content box, location box, tags
 * paginate - test limit/skip in integrated
 

@@ -2,12 +2,10 @@
 
 namespace Wordup\Model;
 
-use MartynBiz\Mongo;
-
 /**
  *
  */
-class Media extends Mongo
+class Media extends Base
 {
     /**
      *

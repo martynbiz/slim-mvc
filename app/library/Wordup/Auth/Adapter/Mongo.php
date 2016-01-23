@@ -47,11 +47,11 @@ class Mongo implements AdapterInterface
         // look up $user from the database
         $user = $this->model->findOne( array(
             'email' => $this->username,
-            'password' => $this->password,
+            // 'password' => User::encryptPassword($this->password),
         ) );
 
         // if a user was found, return the appropriate Result
-        if ($user) {
+        if ($user and password_verify($this->password, $user->password)) {
             return new Result(
                 Result::SUCCESS,
                 $this->username,

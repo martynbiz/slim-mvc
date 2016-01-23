@@ -8,7 +8,7 @@ use MartynBiz\Validator;
 /**
  *
  */
-class User extends Mongo
+class User extends Base
 {
     const ROLE_ADMIN = 'admin';
     const ROLE_EDITOR = 'editor';
@@ -24,6 +24,13 @@ class User extends Mongo
         'email',
         'password',
     );
+
+    public static function encryptPassword($value)
+    {
+        return password_hash($value, PASSWORD_BCRYPT, array(
+            'cost' => 12,
+        ));
+    }
 
     public function validate()
     {

@@ -2,13 +2,12 @@
 
 namespace Wordup\Model;
 
-use MartynBiz\Mongo;
 use MartynBiz\Validator;
 
 /**
  *
  */
-class Article extends Mongo
+class Article extends Base
 {
     // types
     const TYPE_ARTICLE = 'article';
