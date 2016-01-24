@@ -12,41 +12,62 @@ class TagsController extends BaseController
         // only admin can do anything here
         $currentUser = $this->get('auth')->getCurrentUser();
         if (! $currentUser->isAdmin() ) {
-            throw new PermissionDenied('Permission denied to manager users.');
+            throw new PermissionDenied('Permission denied to manage tags.');
         }
     }
 
     public function index()
     {
-        $users = $this->get('model.user')->find();
+        $tags = $this->get('model.tag')->find();
 
-        return $this->render('admin/users/index.html', array(
-            'users' => $users->toArray(),
+        return $this->render('admin/tags/index.html', array(
+            'tags' => $tags->toArray(),
         ));
     }
 
+    public function create()
+    {
+        return $this->render('admin/tags/create.html', array(
+            'params' => $this->getPost(),
+        ));
+    }
+
+    public function post()
+    {
+        $currentUser = $this->get('auth')->getCurrentUser();
+        $tag = $this->get('model.tag')->factory();
+
+        if ( $tag->save( $this->getPost() ) ) {
+            $this->get('flash')->addMessage('success', 'Tag created.');
+            return $this->redirect('/admin/tags');
+        } else {
+            $this->get('flash')->addMessage('errors', $tag->getErrors());
+            return $this->forward('create');
+        }
+    }
+
     /**
-     * Upon creation too, the user will be redirect here to edit the user
+     * Upon creation too, the tag will be redirect here to edit the tag
      */
     public function edit($id)
     {
-        $user = $this->get('model.user')->findOneOrFail(array(
+        $tag = $this->get('model.tag')->findOneOrFail(array(
             'id' => (int) $id,
         ));
 
-        return $this->render('admin/users/edit.html', array(
-            'user' => array_merge($user->toArray(), $this->getPost()),
+        return $this->render('admin/tags/edit.html', array(
+            'tag' => array_merge($tag->toArray(), $this->getPost()),
         ));
     }
 
     /**
-     * This method will update the user (save draft) and 1) if xhr, return json,
+     * This method will update the tag (save draft) and 1) if xhr, return json,
      * or 2) redirect back to the edit page (upon which they can then submit when they
      * choose to)
      */
     public function update($id)
     {
-        $user = $this->get('model.user')->findOneOrFail(array(
+        $tag = $this->get('model.tag')->findOneOrFail(array(
             'id' => (int) $id,
         ));
 
@@ -54,13 +75,13 @@ class TagsController extends BaseController
 
         // for security reasons, some properties are not on the whitelist but
         // we can directly assign them by this way
-        if (isset($params['role'])) $user->role = $params['role'];
+        if (isset($params['role'])) $tag->role = $params['role'];
 
-        if ( $user->save($params) ) {
-            $this->get('flash')->addMessage('success', 'User saved.');
-            return $this->redirect('/admin/users');
+        if ( $tag->save($params) ) {
+            $this->get('flash')->addMessage('success', 'Tag saved.');
+            return $this->redirect('/admin/tags');
         } else {
-            $this->get('flash')->addMessage('errors', $user->getErrors());
+            $this->get('flash')->addMessage('errors', $tag->getErrors());
             return $this->forward('edit', array(
                 'id' => $id,
             ));
@@ -69,15 +90,15 @@ class TagsController extends BaseController
 
     public function delete($id)
     {
-        $user = $this->get('model.user')->findOneOrFail(array(
+        $tag = $this->get('model.tag')->findOneOrFail(array(
             'id' => (int) $id,
         ));
 
-        if ( $user->delete() ) {
-            $this->get('flash')->addMessage('success', 'User deleted successfully');
-            return $this->redirect('/admin/users');
+        if ( $tag->delete() ) {
+            $this->get('flash')->addMessage('success', 'Tag deleted successfully');
+            return $this->redirect('/admin/tags');
         } else {
-            $this->get('flash')->addMessage('errors', $user->getErrors());
+            $this->get('flash')->addMessage('errors', $tag->getErrors());
             return $this->edit($id);
         }
     }

@@ -94,8 +94,11 @@ sms links
 test
 * validate role types in admin/users, setting roles,
 * integrated test for tags MongoIterator -> array(DBRefs)
+* test forward on admin/user/edit and admin/tags/edit&create
+* edit/delete/show throw exception on nonfound (users, article, tags)
 
 bug: flash message not persisting across redirect?
+BUG!!! delete one is deleting ALL :O
 
 * register - no duplicate emails, username
 

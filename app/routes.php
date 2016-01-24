@@ -68,9 +68,27 @@ $app->group('/admin', function () use ($app) {
         $controller = new Wordup\Controller\Admin\UsersController($app);
 
         $app->get('', $controller('index'))->setName('admin_users_index');
+        // $app->get('/{id:[0-9]+}', $controller('show'))->setName('admin_users_show');
+        // $app->get('/create', $controller('create'))->setName('admin_users_create');
         $app->get('/{id:[0-9]+}/edit', $controller('edit'))->setName('admin_users_edit');
 
+        // $app->post('', $controller('post'))->setName('admin_users_post');
         $app->put('/{id:[0-9]+}', $controller('update'))->setName('admin_users_update');
         $app->delete('/{id:[0-9]+}', $controller('delete'))->setName('admin_users_delete');
+    });
+
+    // admin/articles routes
+    $app->group('/tags', function () use ($app) {
+
+        $controller = new Wordup\Controller\Admin\TagsController($app);
+
+        $app->get('', $controller('index'))->setName('admin_tags_index');
+        $app->get('/{id:[0-9]+}', $controller('show'))->setName('admin_tags_show');
+        $app->get('/create', $controller('create'))->setName('admin_tags_create');
+        $app->get('/{id:[0-9]+}/edit', $controller('edit'))->setName('admin_tags_edit');
+
+        $app->post('', $controller('post'))->setName('admin_tags_post');
+        $app->put('/{id:[0-9]+}', $controller('update'))->setName('admin_tags_update');
+        $app->delete('/{id:[0-9]+}', $controller('delete'))->setName('admin_tags_delete');
     });
 })->add( new \Wordup\Middleware\Auth( $container['auth'] ) );

@@ -4,6 +4,7 @@ use MartynBiz\Mongo\Connection;
 //
 use Wordup\Model\User;
 use Wordup\Model\Article;
+use Wordup\Model\Tag;
 
 abstract class TestCase extends \MartynBiz\Slim3Controller\Test\PHPUnit\TestCase
 {
@@ -101,6 +102,12 @@ abstract class TestCase extends \MartynBiz\Slim3Controller\Test\PHPUnit\TestCase
         ) );
         $this->article->author = $this->ownerUser;
         $this->article->save();
+
+        $this->tag = new Tag( array(
+            'name' => 'Travel',
+            'slug' => 'travel',
+        ) );
+        $this->tag->save();
     }
 
     public function tearDown()

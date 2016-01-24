@@ -12,7 +12,7 @@ class UsersController extends BaseController
         // only admin can do anything here
         $currentUser = $this->get('auth')->getCurrentUser();
         if (! $currentUser->isAdmin() ) {
-            throw new PermissionDenied('Permission denied to manager users.');
+            throw new PermissionDenied('Permission denied to manage users.');
         }
     }
 
