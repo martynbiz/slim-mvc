@@ -4,6 +4,7 @@ namespace Wordup\Model;
 
 use MartynBiz\Mongo;
 use MartynBiz\Validator;
+use Wordup\Model\Article;
 
 /**
  *

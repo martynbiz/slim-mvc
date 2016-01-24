@@ -10,47 +10,99 @@
 </ol>
 
 <form method="post" action="/admin/articles/{{ article.id }}/submit">
-    <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" value="{{ user.title }}" class="form-control" name="title" id="title" placeholder="Title">
+
+<div class="buttons">
+    <div class="col-md-6 hidden-s hidden-xs">
+        &nbsp;
+    </div>
+    <div class="col-md-6 text-right">
+        {% if current_user.is_admin or current_user.is_editor %}
+            <button type="submit" formaction="/admin/articles/{{ article.id }}/approve" class="btn btn-primary">Approve</button>
+        {% else %}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        {% endif %}
+        <button type="submit" formaction="/admin/articles/{{ article.id }}" class="btn btn-default">Save draft</button>
+    </div>
+</div>
+
+<div class="col-md-8">
+    <div class="homebox">
+        <div class="body">
+            <h3 class="underline"><label for="title">Title</label></h3>
+
+            <div class="form-group">
+                <input type="text" value="{{ article.title }}" class="form-control" name="title" id="title" placeholder="Title">
+            </div>
+
+            <div class="form-group">
+                <label for="subtitle">Subtitle</label>
+                <input type="text" value="{{ article.subtitle }}" class="form-control" name="subtitle" id="subtitle" placeholder="Subtitle">
+            </div>
+
+            {% if current_user.is_admin or current_user.is_editor %}
+            <div class="form-group">
+                <label for="slug">Slug</label>
+                <input type="text" value="{{ article.slug }}" class="form-control" name="slug" id="slug" placeholder="Slug">
+            </div>
+            {% endif %}
+        </div>
     </div>
 
-    {% if current_user.is_admin or current_user.is_editor %}
-    <div class="form-group">
-        <label for="slug">Slug</label>
-        <input type="text" value="{{ user.slug }}" class="form-control" name="slug" id="slug" placeholder="Slug">
+    <div class="homebox">
+        <div class="body">
+            <h3 class="underline"><label for="content">Content</label></h3>
+
+            <div class="form-group">
+                <textarea id="content" name="content" class="form-control" rows="5">{{ article.content }}</textarea>
+            </div>
+        </div>
     </div>
-    {% endif %}
+</div>
+<div class="col-md-4">
+    <div class="homebox">
+        <div class="body">
+            <h3 class="underline">Tags</h3>
 
-    <div class="form-group">
-        <label for="content">Title</label>
-        <textarea id="content" name="content" class="form-control" rows="5">{{ article.content }}</textarea>
+            {% if tags %}
+            <div class="form-group">
+                <ul class="tags">
+                    {% for tag in tags %}
+                        {% set selected = false %}
+                        {% for article_tag in article.tags %}
+                            {% if article_tag.id == tag.id %}
+                                {% set selected = true %}
+                            {% endif %}
+                        {% endfor %}
+                        <li><span><input type="checkbox" name="tags[]" value="{{ tag.id }}" {% if selected %}checked{% endif %}> {{ tag.name }}<span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
     </div>
 
-    {% if tags %}
-    <div class="form-group">
-    <ul>
-        {% for tag in tags %}
-        <li><input type="checkbox" name="tags[]" value="{{ tag.id }}"> {{ tag.name }}</li>
-        {% endfor %}
-    </ul>
+    <div class="homebox">
+        <div class="body">
+            <h3 class="underline">Photos</h3>
+
+            <div class="form-group">
+                <input type="file" name="files[]"><br>
+                <input type="file" name="files[]"><br>
+                <input type="file" name="files[]"><br>
+                <input type="file" name="files[]"><br>
+            </div>
+        </div>
     </div>
-    {% endif %}
+</div>
 
-    <input type="hidden" name="_METHOD" value="PUT">
+<input type="hidden" name="_METHOD" value="PUT">
 
-    {% if current_user.is_admin or current_user.is_editor %}
-        <button type="submit" formaction="/admin/articles/{{ article.id }}/approve" class="btn btn-primary">Approve</button>
-    {% else %}
-        <button type="submit" class="btn btn-primary">Submit</button>
-    {% endif %}
-    <button type="submit" formaction="/admin/articles/{{ article.id }}" class="btn btn-default">Save draft</button>
 </form>
 {% endblock %}
 
 {% block scripts %}
 <script src="//cdn.ckeditor.com/4.5.6/standard/ckeditor.js"></script>
 <script>
-    CKEDITOR.replace( 'description' );
+    CKEDITOR.replace( 'content' );
 </script>
 {% endblock %}

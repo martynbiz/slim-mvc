@@ -1,21 +1,59 @@
 @import 'bootstrap';
 
 // components
-@import 'navbar';
-@import 'footer';
+@import 'partials/body';
+@import 'partials/navbar';
+@import 'partials/homebox';
+@import 'partials/footer';
 
 
-// body {
-//     background-image: url('/images/bg.jpg');
+
 //
-//     h1, h2, h3, h4, h5, h6 {
-//         margin: 0px;
-//         margin-bottom: 0.5em;
-//         font-weight: 700;
-//         font-family: "Oswald";
-//     }
+// Buttons
+// --------------------------------------------------
+
+.buttons {
+    padding: 10px;
+    background: @gray-lighter;
+    float:left;
+    width: 100%;
+
+    margin-bottom: 1em;
+
+    a, button {
+        margin-bottom: 0.5em;
+    }
+
+    form {
+        display: inline;
+    }
+}
+
+
+
 //
-//     p {
-//         line-height: 1.5em;
-//     }
-// }
+// Tags
+// --------------------------------------------------
+
+ul.tags {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+
+    li {
+        display: inline;
+
+        span {
+            display: inline-block;
+            background-color: @link-color;
+            color: @white;
+            padding: 10px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        input {
+            margin: 0px;
+            padding: 0px;
+        }
+    }
+}

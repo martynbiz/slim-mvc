@@ -9,7 +9,17 @@ class ArticlesController extends BaseController
 {
     public function index()
     {
-        $articles = $this->get('model.article')->find();
+        $currentUser = $this->get('auth')->getCurrentUser();
+
+        // for now, members can view only thiers and admin/editors can view all
+        // TODO perhaps have a ("model.article")->findArticlesManagedBy($currentUser)
+        if ( $currentUser->isMember() or true) {
+            $articles = $this->get('model.article')->findArticlesOf($currentUser);
+        } else {
+            $articles = $this->get('model.article')->find(); // TODO paginate
+        }
+
+        // $articles = $this->get('model.article')->find();
 
         return $this->render('admin/articles/index.html', array(
             'articles' => $articles->toArray(),
@@ -85,7 +95,7 @@ class ArticlesController extends BaseController
         $cacheId = 'tags';
         if (! $tags = $this->get('cache')->get($cacheId)) {
             $tags = $this->get('model.tag')->find();
-            $this->get('cache')->set($cacheId, $tags, 3600);
+            $this->get('cache')->set($cacheId, $tags, 1);
         }
 
         return $this->render('admin/articles/edit.html', array(
@@ -112,12 +122,9 @@ class ArticlesController extends BaseController
             throw new PermissionDenied('Permission denied to edit this article.');
         }
 
-        // get tags from tags[] and write back to params['tags']
-        $params['tags'] = $this->get('model.tag')->find(array(
-            'id' => array(
-                '$in' => @$params['tags'],
-            ),
-        ));
+        // set tags from the params tags value submitted
+        // this will also ensure than only valid tags are used
+        $params['tags'] = $this->getTagsFromTagIds($params['tags']);
 
         if ( $article->save($params) ) {
             $this->get('flash')->addMessage('success', 'Draft article saved. Click "submit" when ready to publish.');
@@ -154,6 +161,10 @@ class ArticlesController extends BaseController
         // more testable as a method :)
         $article->set('status', Article::STATUS_SUBMITTED);
 
+        // set tags from the params tags value submitted
+        // this will also ensure than only valid tags are used
+        $params['tags'] = $this->getTagsFromTagIds($params['tags']);
+
         if ( $article->save( $this->getPost() ) ) {
             $this->get('flash')->addMessage('success', 'Article has been submitted and will be reviewed by an editor shortly.');
             return $this->redirect('/admin/articles/' . $id);
@@ -186,6 +197,10 @@ class ArticlesController extends BaseController
         // more testable as a method :)
         $article->set('status', Article::STATUS_APPROVED);
 
+        // set tags from the params tags value submitted
+        // this will also ensure than only valid tags are used
+        $params['tags'] = $this->getTagsFromTagIds($params['tags']);
+
         if ( $article->save( $this->getPost() ) ) {
             $this->get('flash')->addMessage('success', 'Article has been approved.');
             return $this->redirect('/admin/articles/' . $id);
@@ -217,5 +232,25 @@ class ArticlesController extends BaseController
             $this->get('flash')->addMessage('errors', $article->getErrors());
             return $this->edit($id);
         }
+    }
+
+
+    protected function getTagsFromTagIds($ids)
+    {
+        // if not an array (e.g. single id), set as one
+        // makes life easier for the query when use of "$in" can be assumed
+        if (! is_array($ids)) $ids = array($ids);
+
+        // ids need to be integers, otherwise they won't fetch anything
+        foreach ($ids as $i => $id) {
+            $ids[$i] = (int) $id;
+        }
+
+        // get tags from tags[] and write back to params['tags']
+        return $this->get('model.tag')->find(array(
+            'id' => array(
+                '$in' => $ids,
+            ),
+        ));
     }
 }

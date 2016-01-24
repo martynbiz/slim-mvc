@@ -7,6 +7,26 @@
     <li class="active">{{ article.title }}</li>
 </ol>
 
+<div class="buttons">
+    <div class="col-md-6">
+        <a href="{{ path_for('admin_articles_edit', { 'id': article.id }) }}" class="btn btn-default">Edit</a>
+
+        <form id="deleteUser" method="POST" action="{{ path_for('admin_articles_delete', { 'id': article.id }) }}">
+            <input type="hidden" name="_METHOD" value="DELETE">
+            <button type="submit" class="btn btn-default">Delete</button>
+        </form>
+    </div>
+
+    <div class="col-md-6 text-right">
+        {% if current_user.is_admin or current_user.is_editor %}
+        <form id="deleteUser" method="POST" action="{{ path_for('admin_articles_approve', { 'id': article.id }) }}">
+            <input type="hidden" name="_METHOD" value="PUT">
+            <button type="submit" class="btn btn-primary">Approve</button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+
 <table class="table table-striped">
     <tr>
         <th width="20%">Title</th>
@@ -19,6 +39,14 @@
     <tr>
         <th>Description</th>
         <td>{{ article.description|raw }}</td>
+    </tr>
+    <tr>
+        <th>Tags</th>
+        <td>
+            {% for tag in article.tags %}
+            <span class="tag">{{ tag.name }}</span>
+            {% endfor %}
+        </td>
     </tr>
     <tr>
         <th>Type</th>

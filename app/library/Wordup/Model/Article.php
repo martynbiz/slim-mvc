@@ -35,4 +35,16 @@ class Article extends Base
 
         return empty($this->getErrors());
     }
+
+    /**
+     * Find articles which belong to a given $user
+     * @param App\Model\User $user
+     * @param MartynBiz\Mongo\MongoIterator
+     */
+    public function findArticlesOf(User $user)
+    {
+        return $this->find(array(
+            'author' => $user,
+        ));
+    }
 }

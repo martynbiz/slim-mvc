@@ -31,12 +31,9 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ current_user.first_name }} <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ path_for('admin_articles_create', { 'type': 'article' }) }}">New article</a></li>
-                                <li><a href="{{ path_for('admin_articles_create', { 'type': 'recipe' }) }}">New recipe</a></li>
+                                <li><a href="{{ path_for('admin_articles_index', { 'type': 'recipe' }) }}">Admin</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li>
-                                        <a href="#" onclick="$('form#deleteSession').submit(); return false;">Logout</a>
-                                </li>
+                                <li><a href="#" onclick="$('form#deleteSession').submit(); return false;">Logout</a></li>
                             </ul>
                         </li>
                     </ul>

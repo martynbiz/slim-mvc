@@ -80,15 +80,21 @@ $ gulp watch
 ## TODO
 
 martynbiz/martynbiz
-* get only users articles
-* no duplicate email register
-* admin-lte template - create form: title box, content box, location box, tags
-* paginate - test limit/skip in integrated
+* photo uploads - hash storage dirs, resize, 
 
-*
+* no duplicate email register
+* paginate - test limit/skip in integrated
+* style login form, register form
+* confirm alert when deleting
+* portfolio
+* contact form
+* about me
+* search
+
 * homepage - latest
 * csrf - ask question on SO
 
+v2
 sms links
 
 test
@@ -96,6 +102,7 @@ test
 * integrated test for tags MongoIterator -> array(DBRefs)
 * test forward on admin/user/edit and admin/tags/edit&create
 * edit/delete/show throw exception on nonfound (users, article, tags)
+* tags: tags are being saved (submit, approve, draft)
 
 bug: flash message not persisting across redirect?
 BUG!!! delete one is deleting ALL :O

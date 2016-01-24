@@ -69,7 +69,7 @@ $container['cache'] = function ($c) {
 
     // we wanna set the prefix so not to clash with other apps
     $backend = new \Predis\Client(null, array(
-        'prefix' => 'crsrc:',
+        'prefix' => 'wordup:', // TODO move this into settings
     ));
 
     $adapter = new \Desarrolla2\Cache\Adapter\Predis($backend);
