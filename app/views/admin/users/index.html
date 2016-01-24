@@ -23,9 +23,11 @@
         <td>{{ user.email }}</td>
         <td>{{ user.created_at }}</td>
         <td width="10%" class="text-right">
-            <form method="POST" action="{{ path_for('admin_users_delete', { 'id': user.id }) }}">
+            <form id="deleteUser" method="POST" action="{{ path_for('admin_users_delete', { 'id': user.id }) }}">
+                <input type="hidden" name="_METHOD" value="DELETE">
+
                 <a href="{{ path_for('admin_users_edit', { 'id': user.id }) }}"><i class="glyphicon glyphicon-edit"></i></a>
-                <a href="#"><i class="glyphicon glyphicon-trash"></i></a>
+                <a href="#" onclick="$('form#deleteUser').submit(); return false;"><i class="glyphicon glyphicon-trash"></i></a>
             </form>
         </td>
     </tr>

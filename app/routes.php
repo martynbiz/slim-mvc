@@ -9,6 +9,7 @@ $app->group('', function () use ($app) {
     $controller = new Wordup\Controller\IndexController($app);
 
     $app->get('/', $controller('index'))->setName('index_index');
+    $app->get('/portfolio', $controller('portfolio'))->setName('index_portfolio');
     $app->get('/contact', $controller('contact'))->setName('index_contact');
 });
 

@@ -80,15 +80,17 @@ $ gulp watch
 ## TODO
 
 martynbiz/martynbiz
+* arrange all elements so that we can copy - http://demo.themeinprogress.com/nova/
+* get only users articles
+* no duplicate email register
 * admin-lte template - create form: title box, content box, location box, tags
 * paginate - test limit/skip in integrated
 
 *
-* bootstrap - gulp
-* give nice design
 * homepage - latest
 * csrf - ask question on SO
-* gulp?
+
+sms links
 
 test - validate role types in admin/users, setting roles,
 

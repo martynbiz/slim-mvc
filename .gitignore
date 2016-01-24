@@ -6,3 +6,5 @@
 /node_modules
 
 app/config/local.php
+
+/public/photos

@@ -9,21 +9,28 @@ var gulp = require('gulp'),
 
 // task for compiling less, combining css, and minifying
 gulp.task('css', function () {
-    // complile less
-    gulp.src('assets/less/app.less')
+    // complile frontend less
+    gulp.src('assets/less/frontend.less')
         .pipe(sourcemaps.init())  // Process the original sources
         .pipe(less())
         .pipe(sourcemaps.write()) // Add the map to modified source.
         .pipe(gulp.dest('public/css'));
 
-    // combine all files
-    return gulp.src([
-            'public/css/app.css'
-        ])
-        .pipe(concat('app.css'))
-        // //only minify if gulp is ran with '--type production'
-        // .pipe(gutil.env.type === 'production' ? minifyCss() : gutil.noop())
+    // complile admin less
+    gulp.src('assets/less/admin.less')
+        .pipe(sourcemaps.init())  // Process the original sources
+        .pipe(less())
+        .pipe(sourcemaps.write()) // Add the map to modified source.
         .pipe(gulp.dest('public/css'));
+
+    // // combine all files
+    // return gulp.src([
+    //         'public/css/app.css'
+    //     ])
+    //     .pipe(concat('app.css'))
+    //     // //only minify if gulp is ran with '--type production'
+    //     // .pipe(gutil.env.type === 'production' ? minifyCss() : gutil.noop())
+    //     .pipe(gulp.dest('public/css'));
 
 });
 

@@ -15,12 +15,20 @@
         <th>Title</th>
         <th>Type</th>
         <th>Data created</th>
+        <th>&nbsp;</th>
     </tr>
     {% for article in articles %}
     <tr>
         <td><a href="/admin/articles/{{ article.id }}">{{ article.title|e }}</a></td>
         <td>{{ article.type|e }}</td>
         <td>{{ article.created_at|e }}</td>
+        <td width="10%" class="text-right">
+            <form id="deleteUser" method="POST" action="{{ path_for('admin_articles_delete', { 'id': article.id }) }}">
+                <input type="hidden" name="_METHOD" value="DELETE">
+
+                <a href="#" onclick="$('form#deleteUser').submit(); return false;"><i class="glyphicon glyphicon-trash"></i></a>
+            </form>
+        </td>
     </tr>
     {% endfor %}
 </table>
