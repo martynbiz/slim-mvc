@@ -139,11 +139,13 @@
             <div class="col-md-12 body">
                 <h3>Tags</h3>
 
+                {% if tags %}
                 <ul class="tags">
-                    <li><a href="#">Recipes</a></li>
-                    <li><a href="#">Programming</a></li>
-                    <li><a href="#">Japanese</a></li>
+                    {% for tag in tags %}
+                    <li><a href="/{{ tag.slug }}">{{ tag.name }}</a></li>
+                    {% endfor %}
                 </ul>
+                {% endif %}
             </div>
         </div>
 

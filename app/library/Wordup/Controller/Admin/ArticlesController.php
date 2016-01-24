@@ -81,8 +81,16 @@ class ArticlesController extends BaseController
             throw new PermissionDenied('Permission denied to edit this article.');
         }
 
+        // get tags from cache
+        $cacheId = 'tags';
+        if (! $tags = $this->get('cache')->get($cacheId)) {
+            $tags = $this->get('model.tag')->find();
+            $this->get('cache')->set($cacheId, $tags, 3600);
+        }
+
         return $this->render('admin/articles/edit.html', array(
             'article' => array_merge($article->toArray(), $this->getPost()),
+            'tags' => $tags->toArray(),
         ));
     }
 
@@ -94,7 +102,7 @@ class ArticlesController extends BaseController
     public function update($id)
     {
         $currentUser = $this->get('auth')->getCurrentUser();
-
+        $params = $this->getPost();
         $article = $this->get('model.article')->findOneOrFail(array(
             'id' => (int) $id,
         ));
@@ -104,7 +112,14 @@ class ArticlesController extends BaseController
             throw new PermissionDenied('Permission denied to edit this article.');
         }
 
-        if ( $article->save( $this->getPost() ) ) {
+        // get tags from tags[] and write back to params['tags']
+        $params['tags'] = $this->get('model.tag')->find(array(
+            'id' => array(
+                '$in' => @$params['tags'],
+            ),
+        ));
+
+        if ( $article->save($params) ) {
             $this->get('flash')->addMessage('success', 'Draft article saved. Click "submit" when ready to publish.');
             return $this->redirect('/admin/articles/' . $id . '/edit');
         } else {

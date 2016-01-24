@@ -80,7 +80,6 @@ $ gulp watch
 ## TODO
 
 martynbiz/martynbiz
-* arrange all elements so that we can copy - http://demo.themeinprogress.com/nova/
 * get only users articles
 * no duplicate email register
 * admin-lte template - create form: title box, content box, location box, tags
@@ -92,7 +91,9 @@ martynbiz/martynbiz
 
 sms links
 
-test - validate role types in admin/users, setting roles,
+test
+* validate role types in admin/users, setting roles,
+* integrated test for tags MongoIterator -> array(DBRefs)
 
 bug: flash message not persisting across redirect?
 
@@ -143,7 +144,7 @@ martynbiz/slim3-contoller
 * assertViewReceives
 
 martynbiz/php-mongo
-* custom getter setters getCreatedAt, setPassword
+* onSave() -- generate slug
 * does save() return true or false?
 * paginate - test limit/skip in integrated
 * access properties like: $user['username'] or $user->username

@@ -11,36 +11,31 @@
 
 <form method="post" action="/admin/articles/{{ article.id }}/submit">
     <div class="form-group">
-        <label for="first_name">Title</label>
-        <input type="text" value="{{ user.first_name }}" class="form-control" name="first_name" id="first_name" placeholder="First name">
+        <label for="title">Title</label>
+        <input type="text" value="{{ user.title }}" class="form-control" name="title" id="title" placeholder="Title">
     </div>
-    <table class="table table-striped">
-        <tr>
-            <th width="20%">Title</th>
-            <td><input type="text" name="title" value="{{ article.title }}" class="form-control"></td>
-        </tr>
-        {% if current_user.is_admin or current_user.is_editor %}
-        <tr>
-            <th width="20%">Slug</th>
-            <td>
-                <input type="text" name="slug" value="{{ article.slug }}" class="form-control">
-                <p>Leave blank to auto-generate slug from title</p>
-            </td>
-        </tr>
-        {% endif %}
-        <tr>
-            <th>Description</th>
-            <td><textarea id="description" name="description" class="form-control" rows="5">{{ article.description }}</textarea></td>
-        </tr>
-        <tr>
-            <th>File upload</th>
-            <td><div class="fallback">
-                <input name="file[]" type="file" multiple />
-                <input name="file[]" type="file" multiple />
-                <input name="file[]" type="file" multiple />
-            </div></td>
-        </tr>
-    </table>
+
+    {% if current_user.is_admin or current_user.is_editor %}
+    <div class="form-group">
+        <label for="slug">Slug</label>
+        <input type="text" value="{{ user.slug }}" class="form-control" name="slug" id="slug" placeholder="Slug">
+    </div>
+    {% endif %}
+
+    <div class="form-group">
+        <label for="content">Title</label>
+        <textarea id="content" name="content" class="form-control" rows="5">{{ article.content }}</textarea>
+    </div>
+
+    {% if tags %}
+    <div class="form-group">
+    <ul>
+        {% for tag in tags %}
+        <li><input type="checkbox" name="tags[]" value="{{ tag.id }}"> {{ tag.name }}</li>
+        {% endfor %}
+    </ul>
+    </div>
+    {% endif %}
 
     <input type="hidden" name="_METHOD" value="PUT">
 

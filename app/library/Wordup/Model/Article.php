@@ -25,20 +25,13 @@ class Article extends Base
     protected static $whitelist = array(
         'title',
         'slug',
-        'description',
+        'content',
+        'tags',
     );
 
     public function validate()
     {
         $this->resetErrors();
-
-        // if (empty($this->data['title'])) {
-        //     $this->setError('Title must be given');
-        // }
-        //
-        // if (empty($this->data['description'])) {
-        //     $this->setError('Description must be given');
-        // }
 
         return empty($this->getErrors());
     }
