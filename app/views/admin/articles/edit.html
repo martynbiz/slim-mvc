@@ -10,6 +10,10 @@
 </ol>
 
 <form method="post" action="/admin/articles/{{ article.id }}/submit">
+    <div class="form-group">
+        <label for="first_name">Title</label>
+        <input type="text" value="{{ user.first_name }}" class="form-control" name="first_name" id="first_name" placeholder="First name">
+    </div>
     <table class="table table-striped">
         <tr>
             <th width="20%">Title</th>
@@ -52,8 +56,6 @@
 {% block scripts %}
 <script src="//cdn.ckeditor.com/4.5.6/standard/ckeditor.js"></script>
 <script>
-    // Replace the <textarea id="editor1"> with a CKEditor
-    // instance, using default configuration.
     CKEDITOR.replace( 'description' );
 </script>
 {% endblock %}
