@@ -9,7 +9,7 @@
     <li class="active">Edit draft</li>
 </ol>
 
-<form method="post" action="/admin/articles/{{ article.id }}/submit">
+<form method="post" action="/admin/articles/{{ article.id }}/submit" enctype="multipart/form-data">
 
 <div class="buttons">
     <div class="col-md-6 hidden-s hidden-xs">
@@ -32,11 +32,6 @@
 
             <div class="form-group">
                 <input type="text" value="{{ article.title }}" class="form-control" name="title" id="title" placeholder="Title">
-            </div>
-
-            <div class="form-group">
-                <label for="subtitle">Subtitle</label>
-                <input type="text" value="{{ article.subtitle }}" class="form-control" name="subtitle" id="subtitle" placeholder="Subtitle">
             </div>
 
             {% if current_user.is_admin or current_user.is_editor %}
@@ -86,10 +81,10 @@
             <h3 class="underline">Photos</h3>
 
             <div class="form-group">
-                <input type="file" name="files[]"><br>
-                <input type="file" name="files[]"><br>
-                <input type="file" name="files[]"><br>
-                <input type="file" name="files[]"><br>
+                <input type="file" name="photos[]"><br>
+                <input type="file" name="photos[]"><br>
+                <input type="file" name="photos[]"><br>
+                <input type="file" name="photos[]"><br>
             </div>
         </div>
     </div>

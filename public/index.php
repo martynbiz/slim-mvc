@@ -19,7 +19,7 @@ if (PHP_SAPI == 'cli-server') {
 
 require APPLICATION_PATH . '/../vendor/autoload.php';
 
-session_start();
+session_start(); // TODO start with Zend\Session?
 
 // Instantiate the app
 $settings = require APPLICATION_PATH . '/config/global.php';

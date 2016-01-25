@@ -1,8 +1,10 @@
 <?php
 namespace Wordup\Controller\Admin;
 
+use MartynBiz\Mongo;
 use Wordup\Controller\BaseController;
 use Wordup\Model\Article;
+use Wordup\Model\Photo;
 use Wordup\Exception\PermissionDenied;
 
 class ArticlesController extends BaseController
@@ -60,7 +62,7 @@ class ArticlesController extends BaseController
         $article = $this->get('model.article')->factory();
 
         // for security reasons, some properties are not on the whitelist but
-        // we can directly assign them by this way
+        // we can directly assign
         $article->status = Article::STATUS_DRAFT;
         $article->type = Article::TYPE_ARTICLE;
         $article->author = $currentUser->getDBRef();
@@ -124,7 +126,10 @@ class ArticlesController extends BaseController
 
         // set tags from the params tags value submitted
         // this will also ensure than only valid tags are used
-        $params['tags'] = $this->getTagsFromTagIds($params['tags']);
+        $params['tags'] = $this->getTagsFromTagIds(@$params['tags']);
+
+        // handle photos
+        $this->attachPhotosTo($article);
 
         if ( $article->save($params) ) {
             $this->get('flash')->addMessage('success', 'Draft article saved. Click "submit" when ready to publish.');
@@ -146,7 +151,7 @@ class ArticlesController extends BaseController
     public function submit($id)
     {
         $currentUser = $this->get('auth')->getCurrentUser();
-
+        $params = $this->getPost();
         $article = $this->get('model.article')->findOneOrFail(array(
             'id' => (int) $id,
         ));
@@ -161,9 +166,12 @@ class ArticlesController extends BaseController
         // more testable as a method :)
         $article->set('status', Article::STATUS_SUBMITTED);
 
+        // handle photos
+        $this->attachPhotosTo($article, @$params['photos']);
+
         // set tags from the params tags value submitted
         // this will also ensure than only valid tags are used
-        $params['tags'] = $this->getTagsFromTagIds($params['tags']);
+        $params['tags'] = $this->getTagsFromTagIds(@$params['tags']);
 
         if ( $article->save( $this->getPost() ) ) {
             $this->get('flash')->addMessage('success', 'Article has been submitted and will be reviewed by an editor shortly.');
@@ -182,7 +190,7 @@ class ArticlesController extends BaseController
     public function approve($id)
     {
         $currentUser = $this->get('auth')->getCurrentUser();
-
+        $params = $this->getPost();
         $article = $this->get('model.article')->findOneOrFail(array(
             'id' => (int) $id,
         ));
@@ -199,7 +207,10 @@ class ArticlesController extends BaseController
 
         // set tags from the params tags value submitted
         // this will also ensure than only valid tags are used
-        $params['tags'] = $this->getTagsFromTagIds($params['tags']);
+        $params['tags'] = $this->getTagsFromTagIds(@$params['tags']);
+
+        // handle photos
+        $this->attachPhotosTo($article, @$params['photos']);
 
         if ( $article->save( $this->getPost() ) ) {
             $this->get('flash')->addMessage('success', 'Article has been approved.');
@@ -234,7 +245,11 @@ class ArticlesController extends BaseController
         }
     }
 
-
+    /**
+     * Fetch tags from the tag $ids
+     * @param int|array $ids Array (or single int) of tag ids
+     * @return MartynBiz\Mongo\MongoIterator
+     */
     protected function getTagsFromTagIds($ids)
     {
         // if not an array (e.g. single id), set as one
@@ -252,5 +267,58 @@ class ArticlesController extends BaseController
                 '$in' => $ids,
             ),
         ));
+    }
+
+    /**
+     * Create photos in photos collection and attach to Mongo object (e.g. Article)
+     * @param Mongo $article Article to attach the photos to
+     * @param array $photos POST param
+     * @return void
+     */
+    protected function attachPhotosTo(Mongo $target)
+    {
+        // $container = $this->app->getContainer();
+        // $settings = $container->get('settings');
+        //
+        // // generate the photo dir from the target id
+        // // we'll use Photo::getDir to generate the dir hash which will be
+        // // useful when managing thousands of photos/articles
+        // // e.g. /var/www/.../data/photos/11/00/17/
+        // $destpath = $settings['photos_dir'] . Photo::getDir($target->id);
+        // if (!file_exists($destpath) and !mkdir($destpath, 0775, true)) {
+        //     throw new \Exception('Could not create directory');
+        // }
+        //
+        // // loop through photos and create in photos collection
+        // // also, attach the newly created photo to article
+        // foreach(@$_FILES['photos']['name'] as $i => $file) {
+        //
+        //     $name = $_FILES['photos']['name'][$i];
+        //     $tmpName = $_FILES['photos']['tmp_name'][$i];
+        //     $type = $_FILES['photos']['type'][$i];
+        //     $ext = pathinfo($name, PATHINFO_EXTENSION);
+        //
+        //     // TODO validation
+        //
+        //
+        //     // first, move the file to it's desired location
+        //     // e.g. /var/www/.../data/photos/11/00/17/7sdfdfsfs.jpg
+        //     $destpath = sprintf('%s/%s.%s', $destpath, uniqid(), strtolower($ext));
+        //     move_uploaded_file($tmpName, $destpath);
+        //
+        //     // create the photo in collection first so that we have an id to
+        //     // name the photo by
+        //     $photo = $this->get('model.photo')->create(array(
+        //         'file_path' => $destpath,
+        //         'type' => $type,
+        //     ));
+        //
+        //     // attach the photo to $article
+        //     // TODO enable Mongo to handle this
+        //     $target->push( array(
+        //         'photos' => $photo,
+        //     ) );
+        //
+        // }
     }
 }

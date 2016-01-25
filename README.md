@@ -80,7 +80,12 @@ $ gulp watch
 ## TODO
 
 martynbiz/martynbiz
-* photo uploads - hash storage dirs, resize, 
+* photo uploads - mongo->push
+
+
+* import data from wordpress
+
+* languages - japanese and english
 
 * no duplicate email register
 * paginate - test limit/skip in integrated
@@ -90,26 +95,30 @@ martynbiz/martynbiz
 * contact form
 * about me
 * search
+* fix titles on pages esp homepage
 
 * homepage - latest
 * csrf - ask question on SO
+* photo resize caching
 
 v2
 sms links
 
 test
+* validating images
 * validate role types in admin/users, setting roles,
 * integrated test for tags MongoIterator -> array(DBRefs)
 * test forward on admin/user/edit and admin/tags/edit&create
 * edit/delete/show throw exception on nonfound (users, article, tags)
 * tags: tags are being saved (submit, approve, draft)
+* getTagsFromTagIds, attachPhotos, class TestArticleProtected { public function testAttachPhotos() { return $this->attachPhotos } }
 
 bug: flash message not persisting across redirect?
 BUG!!! delete one is deleting ALL :O
 
 * register - no duplicate emails, username
 
-buy wordup.com
+domains: wordm8
 
 
 * file uploads
@@ -154,6 +163,7 @@ martynbiz/slim3-contoller
 * assertViewReceives
 
 martynbiz/php-mongo
+* 'photos' => [Photo, Photo, Photo] .. does Mongo loop through and getDBRef on each?
 * onSave() -- generate slug
 * does save() return true or false?
 * paginate - test limit/skip in integrated

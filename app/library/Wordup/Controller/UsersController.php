@@ -34,7 +34,7 @@ class UsersController extends BaseController
 
         // generate the password
 
-        $user->password = User::encryptPassword($params['password']);
+        $user->password = User::encryptPassword(@$params['password']);
 
         if ($user->save()) {
             // auto sign in

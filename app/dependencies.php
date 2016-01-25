@@ -91,3 +91,7 @@ $container['model.user'] = function ($c) {
 $container['model.tag'] = function ($c) {
     return new \Wordup\Model\Tag();
 };
+
+$container['model.photo'] = function ($c) {
+    return new \Wordup\Model\Photo();
+};

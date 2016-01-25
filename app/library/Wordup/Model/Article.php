@@ -27,14 +27,15 @@ class Article extends Base
         'slug',
         'content',
         'tags',
+        'photos',
     );
 
-    public function validate()
-    {
-        $this->resetErrors();
-
-        return empty($this->getErrors());
-    }
+    // public function validate()
+    // {
+    //     $this->resetErrors();
+    //
+    //     return empty($this->getErrors());
+    // }
 
     /**
      * Find articles which belong to a given $user

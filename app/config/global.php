@@ -9,15 +9,20 @@ $settings = [
             'template_path' => APPLICATION_PATH . '/views/',
         ],
 
+        // photos upload dir
+        'photos_dir' => APPLICATION_PATH . '/../data/photos/',
+
         // Monolog settings
         'logger' => [
             'name' => 'slim-app',
-            'path' => APPLICATION_PATH . '/../logs/app.log',
+            'path' => APPLICATION_PATH . '/../data/logs/app.log',
         ],
         'view' => [
             // 'cache' => realpath(APPLICATION_PATH . '/../cache/')
         ],
     ],
+
+    // TODO move mongo inside settings maybe?
     'mongo' => [
         'db' => 'crsrc',
         'classmap' => [
