@@ -28,6 +28,11 @@ class User extends Base
 
     public static function encryptPassword($value)
     {
+        // even null will be encrypted it seems
+        if (is_null($value)) {
+            return null;
+        }
+
         return password_hash($value, PASSWORD_BCRYPT, array(
             'cost' => 12,
         ));

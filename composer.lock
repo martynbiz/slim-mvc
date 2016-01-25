@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cfdcb8aeec9983af0666f7e8277ab61c",
+    "hash": "86d7d691d78a9528730a4d568772fe05",
     "content-hash": "0b134f69b85b0c69911b212f24e6b1f1",
     "packages": [
         {
@@ -142,12 +142,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/martynbiz/php-mongo.git",
-                "reference": "eb2a7f469f5f91bc6ec35cc5e981cda14166cd63"
+                "reference": "f1d1cb7ce63db3b225ecf7cc1b48135937bf0413"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/martynbiz/php-mongo/zipball/eb2a7f469f5f91bc6ec35cc5e981cda14166cd63",
-                "reference": "eb2a7f469f5f91bc6ec35cc5e981cda14166cd63",
+                "url": "https://api.github.com/repos/martynbiz/php-mongo/zipball/f1d1cb7ce63db3b225ecf7cc1b48135937bf0413",
+                "reference": "f1d1cb7ce63db3b225ecf7cc1b48135937bf0413",
                 "shasum": ""
             },
             "require": {
@@ -171,7 +171,7 @@
             ],
             "description": "ODM for MongoDB with auto-incremented IDs, whitelists, soft deletes and save validation configurable.",
             "homepage": "http://github.com/martynbiz/php-mongo",
-            "time": "2016-01-21 13:43:02"
+            "time": "2016-01-24 12:17:14"
         },
         {
             "name": "martynbiz/php-validator",
@@ -225,12 +225,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/martynbiz/slim3-controller.git",
-                "reference": "d52ebbe501171f9c7cae28937fda2344678eb521"
+                "reference": "23b65e21153454afe4df822b79b28a6bd2d957c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/martynbiz/slim3-controller/zipball/d52ebbe501171f9c7cae28937fda2344678eb521",
-                "reference": "d52ebbe501171f9c7cae28937fda2344678eb521",
+                "url": "https://api.github.com/repos/martynbiz/slim3-controller/zipball/23b65e21153454afe4df822b79b28a6bd2d957c7",
+                "reference": "23b65e21153454afe4df822b79b28a6bd2d957c7",
                 "shasum": ""
             },
             "require": {
@@ -268,7 +268,7 @@
                 "slim",
                 "slim3"
             ],
-            "time": "2016-01-21 12:16:26"
+            "time": "2016-01-24 09:16:34"
         },
         {
             "name": "monolog/monolog",
@@ -276,12 +276,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "6a35f7387b1b66121c37436e72378d58125cef90"
+                "reference": "79817af0de141a2278e54acd01fb2532a7548516"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/6a35f7387b1b66121c37436e72378d58125cef90",
-                "reference": "6a35f7387b1b66121c37436e72378d58125cef90",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/79817af0de141a2278e54acd01fb2532a7548516",
+                "reference": "79817af0de141a2278e54acd01fb2532a7548516",
                 "shasum": ""
             },
             "require": {
@@ -346,7 +346,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2016-01-20 10:14:19"
+            "time": "2016-01-22 18:13:50"
         },
         {
             "name": "nikic/fast-route",
@@ -918,12 +918,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "d7f01c96a4dde264682cf36c28e62086c77a09d4"
+                "reference": "1289d16209491b584839022f29257ad859b8532d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/d7f01c96a4dde264682cf36c28e62086c77a09d4",
-                "reference": "d7f01c96a4dde264682cf36c28e62086c77a09d4",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/1289d16209491b584839022f29257ad859b8532d",
+                "reference": "1289d16209491b584839022f29257ad859b8532d",
                 "shasum": ""
             },
             "require": {
@@ -935,7 +935,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -969,7 +969,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-01-13 07:16:33"
+            "time": "2016-01-20 09:13:37"
         },
         {
             "name": "twig/twig",
@@ -977,12 +977,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "57cc04b0f61504b9fad6b04946d2d44351019353"
+                "reference": "7dc9fb27a1fc3e750d33f196b7ff42aceaad343a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/57cc04b0f61504b9fad6b04946d2d44351019353",
-                "reference": "57cc04b0f61504b9fad6b04946d2d44351019353",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/7dc9fb27a1fc3e750d33f196b7ff42aceaad343a",
+                "reference": "7dc9fb27a1fc3e750d33f196b7ff42aceaad343a",
                 "shasum": ""
             },
             "require": {
@@ -1030,7 +1030,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-01-21 14:45:18"
+            "time": "2016-01-25 14:55:24"
         },
         {
             "name": "zendframework/zend-authentication",

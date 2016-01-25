@@ -106,6 +106,7 @@ sms links
 
 test
 * validating images
+* User::encryptPassword -- should return null, and try password_verify
 * validate role types in admin/users, setting roles,
 * integrated test for tags MongoIterator -> array(DBRefs)
 * test forward on admin/user/edit and admin/tags/edit&create
@@ -153,7 +154,8 @@ v2
 
 
 
-
+martynbiz/php-mongo
+* isNotEmpty returns true when ?
 
 martynbiz/slim3-contoller
 * can we run tests with run() instead? then we can use App for bootstrap (eg. routes)
