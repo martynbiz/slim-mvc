@@ -277,48 +277,47 @@ class ArticlesController extends BaseController
      */
     protected function attachPhotosTo(Mongo $target)
     {
-        // $container = $this->app->getContainer();
-        // $settings = $container->get('settings');
-        //
-        // // generate the photo dir from the target id
-        // // we'll use Photo::getDir to generate the dir hash which will be
-        // // useful when managing thousands of photos/articles
-        // // e.g. /var/www/.../data/photos/11/00/17/
-        // $destpath = $settings['photos_dir'] . Photo::getDir($target->id);
-        // if (!file_exists($destpath) and !mkdir($destpath, 0775, true)) {
-        //     throw new \Exception('Could not create directory');
-        // }
-        //
-        // // loop through photos and create in photos collection
-        // // also, attach the newly created photo to article
-        // foreach(@$_FILES['photos']['name'] as $i => $file) {
-        //
-        //     $name = $_FILES['photos']['name'][$i];
-        //     $tmpName = $_FILES['photos']['tmp_name'][$i];
-        //     $type = $_FILES['photos']['type'][$i];
-        //     $ext = pathinfo($name, PATHINFO_EXTENSION);
-        //
-        //     // TODO validation
-        //
-        //
-        //     // first, move the file to it's desired location
-        //     // e.g. /var/www/.../data/photos/11/00/17/7sdfdfsfs.jpg
-        //     $destpath = sprintf('%s/%s.%s', $destpath, uniqid(), strtolower($ext));
-        //     move_uploaded_file($tmpName, $destpath);
-        //
-        //     // create the photo in collection first so that we have an id to
-        //     // name the photo by
-        //     $photo = $this->get('model.photo')->create(array(
-        //         'file_path' => $destpath,
-        //         'type' => $type,
-        //     ));
-        //
-        //     // attach the photo to $article
-        //     // TODO enable Mongo to handle this
-        //     $target->push( array(
-        //         'photos' => $photo,
-        //     ) );
-        //
-        // }
+        $container = $this->app->getContainer();
+        $settings = $container->get('settings');
+
+        // generate the photo dir from the target id
+        // we'll use Photo::getDir to generate the dir hash which will be
+        // useful when managing thousands of photos/articles
+        // e.g. /var/www/.../data/photos/11/00/17/
+        $destpath = $settings['photos_dir'] . Photo::getDir($target->id);
+        if (!file_exists($destpath) and !mkdir($destpath, 0775, true)) {
+            throw new \Exception('Could not create directory');
+        }
+
+        // loop through photos and create in photos collection
+        // also, attach the newly created photo to article
+        foreach(@$_FILES['photos']['name'] as $i => $file) {
+
+            $name = $_FILES['photos']['name'][$i];
+            $tmpName = $_FILES['photos']['tmp_name'][$i];
+            $type = $_FILES['photos']['type'][$i];
+            $ext = pathinfo($name, PATHINFO_EXTENSION);
+
+            // TODO validation
+
+
+            // first, move the file to it's desired location
+            // e.g. /var/www/.../data/photos/11/00/17/7sdfdfsfs.jpg
+            $destpath = sprintf('%s/%s.%s', $destpath, uniqid(), strtolower($ext));
+            move_uploaded_file($tmpName, $destpath);
+
+            // create the photo in collection first so that we have an id to
+            // name the photo by
+            $photo = $this->get('model.photo')->create(array(
+                'file_path' => $destpath,
+                'type' => $type,
+            ));
+
+            // attach the photo to $article
+            $target->push( array(
+                'photos' => $photo,
+            ) );
+
+        }
     }
 }

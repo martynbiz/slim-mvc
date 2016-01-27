@@ -1,0 +1,4 @@
+{% if current_user.is_admin %}
+<li><a href="{{ path_for('admin_tags') }}">Tags</a></li>
+<li><a href="{{ path_for('admin_users') }}">Users</a></li>
+{% endif %}

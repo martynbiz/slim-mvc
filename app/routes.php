@@ -8,7 +8,7 @@ $app->group('', function () use ($app) {
 
     $controller = new Wordup\Controller\IndexController($app);
 
-    $app->get('/', $controller('index'))->setName('index_index');
+    $app->get('/', $controller('index'))->setName('index');
     $app->get('/portfolio', $controller('portfolio'))->setName('index_portfolio');
     $app->get('/contact', $controller('contact'))->setName('index_contact');
 });
@@ -49,7 +49,7 @@ $app->group('/admin', function () use ($app) {
 
         $controller = new Wordup\Controller\Admin\ArticlesController($app);
 
-        $app->get('', $controller('index'))->setName('admin_articles_index');
+        $app->get('', $controller('index'))->setName('admin_articles');
         $app->get('/{id:[0-9]+}', $controller('show'))->setName('admin_articles_show');
         $app->get('/create', $controller('create'))->setName('admin_articles_create');
         $app->get('/{id:[0-9]+}/edit', $controller('edit'))->setName('admin_articles_edit');
@@ -69,7 +69,7 @@ $app->group('/admin', function () use ($app) {
 
         $controller = new Wordup\Controller\Admin\UsersController($app);
 
-        $app->get('', $controller('index'))->setName('admin_users_index');
+        $app->get('', $controller('index'))->setName('admin_users');
         // $app->get('/{id:[0-9]+}', $controller('show'))->setName('admin_users_show');
         // $app->get('/create', $controller('create'))->setName('admin_users_create');
         $app->get('/{id:[0-9]+}/edit', $controller('edit'))->setName('admin_users_edit');
@@ -84,7 +84,7 @@ $app->group('/admin', function () use ($app) {
 
         $controller = new Wordup\Controller\Admin\TagsController($app);
 
-        $app->get('', $controller('index'))->setName('admin_tags_index');
+        $app->get('', $controller('index'))->setName('admin_tags');
         $app->get('/{id:[0-9]+}', $controller('show'))->setName('admin_tags_show');
         $app->get('/create', $controller('create'))->setName('admin_tags_create');
         $app->get('/{id:[0-9]+}/edit', $controller('edit'))->setName('admin_tags_edit');

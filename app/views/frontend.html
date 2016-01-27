@@ -3,6 +3,7 @@
         <title>{% block title %}Wordup admin{% endblock %}</title>
         {% block head %}{% endblock %}
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
         <link href='https://fonts.googleapis.com/css?family=Mr+Dafoe' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="/css/frontend.css">
@@ -18,7 +19,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                <a class="navbar-brand" href="{{ path_for('index_index') }}">Martyn Bissett</a>
+                    <a class="navbar-brand" href="{{ path_for('index') }}">Martyn Bissett</a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -27,11 +28,11 @@
                 <form id="deleteSession" method="post" action="/session">
                     <input type="hidden" name="_METHOD" value="DELETE">
                     <ul class="nav navbar-nav navbar-right">
-                        {% include 'partials/navbar_links.html' %}
+                        {% include 'partials/frontend/navbar_links.html' %}
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ current_user.first_name }} <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ path_for('admin_articles_index', { 'type': 'recipe' }) }}">Admin</a></li>
+                                <li><a href="{{ path_for('admin_articles', { 'type': 'recipe' }) }}">Admin</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#" onclick="$('form#deleteSession').submit(); return false;">Logout</a></li>
                             </ul>
@@ -41,7 +42,7 @@
                 {% else %}
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        {% include 'partials/navbar_links.html' %}
+                        {% include 'partials/frontend/navbar_links.html' %}
                         <li><a href="{{ path_for('users_create') }}">Register</a></li>
                         <li><a href="{{ path_for('session_login') }}">Login</a></li>
                     </li>
