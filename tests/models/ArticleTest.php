@@ -69,29 +69,29 @@ class ArticleTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals($values['author'], @$article->author);
     }
 
-    public function testGetArticlesOfWithQueriesByUser()
-    {
-        $model = (new Article());
-
-        $user = new User();
-        $user->_id = new \MongoId();
-
-        $returns = array(
-            array('title' => 'Have a nice day'),
-        );
-
-        // mock the find method of Connection and assert that correct query was
-        // used
-        $this->connectionMock
-            ->expects( $this->once() )
-            ->method('find')
-            ->with('articles', array(
-                'author' => $user->getDBRef(),
-            ), array())
-			->willReturn($returns);
-
-        $articles = $model->findArticlesOf($user);
-
-        $this->assertEquals($returns[0]['title'], $articles[0]->title);
-    }
+    // public function testGetArticlesManagedByWithQueriesByUser()
+    // {
+    //     $model = (new Article());
+    //
+    //     $user = new User();
+    //     $user->_id = new \MongoId();
+    //
+    //     $returns = array(
+    //         array('title' => 'Have a nice day'),
+    //     );
+    //
+    //     // mock the find method of Connection and assert that correct query was
+    //     // used
+    //     $this->connectionMock
+    //         ->expects( $this->once() )
+    //         ->method('find')
+    //         ->with('articles', array(
+    //             'author' => $user->getDBRef(),
+    //         ), array())
+	// 		->willReturn($returns);
+    //
+    //     $articles = $model->findArticlesOf($user);
+    //
+    //     $this->assertEquals($returns[0]['title'], $articles[0]->title);
+    // }
 }

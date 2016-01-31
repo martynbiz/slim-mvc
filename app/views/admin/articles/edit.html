@@ -80,6 +80,16 @@
         <div class="body">
             <h3 class="underline">Photos</h3>
 
+            {% if article.photos %}
+            <div class="photos">
+                {% for photo in article.photos %}
+                    <img src="http://geniussys.com/img/placeholder/blogpost-placeholder-100x100.png">
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <hr>
+
             <div class="form-group">
                 <input type="file" name="photos[]"><br>
                 <input type="file" name="photos[]"><br>

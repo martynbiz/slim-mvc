@@ -113,8 +113,8 @@ abstract class TestCase extends \MartynBiz\Slim3Controller\Test\PHPUnit\TestCase
     public function tearDown()
     {
         // clear fixtures
-        User::remove();
-        Article::remove();
+        User::remove(array());
+        Article::remove(array());
     }
 
     public function login($user)

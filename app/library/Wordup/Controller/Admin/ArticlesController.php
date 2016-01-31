@@ -12,20 +12,9 @@ class ArticlesController extends BaseController
     public function index()
     {
         $currentUser = $this->get('auth')->getCurrentUser();
+        $articles = $this->get('model.article')->findArticlesManagedBy($currentUser);
 
-        // for now, members can view only thiers and admin/editors can view all
-        // TODO perhaps have a ("model.article")->findArticlesManagedBy($currentUser)
-        if ( $currentUser->isMember() or true) {
-            $articles = $this->get('model.article')->findArticlesOf($currentUser);
-        } else {
-            $articles = $this->get('model.article')->find(); // TODO paginate
-        }
-
-        // $articles = $this->get('model.article')->find();
-
-        return $this->render('admin/articles/index.html', array(
-            'articles' => $articles->toArray(),
-        ));
+        return $this->render('admin.articles.index', compact('articles'));
     }
 
     /**
@@ -45,9 +34,7 @@ class ArticlesController extends BaseController
             throw new PermissionDenied('Permission denied to view this article.');
         }
 
-        return $this->render('admin/articles/show.html', array(
-            'article' => $article->toArray(),
-        ));
+        return $this->render('admin.articles.show', compact('article'));
     }
 
     /**
@@ -100,10 +87,7 @@ class ArticlesController extends BaseController
             $this->get('cache')->set($cacheId, $tags, 1);
         }
 
-        return $this->render('admin/articles/edit.html', array(
-            'article' => array_merge($article->toArray(), $this->getPost()),
-            'tags' => $tags->toArray(),
-        ));
+        return $this->render('admin.articles.edit', compact('article', 'tags'));
     }
 
     /**
@@ -129,16 +113,14 @@ class ArticlesController extends BaseController
         $params['tags'] = $this->getTagsFromTagIds(@$params['tags']);
 
         // handle photos
-        $this->attachPhotosTo($article);
+        $this->attachPhotosTo($article, @$_FILES['photos']);
 
         if ( $article->save($params) ) {
             $this->get('flash')->addMessage('success', 'Draft article saved. Click "submit" when ready to publish.');
             return $this->redirect('/admin/articles/' . $id . '/edit');
         } else {
             $this->get('flash')->addMessage('errors', $article->getErrors());
-            return $this->forward('edit', array(
-                'id' => $id,
-            ));
+            return $this->forward('edit', compact('id'));
         }
     }
 
@@ -167,7 +149,7 @@ class ArticlesController extends BaseController
         $article->set('status', Article::STATUS_SUBMITTED);
 
         // handle photos
-        $this->attachPhotosTo($article, @$params['photos']);
+        $this->attachPhotosTo($article, @$_FILES['photos']);
 
         // set tags from the params tags value submitted
         // this will also ensure than only valid tags are used
@@ -178,9 +160,7 @@ class ArticlesController extends BaseController
             return $this->redirect('/admin/articles/' . $id);
         } else {
             $this->get('flash')->addMessage('errors', $article->getErrors());
-            return $this->forward('edit', array(
-                'id' => $id,
-            ));
+            return $this->forward('edit', compact('id'));
         }
     }
 
@@ -210,16 +190,14 @@ class ArticlesController extends BaseController
         $params['tags'] = $this->getTagsFromTagIds(@$params['tags']);
 
         // handle photos
-        $this->attachPhotosTo($article, @$params['photos']);
+        $this->attachPhotosTo($article, @$_FILES['photos']);
 
         if ( $article->save( $this->getPost() ) ) {
             $this->get('flash')->addMessage('success', 'Article has been approved.');
             return $this->redirect('/admin/articles/' . $id);
         } else {
             $this->get('flash')->addMessage('errors', $article->getErrors());
-            return $this->forward('edit', array(
-                'id' => $id,
-            ));
+            return $this->forward('edit', compact('id'));
         }
     }
 
@@ -275,42 +253,77 @@ class ArticlesController extends BaseController
      * @param array $photos POST param
      * @return void
      */
-    protected function attachPhotosTo(Mongo $target)
+    protected function attachPhotosTo(Mongo $target, $photos)
     {
         $container = $this->app->getContainer();
         $settings = $container->get('settings');
 
         // generate the photo dir from the target id
-        // we'll use Photo::getDir to generate the dir hash which will be
+        // we'll use Photo::getCurrentDir to generate the dir from date
         // useful when managing thousands of photos/articles
-        // e.g. /var/www/.../data/photos/11/00/17/
-        $destpath = $settings['photos_dir'] . Photo::getDir($target->id);
-        if (!file_exists($destpath) and !mkdir($destpath, 0775, true)) {
+        // e.g. /var/www/.../data/photos/201601/31/
+        $dir = $settings['photos_dir']['original'] . '/' . Photo::getCurrentDir();
+        if (!file_exists($dir) and !mkdir($dir, 0775, true)) {
             throw new \Exception('Could not create directory');
         }
 
         // loop through photos and create in photos collection
         // also, attach the newly created photo to article
-        foreach(@$_FILES['photos']['name'] as $i => $file) {
+        foreach(@$photos['name'] as $i => $file) {
 
-            $name = $_FILES['photos']['name'][$i];
-            $tmpName = $_FILES['photos']['tmp_name'][$i];
-            $type = $_FILES['photos']['type'][$i];
+            $name = $photos['name'][$i];
+            $tmpName = $photos['tmp_name'][$i];
+            $type = $photos['type'][$i];
             $ext = pathinfo($name, PATHINFO_EXTENSION);
 
-            // TODO validation
+            // if the file field is blank, move onto the next field
+            if (empty($file)) continue;
 
+            // get the dimensions so we can calculate the width/height ratio
+            // throw an exception if this fails
+            list($width_orig, $height_orig) = getimagesize($tmpName);
+            if (!$width_orig or !$height_orig)
+                throw new \Exception('Could not get image size from uploaded image.');
+
+            // calculate new image size with ratio if exceeds max
+            // TODO put this into Photo as static, unit test
+            $ratio_orig = $width_orig/$height_orig;
+
+            // Set a maximum height and width
+            $width = 2000;
+            $height = 2000;
+            if ($width/$height > $ratio_orig) {
+               $width = ceil($height*$ratio_orig);
+            } else {
+               $height = ceil($width/$ratio_orig);
+            }
+
+            // Create a new image from the uploaded file
+            $src = imagecreatefromjpeg($tmpName);
+            if (!$src)
+                throw new \Exception('Only JPEG images are allowed for photos.');
+
+            // Create a new true color image and copy and resize part of an image
+            // with resampling
+            $tmp = imagecreatetruecolor($width, $height);
+            imagecopyresampled($tmp, $src, 0, 0, 0, 0, $width, $height, $width_orig, $height_orig);
 
             // first, move the file to it's desired location
             // e.g. /var/www/.../data/photos/11/00/17/7sdfdfsfs.jpg
-            $destpath = sprintf('%s/%s.%s', $destpath, uniqid(), strtolower($ext));
-            move_uploaded_file($tmpName, $destpath);
+            $file = sprintf('%s.%s', substr(md5_file($tmpName), 0, 10), strtolower($ext));
+            $destpath = $dir . '/' . $file;
+            // move_uploaded_file($tmpName, $destpath);
+
+            imagejpeg($tmp, $destpath);
+            imagedestroy($tmp);
 
             // create the photo in collection first so that we have an id to
             // name the photo by
             $photo = $this->get('model.photo')->create(array(
-                'file_path' => $destpath,
+                'original_file' => $file,
                 'type' => $type,
+                'width' => $width,
+                'height' => $height,
             ));
 
             // attach the photo to $article

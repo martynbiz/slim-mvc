@@ -5,7 +5,7 @@ $container = $app->getContainer();
 // view renderer
 $container['renderer'] = function ($c) {
     $settings = $c->get('settings')['renderer'];
-    return new \Slim\Views\PhpRenderer($settings['template_path']);
+    return new \Wordup\View\PhpRenderer($settings['template_path']);
 };
 
 // monolog
@@ -17,17 +17,17 @@ $container['logger'] = function ($c) {
     return $logger;
 };
 
-// Register component on container
-$container['view'] = function ($c) {
-    $settings = $c->get('settings')['view'];
-    $view = new \Slim\Views\Twig( APPLICATION_PATH . '/views/', $settings);
-    $view->addExtension(new \Slim\Views\TwigExtension(
-        $c['router'],
-        $c['request']->getUri()
-    ));
-
-    return $view;
-};
+// // Register component on container
+// $container['view'] = function ($c) {
+//     $settings = $c->get('settings')['view'];
+//     $view = new \Slim\Views\Twig( APPLICATION_PATH . '/views/', $settings);
+//     $view->addExtension(new \Slim\Views\TwigExtension(
+//         $c['router'],
+//         $c['request']->getUri()
+//     ));
+//
+//     return $view;
+// };
 
 $container['csrf'] = function ($c) {
     return new \Slim\Csrf\Guard;

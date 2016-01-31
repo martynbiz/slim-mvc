@@ -5,7 +5,7 @@ class SessionController extends BaseController
 {
     public function login()
     {
-        return $this->render('session/login.html');
+        return $this->render('session.login');
     }
 
     public function post()

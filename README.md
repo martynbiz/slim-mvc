@@ -26,10 +26,7 @@ https://github.com/martynbiz/slim3-controller
 
 ## Views ##
 
-Views use twig templates:
-
-https://github.com/slimphp/Twig-View
-http://twig.sensiolabs.org/documentation
+Laravel Blade
 
 ## Assets ##
 
@@ -80,26 +77,34 @@ $ gulp watch
 ## TODO
 
 martynbiz/martynbiz
-* photo uploads - mongo->push
+
+* access properties like: $article['content']['title'], $article['options']['featured'], $article['meta']['page_views'] -- mongo
+
+photos
+* photo cache - copyjpg, resize, write to cache file, serve
+* display cached version on homepage,
+
+import wordpress
+* write script
+* add photos to articles
+
+* articles/99 show page
+* add featured option to articles
+* put the $router in the view for $router->pathFor('index_index')
 
 
-* import data from wordpress
+
 
 * languages - japanese and english
-
 * no duplicate email register
 * paginate - test limit/skip in integrated
-* style login form, register form
 * confirm alert when deleting
 * portfolio
 * contact form
 * about me
 * search
 * fix titles on pages esp homepage
-
-* homepage - latest
 * csrf - ask question on SO
-* photo resize caching
 
 v2
 sms links
@@ -114,12 +119,11 @@ test
 * tags: tags are being saved (submit, approve, draft)
 * getTagsFromTagIds, attachPhotos, class TestArticleProtected { public function testAttachPhotos() { return $this->attachPhotos } }
 
-bug: flash message not persisting across redirect?
 BUG!!! delete one is deleting ALL :O
 
 * register - no duplicate emails, username
 
-domains: wordm8
+domains: wordm8, 
 
 
 * file uploads
@@ -150,7 +154,12 @@ v2
 * vagrant
 * zend-like: bootstrap, resources (one for mongo, another for eloquent), -- __construct?
 * popular - google analytics
-* admin-lte homepage (graphs etc)
+* graphs homepage
+
+
+vx
+* alloyeditor - edit in place
+* default action -> views (e.g. members -> MembersController::index / members/index.html)
 
 
 
@@ -165,11 +174,9 @@ martynbiz/slim3-contoller
 * assertViewReceives
 
 martynbiz/php-mongo
-* 'photos' => [Photo, Photo, Photo] .. does Mongo loop through and getDBRef on each?
-* onSave() -- generate slug
+* access properties like: $article['content']['title'], $article['options']['featured'], $article['meta']['page_views']
 * does save() return true or false?
 * paginate - test limit/skip in integrated
-* access properties like: $user['username'] or $user->username
 * SO is it better to update few name/values with $set, or just overwrite all with $this->data?
 * get human readable date
 * allow us to insert an empty draft

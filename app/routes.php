@@ -41,6 +41,14 @@ $app->group('/users', function () use ($app) {
     $app->post('', $controller('post'))->setName('users_post');
 });
 
+// photos
+$app->group('/photos', function () use ($app) {
+
+    $controller = new Wordup\Controller\PhotosController($app);
+
+    $app->get('/{path:[0-9]+\/[0-9]+\/[0-9]+\/.+}/photo.jpg', $controller('cached'))->setName('photos_cached');
+});
+
 // admin routes -- invokes auth middleware
 $app->group('/admin', function () use ($app) {
 

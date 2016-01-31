@@ -13,19 +13,19 @@
             	<div class="row omb_row-sm-offset-3 omb_socialButtons">
             	    <div class="col-xs-4 col-sm-2">
             	        <a href="#" class="btn btn-lg btn-block omb_btn-facebook">
-            		        <i class="fa fa-facebook visible-xs"></i>
+            		        <i class="fa fa-facebook"></i>
             		        <span class="hidden-xs">Facebook</span>
             	        </a>
                     </div>
                 	<div class="col-xs-4 col-sm-2">
             	        <a href="#" class="btn btn-lg btn-block omb_btn-twitter">
-            		        <i class="fa fa-twitter visible-xs"></i>
+            		        <i class="fa fa-twitter"></i>
             		        <span class="hidden-xs">Twitter</span>
             	        </a>
                     </div>
                 	<div class="col-xs-4 col-sm-2">
             	        <a href="#" class="btn btn-lg btn-block omb_btn-google">
-            		        <i class="fa fa-google-plus visible-xs"></i>
+            		        <i class="fa fa-google-plus"></i>
             		        <span class="hidden-xs">Google+</span>
             	        </a>
                     </div>
@@ -43,12 +43,12 @@
                         <form method="post" action="/session" autocomplete="off">
             				<div class="input-group">
             					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            					<input type="text" class="form-control" name="email" placeholder="email address" value="{{ params.email }}">
+            					<input type="text" class="form-control" name="email" placeholder="email address" value="">
             				</div>
 
             				<div class="input-group">
             					<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-            					<input  type="password" class="form-control" name="password" placeholder="Password" value="{{ params.password }}">
+            					<input  type="password" class="form-control" name="password" placeholder="Password" value="">
             				</div>
 
             				<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>

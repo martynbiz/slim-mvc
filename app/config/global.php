@@ -10,7 +10,10 @@ $settings = [
         ],
 
         // photos upload dir
-        'photos_dir' => APPLICATION_PATH . '/../data/photos/',
+        'photos_dir' => [
+            'original' => realpath(APPLICATION_PATH . '/../data/photos/'),
+            'cache' => realpath(APPLICATION_PATH . '/../data/cache/photos/'),
+        ],
 
         // Monolog settings
         'logger' => [

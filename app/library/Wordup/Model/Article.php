@@ -40,12 +40,19 @@ class Article extends Base
     /**
      * Find articles which belong to a given $user
      * @param App\Model\User $user
-     * @param MartynBiz\Mongo\MongoIterator
+     * @param array $query Optional query to find articles
      */
-    public function findArticlesOf(User $user)
+    public function findArticlesManagedBy(User $user, $query=array())
     {
-        return $this->find(array(
-            'author' => $user,
-        ));
+        // members can only view their own articles
+        if ($user->isMember()) {
+            $query = array_merge(array(
+                'author' => $user,
+            ), $query);
+        }
+
+        // TODO editors can only view their members articles
+
+        return $this->find($query);
     }
 }

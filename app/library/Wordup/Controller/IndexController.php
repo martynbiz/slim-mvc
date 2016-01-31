@@ -19,14 +19,11 @@ class IndexController extends BaseController
             $this->get('cache')->set($cacheId, $tags, 1); // TODO set this proper
         }
 
-        return $this->render('index/index.html', array(
-            'featured_articles' => $featured->toArray(),
-            'tags' => $tags->toArray(),
-        ));
+        return $this->render('index.index', compact($featured, $tags));
     }
 
     public function contact()
     {
-        return $this->render('index/contact.html');
+        return $this->render('index.contact');
     }
 }
