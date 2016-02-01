@@ -20,14 +20,14 @@ class TagsController extends BaseController
     {
         $tags = $this->get('model.tag')->find();
 
-        return $this->render('admin/tags/index.html', array(
-            'tags' => $tags->toArray(),
+        return $this->render('admin.tags.index', array(
+            'tags' => $tags,
         ));
     }
 
     public function create()
     {
-        return $this->render('admin/tags/create.html', array(
+        return $this->render('admin.tags.create', array(
             'params' => $this->getPost(),
         ));
     }
@@ -55,8 +55,11 @@ class TagsController extends BaseController
             'id' => (int) $id,
         ));
 
-        return $this->render('admin/tags/edit.html', array(
-            'tag' => array_merge($tag->toArray(), $this->getPost()),
+        // include any params that may have been sent
+        $tag->set( $this->getPost() );
+
+        return $this->render('admin.tags.edit', array(
+            'tag' => $tag,
         ));
     }
 

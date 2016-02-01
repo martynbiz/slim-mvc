@@ -68,10 +68,7 @@
             </div>
 
             <div class="homebox">
-                <div class="col-md-3 image">
-                    <img src="/photos/earthparade.jpg" class="img-responsive">
-                </div>
-                <div class="col-md-9 body">
+                <div class="col-md-12 body">
                     <h2>Earth parade</h2>
                     <p>Slim framework blah blah blah</p>
                     <p class="small">Written by {{ 'article.author.name' }} | {{ 'article.created_at' }}</p>

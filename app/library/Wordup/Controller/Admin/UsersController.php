@@ -20,8 +20,8 @@ class UsersController extends BaseController
     {
         $users = $this->get('model.user')->find();
 
-        return $this->render('admin/users/index.html', array(
-            'users' => $users->toArray(),
+        return $this->render('admin.users.index', array(
+            'users' => $users,
         ));
     }
 
@@ -34,8 +34,10 @@ class UsersController extends BaseController
             'id' => (int) $id,
         ));
 
-        return $this->render('admin/users/edit.html', array(
-            'user' => array_merge($user->toArray(), $this->getPost()),
+        $user->set( $this->getPost() );
+
+        return $this->render('admin.users.edit', array(
+            'user' => $user,
         ));
     }
 

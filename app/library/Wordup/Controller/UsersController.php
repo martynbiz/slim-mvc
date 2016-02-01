@@ -11,14 +11,14 @@ class UsersController extends BaseController
             'id' => (int) $id,
         ));
 
-        return $this->render('users/create.html', array(
+        return $this->render('users.create', array(
             'user' => $user,
         ));
     }
 
     public function create()
     {
-        return $this->render('users/create.html', array(
+        return $this->render('users.create', array(
             'params' => $this->getPost(),
         ));
     }
@@ -33,27 +33,14 @@ class UsersController extends BaseController
         $user->role = User::ROLE_MEMBER;
 
         // generate the password
-
         $user->password = User::encryptPassword(@$params['password']);
 
         if ($user->save()) {
-            // auto sign in
             $this->get('auth')->authenticate($params['email'], $params['password']);
-
             return $this->redirect('/');
         } else {
             $this->get('flash')->addMessage('errors', $user->getErrors());
             return $this->forward('create');
         }
-    }
-
-    public function edit()
-    {
-
-    }
-
-    public function update()
-    {
-
     }
 }

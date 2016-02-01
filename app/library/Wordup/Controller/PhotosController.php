@@ -14,10 +14,7 @@ class PhotosController extends BaseController
         $settings = $container->get('settings');
 
         // check if cached file exists for this photo
-        if (file_exists($path)) {
-            // cached image exists, return it
-
-        } else {
+        if (!file_exists($path)) {
             // cached image doesn't exist, create one
 
             // get the params from the $path (mainly just $id and $dim)
@@ -30,7 +27,7 @@ class PhotosController extends BaseController
 
             // this will generate a path to the cached file eg. 201601/31/100x100.jpg
             $srcPath = $settings['photos_dir']['original'] . $photo->getOriginalPath($dim);
-            $destPath = $settings['photos_dir']['cache'] . $photo->getCachedPath($dim);
+            $filepath = $settings['photos_dir']['cache'] . $photo->getCachedPath($dim);
 
             // get the dimensions so we can calculate the width/height ratio
             // throw an exception if this fails
@@ -38,20 +35,9 @@ class PhotosController extends BaseController
             if (!$width_orig or !$height_orig)
                 throw new \Exception('Could not get image size from uploaded image.');
 
-
-
             // calculate new image size with ratio if exceeds max
             // TODO put this into Photo as static, unit test
             $ratio_orig = $width_orig/$height_orig;
-
-            // // Set a maximum height and width
-            // $width = 2000;
-            // $height = 2000;
-            // if ($width/$height > $ratio_orig) {
-            //    $width = ceil($height*$ratio_orig);
-            // } else {
-            //    $height = ceil($width/$ratio_orig);
-            // }
 
             // check dimensions are valid
             // valid dimansions are:
@@ -86,8 +72,14 @@ class PhotosController extends BaseController
                 throw new \Exception('Could not create directory');
             }
 
-            imagejpeg($tmp, $destPath);
+            imagejpeg($tmp, $filepath);
             imagedestroy($tmp);
         }
+
+        // display image to browser
+        readfile($filepath);
+
+        // set content type
+        return $container['response']->withHeader('Content-type', 'image/jpeg');
     }
 }

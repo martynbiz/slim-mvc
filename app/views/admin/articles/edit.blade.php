@@ -60,7 +60,7 @@
                 <div class="form-group">
                     <ul class="tags">
                         @foreach ($tags as $tag)
-                            <li><span><input type="checkbox" name="tags[]" value="{{ tag.id }}">{{ $tag->name }}<span></li>
+                            <li><span><input type="checkbox" name="tags[]" value="{{ $tag->id }}">{{ $tag->name }}<span></li>
                         @endforeach
                     </ul>
                 </div>

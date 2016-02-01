@@ -1,6 +1,6 @@
-{% extends "admin.html" %}
+@extends('layouts.admin')
 
-{% block body %}
+@section('content')
 <ol class="breadcrumb">
     <li><a href="/admin">Admin</a></li>
     <li class="active">Users</li>
@@ -15,23 +15,23 @@
         <th>Created</th>
         <th>&nbsp;</th>
     </tr>
-    {% for user in users %}
-    <tr>
-        <td>{{ user.first_name }}</td>
-        <td>{{ user.last_name }}</td>
-        <td>{{ user.role }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.created_at }}</td>
-        <td width="10%" class="text-right">
-            <form id="deleteUser" method="POST" action="{{ path_for('admin_users_delete', { 'id': user.id }) }}">
-                <input type="hidden" name="_METHOD" value="DELETE">
+    @foreach ($users as $user)
+        <tr>
+            <td>{{ $user->first_name }}</td>
+            <td>{{ $user->last_name }}</td>
+            <td>{{ $user->role }}</td>
+            <td>{{ $user->email }}</td>
+            <td>{{ $user->created_at }}</td>
+            <td width="10%" class="text-right">
+                <form id="deleteUser" method="POST" action="/admin/users/{{ $user->id }}">
+                    <input type="hidden" name="_METHOD" value="DELETE">
 
-                <a href="{{ path_for('admin_users_edit', { 'id': user.id }) }}"><i class="glyphicon glyphicon-edit"></i></a>
-                <a href="#" onclick="$('form#deleteUser').submit(); return false;"><i class="glyphicon glyphicon-trash"></i></a>
-            </form>
-        </td>
-    </tr>
-    {% endfor %}
+                    <a href="/admin/users/{{ $user->id }}/edit"><i class="glyphicon glyphicon-edit"></i></a>
+                    <a href="#" onclick="$('form#deleteUser').submit(); return false;"><i class="glyphicon glyphicon-trash"></i></a>
+                </form>
+            </td>
+        </tr>
+    @endforeach
 </table>
 
 <nav>
@@ -53,4 +53,4 @@
         </li>
     </ul>
 </nav>
-{% endblock %}
+@stop

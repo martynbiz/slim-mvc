@@ -30,7 +30,7 @@
                     <form id="deleteSession" method="post" action="/session">
                         <input type="hidden" name="_METHOD" value="DELETE">
                         <ul class="nav navbar-nav navbar-right">
-                            @include ('partials.admin.navbar_links')
+                            @include ('partials.frontend.navbar_links')
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ $current_user->first_name }} <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
