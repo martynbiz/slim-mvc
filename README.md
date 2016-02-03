@@ -92,6 +92,7 @@ import wordpress
 * add featured option to articles
 * put the $router in the view for $router->pathFor('index_index')
 
+nesbot/carbon
 
 
 
@@ -118,12 +119,13 @@ test
 * edit/delete/show throw exception on nonfound (users, article, tags)
 * tags: tags are being saved (submit, approve, draft)
 * getTagsFromTagIds, attachPhotos, class TestArticleProtected { public function testAttachPhotos() { return $this->attachPhotos } }
+* uploading images
 
 BUG!!! delete one is deleting ALL :O
 
 * register - no duplicate emails, username
 
-domains: wordm8, 
+domains: wordm8,
 
 
 * file uploads

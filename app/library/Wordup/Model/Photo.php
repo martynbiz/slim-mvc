@@ -37,24 +37,57 @@ class Photo extends Base
     }
 
     /**
+     * Will return directory of this photo
+     * @return string
+     */
+    public function getCachedDir()
+    {
+        $datePart = date('Ym/d', $this->data['created_at']->sec);
+
+        return '/' . $datePart . '/' . $this->data['id'];
+    }
+
+    /**
+     * Will get the path to the cached photo by given dimensions
+     * @param string $dim Dimensions to get (e.g. "100x100")
+     */
+    public function getCachedFileName($dim)
+    {
+        return $dim . '.jpg';
+    }
+
+    /**
      * Will get the path to the cached photo by given dimensions
      * @param string $dim Dimensions to get (e.g. "100x100")
      */
     public function getCachedPath($dim)
     {
+        return $this->getCachedDir() . '/' . $this->getCachedFileName($dim);
+    }
+
+    /**
+     * Will get the path to the cached photo by given dimensions
+     * @param string $dim Dimensions to get (e.g. "100x100")
+     */
+    public function getCachedHref($dim)
+    {
+        return $dim . '.jpg';
+    }
+
+    /**
+     */
+    public function getOriginalDir()
+    {
         $datePart = date('Ym/d', $this->data['created_at']->sec);
 
-        return '/' . $datePart . '/' . $this->data['id'] . '-' . $dim . '.jpg';
+        return '/' . $datePart;
     }
 
     /**
      * Will get the path to the original photo (not cached)
-     * @param int $id The ID which to create the hash from
      */
-    public function getOriginalPath($dim)
+    public function getOriginalFileName()
     {
-        $datePart = date('Ym/d', $this->data['created_at']->sec);
-
-        return '/' . $datePart . '/' . $this->data['original_file'];
+        return $this->data['original_file'];
     }
 }

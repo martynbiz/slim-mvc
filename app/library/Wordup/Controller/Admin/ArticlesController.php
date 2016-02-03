@@ -5,7 +5,7 @@ use MartynBiz\Mongo;
 use Wordup\Controller\BaseController;
 use Wordup\Model\Article;
 use Wordup\Model\Photo;
-use Wordup\Exception\PermissionDenied;
+use Wordup\Exception\PermissionDenied as PermissionDeniedException;
 
 class ArticlesController extends BaseController
 {
@@ -31,7 +31,7 @@ class ArticlesController extends BaseController
 
         // ensure that this user can edit this article
         if (! $currentUser->canView($article) ) {
-            throw new PermissionDenied('Permission denied to view this article.');
+            throw new PermissionDeniedException('Permission denied to view this article.');
         }
 
         return $this->render('admin.articles.show', compact('article'));
@@ -77,7 +77,7 @@ class ArticlesController extends BaseController
 
         // ensure that this user can edit this article
         if (! $currentUser->canEdit($article) ) {
-            throw new PermissionDenied('Permission denied to edit this article.');
+            throw new PermissionDeniedException('Permission denied to edit this article.');
         }
 
         // get tags from cache
@@ -105,7 +105,7 @@ class ArticlesController extends BaseController
 
         // ensure that this user can edit this article
         if (! $currentUser->canEdit($article) ) {
-            throw new PermissionDenied('Permission denied to edit this article.');
+            throw new PermissionDeniedException('Permission denied to edit this article.');
         }
 
         // set tags from the params tags value submitted
@@ -140,7 +140,7 @@ class ArticlesController extends BaseController
 
         // only top brass can approve
         if (! $currentUser->canSubmit($article) ) {
-            throw new PermissionDenied('Permission denied to submit this article.');
+            throw new PermissionDeniedException('Permission denied to submit this article.');
         }
 
         // set the status of the article to approved, if there are any problems
@@ -177,7 +177,7 @@ class ArticlesController extends BaseController
 
         // only top brass can approve
         if (! $currentUser->canApprove($article) ) {
-            throw new PermissionDenied('Permission denied to approve this article.');
+            throw new PermissionDeniedException('Permission denied to approve this article.');
         }
 
         // set the status of the article to approved, if there are any problems
@@ -211,7 +211,7 @@ class ArticlesController extends BaseController
 
         // only top brass can delete
         if (! $currentUser->canDelete($article) ) {
-            throw new PermissionDenied('Permission denied to delete this article.');
+            throw new PermissionDeniedException('Permission denied to delete this article.');
         }
 
         if ( $article->delete() ) {
@@ -265,7 +265,8 @@ class ArticlesController extends BaseController
             // useful when managing thousands of photos/articles
             // e.g. /var/www/.../data/photos/201601/31/
             $dir = $settings['photos_dir']['original'] . '/' . Photo::getNewDir();
-            if (!file_exists($dir) and !mkdir($dir, 0775, true)) {
+            $fileExists = $this->get('fs')->fileExists($dir);
+            if (!$fileExists and !$this->get('fs')->makeDir($dir, 0775, true)) {
                 throw new \Exception('Could not create directory');
             }
 
@@ -273,6 +274,7 @@ class ArticlesController extends BaseController
             // also, attach the newly created photo to article
             foreach($photos['name'] as $i => $file) {
 
+                // get the parameters from the form submission
                 $name = $photos['name'][$i];
                 $tmpName = $photos['tmp_name'][$i];
                 $type = $photos['type'][$i];
@@ -281,43 +283,12 @@ class ArticlesController extends BaseController
                 // if the file field is blank, move onto the next field
                 if (empty($file)) continue;
 
-                // get the dimensions so we can calculate the width/height ratio
-                // throw an exception if this fails
-                list($width_orig, $height_orig) = getimagesize($tmpName);
-                if (!$width_orig or !$height_orig)
-                    throw new \Exception('Could not get image size from uploaded image.');
-
-                // calculate new image size with ratio if exceeds max
-                // TODO put this into Photo as static, unit test
-                $ratio_orig = $width_orig/$height_orig;
-
-                // Set a maximum height and width
-                $width = 2000;
-                $height = 2000;
-                if ($width/$height > $ratio_orig) {
-                   $width = ceil($height*$ratio_orig);
-                } else {
-                   $height = ceil($width/$ratio_orig);
-                }
-
-                // Create a new image from the uploaded file
-                $src = imagecreatefromjpeg($tmpName);
-                if (!$src)
-                    throw new \Exception('Only JPEG images are allowed for photos.');
-
-                // Create a new true color image and copy and resize part of an image
-                // with resampling
-                $tmp = imagecreatetruecolor($width, $height);
-                imagecopyresampled($tmp, $src, 0, 0, 0, 0, $width, $height, $width_orig, $height_orig);
-
-                // first, move the file to it's desired location
-                // e.g. /var/www/.../data/photos/11/00/17/7sdfdfsfs.jpg
+                // build the file name and path, we'll store the filename in the db
                 $file = sprintf('%s.%s', substr(md5_file($tmpName), 0, 10), strtolower($ext));
                 $destpath = $dir . '/' . $file;
-                // move_uploaded_file($tmpName, $destpath);
 
-                imagejpeg($tmp, $destpath);
-                imagedestroy($tmp);
+                // handle the uploaded file
+                $this->get('photo_manager')->moveUploadedFile($tmpName, $destpath, $maxWidth=2000, $maxHeight=2000);
 
                 // create the photo in collection first so that we have an id to
                 // name the photo by

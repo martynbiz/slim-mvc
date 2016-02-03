@@ -30,13 +30,6 @@ class Article extends Base
         'photos',
     );
 
-    // public function validate()
-    // {
-    //     $this->resetErrors();
-    //
-    //     return empty($this->getErrors());
-    // }
-
     /**
      * Find articles which belong to a given $user
      * @param App\Model\User $user

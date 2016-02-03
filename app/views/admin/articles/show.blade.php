@@ -44,9 +44,11 @@
             <th>Tags</th>
             <td>
                 @if ($article->tags)
-                    @foreach ($article->tags as $tag)
-                        <span class="tag">{{ $tag->name }}</span>
-                    @endforeach
+                    <ul class="tags">
+                        @foreach ($article->tags as $tag)
+                            <li><span>{{ $tag->name }}</span></li>
+                        @endforeach
+                    </ul>
                 @endif
             </td>
         </tr>
@@ -56,7 +58,7 @@
                 @if ($article->photos)
                     <div class="photos">
                         @foreach ($article->photos as $photo)
-                            <img src="http://geniussys.com/img/placeholder/blogpost-placeholder-100x100.png">
+                            <img src="/photos{{ $photo->getCachedPath('x100') }}" class="photo">
                         @endforeach
                     </div>
                 @endif

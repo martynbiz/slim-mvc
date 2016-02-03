@@ -17,6 +17,22 @@ $container['logger'] = function ($c) {
     return $logger;
 };
 
+// filesystem
+$container['fs'] = function ($c) {
+    return new \Wordup\FileSystem();
+};
+
+// filesystem
+$container['image'] = function ($c) {
+    return new \Wordup\Image();
+};
+
+// photo_manager
+// deals with moving
+$container['photo_manager'] = function ($c) {
+    return new \Wordup\PhotoManager($c['image'], $c['fs']);
+};
+
 // // Register component on container
 // $container['view'] = function ($c) {
 //     $settings = $c->get('settings')['view'];

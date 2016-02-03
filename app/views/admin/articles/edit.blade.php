@@ -4,6 +4,7 @@
     <ol class="breadcrumb">
         <li><a href="/admin">Admin</a></li>
         <li><a href="/admin/articles">Articles</a></li>
+        <li><a href="/admin/articles/{{ $article->id }}">{{ $article->title }}</a></li>
         <li class="active">Edit draft</li>
     </ol>
 
@@ -73,14 +74,18 @@
                 <h3 class="underline">Photos</h3>
 
                 @if ($article->photos)
-                    <div class="photos">
+                    <ul class="photo-list sortable">
                         @foreach ($article->photos as $photo)
-                            <img src="http://geniussys.com/img/placeholder/blogpost-placeholder-100x100.png">
+                            <li class="col-md-4">
+                                <img src="/photos{{ $photo->getCachedPath('x100') }}" class="photo img-responsive">
+                            </li>
                         @endforeach
-                    </div>
+                    </ul>
                 @endif
 
+                    <div class="col-md-12">
                 <hr>
+            </div>
 
                 <div class="form-group">
                     <input type="file" name="photos[]"><br>

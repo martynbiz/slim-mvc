@@ -25,12 +25,14 @@ $settings = [
         ],
     ],
 
-    // TODO move mongo inside settings maybe?
+    // TODO move mongo inside settings maybe? then they are retreivable by container
     'mongo' => [
         'db' => 'crsrc',
         'classmap' => [
             'articles' => '\\Wordup\\Model\\Article',
             'users' => '\\Wordup\\Model\\User',
+            'photos' => '\\Wordup\\Model\\Photo',
+            'tags' => '\\Wordup\\Model\\Tag',
         ]
     ],
     'mongo_testing' => [
@@ -38,6 +40,8 @@ $settings = [
         'classmap' => [
             'articles' => '\\Wordup\\Model\\Article',
             'users' => '\\Wordup\\Model\\User',
+            'photos' => '\\Wordup\\Model\\Photo',
+            'tags' => '\\Wordup\\Model\\Tag',
         ]
     ],
 ];
