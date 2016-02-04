@@ -3,7 +3,10 @@
 namespace Wordup\Model;
 
 use MartynBiz\Validator;
+use MartynBiz\Mongo;
 use Wordup\Utils;
+use Wordup\Model\Tag;
+use Wordup\Model\Photo;
 
 /**
  *
@@ -69,5 +72,34 @@ class Article extends Base
         }
 
         return parent::save($data);
+    }
+
+    /**
+     * Additional Save procedures
+     */
+    public function has(Mongo $item)
+    {
+        // if $item doesn't have a DBRef, then we can't proceed
+        if(!$item->getDBRef()) return false;
+
+        // check for Tags
+        if ($item instanceof Tag) {
+            if ($tags = @$this->data['tags']) {
+                foreach($this->data['tags'] as $tag) {
+                    if($item->getDBRef() == $tag) return true;
+                }
+            }
+        }
+
+        // check for Photo
+        if ($item instanceof Photo) {
+            if ($photos = @$this->data['photos']) {
+                foreach($this->data['photos'] as $photo) {
+                    if($item->getDBRef() == $photo) return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

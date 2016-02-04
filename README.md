@@ -78,13 +78,13 @@ $ gulp watch
 
 martynbiz/martynbiz
 
-* save tags on import
-
 * add featured option to articles
 * add photos to articles
 * list article on homepage
 * show frontend article
 * list articles on tag page
+* tidy up content: p tags, headers, etc
+* just combine submit/approve/update
 
 * when deleting a tag, remove from all articles
 * when deleting a user, what to do with articles?
@@ -107,6 +107,12 @@ v２
 * put the $router in the view for $router->pathFor('index_index')
 * sms links
 * export data
+
+
+
+tidyups
+* status buttons in article::edit shoudl be constants
+* terms - publish
 
 ？ create static pages? like wordpress does
   /pages/{slug} -> PagesController::show($id);
@@ -150,9 +156,11 @@ test
 * uploading images
 * utils slugify
 * article methods - getPublishedAt, save
+* article::has
 
 BUG!!! delete one is deleting ALL :O
 * confirm alert when deleting
+bug: why is import still duplicate tags with array_unique
 
 
 

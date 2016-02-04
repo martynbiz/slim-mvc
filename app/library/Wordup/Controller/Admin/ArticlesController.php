@@ -108,55 +108,65 @@ class ArticlesController extends BaseController
             throw new PermissionDeniedException('Permission denied to edit this article.');
         }
 
-        // set tags from the params tags value submitted
-        // this will also ensure than only valid tags are used
+
+        // =====================
+        // tags
+
         $params['tags'] = $this->getTagsFromTagIds(@$params['tags']);
 
-        // handle photos
+
+        // =====================
+        // photos
+
         $this->attachPhotosTo($article, @$_FILES['photos']);
+
+
+        // =====================
+        // status
+
+        switch((int) @$params['status']) {
+            case Article::STATUS_DRAFT:
+
+                if (! $currentUser->canEdit($article))
+                    throw new PermissionDeniedException('Permission denied to submit this article.');
+
+                $flashSuccessMessage = 'Draft article saved. Click "submit" when ready to publish.';
+
+                $article->status = Article::STATUS_DRAFT;
+
+                break;
+            case Article::STATUS_SUBMITTED:
+
+                if (! $currentUser->canSubmit($article))
+                    throw new PermissionDeniedException('Permission denied to submit this article.');
+
+                $flashSuccessMessage = 'Article has been submitted and will be reviewed by an editor shortly.';
+
+                $article->status = Article::STATUS_SUBMITTED;
+
+                break;
+            case Article::STATUS_APPROVED:
+
+                if (! $currentUser->canApprove($article))
+                    throw new PermissionDeniedException('Permission denied to submit this article.');
+
+                $flashSuccessMessage = 'Article has been approved.';
+
+                $article->status = Article::STATUS_APPROVED;
+
+                break;
+        }
+
+
+        // =====================
+        // options
+
+        // check options
+        $article->featured = (@$params['featured']) ? 1 : 0;
+
 
         if ( $article->save($params) ) {
-            $this->get('flash')->addMessage('success', 'Draft article saved. Click "submit" when ready to publish.');
-            return $this->redirect('/admin/articles/' . $id . '/edit');
-        } else {
-            $this->get('flash')->addMessage('errors', $article->getErrors());
-            return $this->forward('edit', compact('id'));
-        }
-    }
-
-    /**
-     * This method is used when the contributer has finished editing and ready to
-     * publish. They will be redirected to the "show" page from there they can
-     * review and open up for additional changes. from there, an admin user can also
-     * approve the article to make it live.
-     */
-    public function submit($id)
-    {
-        $currentUser = $this->get('auth')->getCurrentUser();
-        $params = $this->getPost();
-        $article = $this->get('model.article')->findOneOrFail(array(
-            'id' => (int) $id,
-        ));
-
-        // only top brass can approve
-        if (! $currentUser->canSubmit($article) ) {
-            throw new PermissionDeniedException('Permission denied to submit this article.');
-        }
-
-        // set the status of the article to approved, if there are any problems
-        // with the data send, save() will fail anyway. Using set() here as it is
-        // more testable as a method :)
-        $article->set('status', Article::STATUS_SUBMITTED);
-
-        // handle photos
-        $this->attachPhotosTo($article, @$_FILES['photos']);
-
-        // set tags from the params tags value submitted
-        // this will also ensure than only valid tags are used
-        $params['tags'] = $this->getTagsFromTagIds(@$params['tags']);
-
-        if ( $article->save( $this->getPost() ) ) {
-            $this->get('flash')->addMessage('success', 'Article has been submitted and will be reviewed by an editor shortly.');
+            $this->get('flash')->addMessage('success', $flashSuccessMessage);
             return $this->redirect('/admin/articles/' . $id);
         } else {
             $this->get('flash')->addMessage('errors', $article->getErrors());
@@ -164,42 +174,85 @@ class ArticlesController extends BaseController
         }
     }
 
-    /**
-     * Only editor and admin users can approve articles
-     */
-    public function approve($id)
-    {
-        $currentUser = $this->get('auth')->getCurrentUser();
-        $params = $this->getPost();
-        $article = $this->get('model.article')->findOneOrFail(array(
-            'id' => (int) $id,
-        ));
-
-        // only top brass can approve
-        if (! $currentUser->canApprove($article) ) {
-            throw new PermissionDeniedException('Permission denied to approve this article.');
-        }
-
-        // set the status of the article to approved, if there are any problems
-        // with the data send, save() will fail anyway. Using set() here as it is
-        // more testable as a method :)
-        $article->set('status', Article::STATUS_APPROVED);
-
-        // set tags from the params tags value submitted
-        // this will also ensure than only valid tags are used
-        $params['tags'] = $this->getTagsFromTagIds(@$params['tags']);
-
-        // handle photos
-        $this->attachPhotosTo($article, @$_FILES['photos']);
-
-        if ( $article->save( $this->getPost() ) ) {
-            $this->get('flash')->addMessage('success', 'Article has been approved.');
-            return $this->redirect('/admin/articles/' . $id);
-        } else {
-            $this->get('flash')->addMessage('errors', $article->getErrors());
-            return $this->forward('edit', compact('id'));
-        }
-    }
+    // /**
+    //  * This method is used when the contributer has finished editing and ready to
+    //  * publish. They will be redirected to the "show" page from there they can
+    //  * review and open up for additional changes. from there, an admin user can also
+    //  * approve the article to make it live.
+    //  */
+    // public function submit($id)
+    // {
+    //     $currentUser = $this->get('auth')->getCurrentUser();
+    //     $params = $this->getPost();
+    //     $article = $this->get('model.article')->findOneOrFail(array(
+    //         'id' => (int) $id,
+    //     ));
+    //
+    //
+    //
+    //     // set the status of the article to approved, if there are any problems
+    //     // with the data send, save() will fail anyway. Using set() here as it is
+    //     // more testable as a method :)
+    //     $article->set('status', Article::STATUS_SUBMITTED);
+    //
+    //     // handle photos
+    //     $this->attachPhotosTo($article, @$_FILES['photos']);
+    //
+    //     // set tags from the params tags value submitted
+    //     // this will also ensure than only valid tags are used
+    //     $params['tags'] = $this->getTagsFromTagIds(@$params['tags']);
+    //
+    //     // check options
+    //     $article->featured = (@$params['featured']) ? 1 : 0;
+    //
+    //     if ( $article->save( $this->getPost() ) ) {
+    //         $this->get('flash')->addMessage('success', );
+    //         return $this->redirect('/admin/articles/' . $id);
+    //     } else {
+    //         $this->get('flash')->addMessage('errors', $article->getErrors());
+    //         return $this->forward('edit', compact('id'));
+    //     }
+    // }
+    //
+    // /**
+    //  * Only editor and admin users can approve articles
+    //  */
+    // public function approve($id)
+    // {
+    //     $currentUser = $this->get('auth')->getCurrentUser();
+    //     $params = $this->getPost();
+    //     $article = $this->get('model.article')->findOneOrFail(array(
+    //         'id' => (int) $id,
+    //     ));
+    //
+    //     // only top brass can approve
+    //     if (! $currentUser->canApprove($article) ) {
+    //         throw new PermissionDeniedException('Permission denied to approve this article.');
+    //     }
+    //
+    //     // set the status of the article to approved, if there are any problems
+    //     // with the data send, save() will fail anyway. Using set() here as it is
+    //     // more testable as a method :)
+    //     $article->set('status', Article::STATUS_APPROVED);
+    //
+    //     // set tags from the params tags value submitted
+    //     // this will also ensure than only valid tags are used
+    //     $params['tags'] = $this->getTagsFromTagIds(@$params['tags']);
+    //
+    //     // handle photos
+    //     $this->attachPhotosTo($article, @$_FILES['photos']);
+    //
+    //     // check options
+    //     $article->featured = (@$params['featured']) ? 1 : 0;
+    //
+    //     if ( $article->save( $this->getPost() ) ) {
+    //         $this->get('flash')->addMessage('success', );
+    //         return $this->redirect('/admin/articles/' . $id);
+    //     } else {
+    //         $this->get('flash')->addMessage('errors', $article->getErrors());
+    //         return $this->forward('edit', compact('id'));
+    //     }
+    // }
 
     public function delete($id)
     {

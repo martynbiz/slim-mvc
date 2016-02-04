@@ -2,8 +2,8 @@
 namespace Wordup\Controller\Admin;
 
 use Wordup\Controller\BaseController;
-use Wordup\Model\Article;
-use Wordup\Model\Tag;
+// use Wordup\Model\Article;
+// use Wordup\Model\Tag;
 use Wordup\Utils;
 use Wordup\Exception\PermissionDenied;
 

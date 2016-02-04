@@ -8,19 +8,18 @@
         <li class="active">Edit draft</li>
     </ol>
 
-    <form method="post" action="/admin/articles/{{ $article->id }}/submit" enctype="multipart/form-data">
+    <form method="post" action="/admin/articles/{{ $article->id }}" enctype="multipart/form-data">
 
     <div class="buttons">
         <div class="col-md-6 hidden-s hidden-xs">
             &nbsp;
         </div>
         <div class="col-md-6 text-right">
-            @if ($current_user->isAdmin() or $current_user->isEditor())
-                <button type="submit" formaction="/admin/articles/{{ $article->id }}/approve" class="btn btn-primary">Approve</button>
-            @else
-                <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="/admin/articles/{{ $article->id }}" class="btn btn-default">Cancel</a>
+            <button type="submit" class="btn btn-default">Save</button>
+            @if($current_user->isMember()))
+                <button type="submit" name="status" value="1" class="btn btn-primary">Submit</button>
             @endif
-            <button type="submit" formaction="/admin/articles/{{ $article->id }}" class="btn btn-default">Save draft</button>
         </div>
     </div>
 
@@ -61,7 +60,7 @@
                 <div class="form-group">
                     <ul class="tags">
                         @foreach ($tags as $tag)
-                            <li><span><input type="checkbox" name="tags[]" value="{{ $tag->id }}">{{ $tag->name }}<span></li>
+                            <li><span><input type="checkbox" name="tags[]" value="{{ $tag->id }}" @if($article->has($tag)) checked="checked" @endif> {{ $tag->name }}<span></li>
                         @endforeach
                     </ul>
                 </div>
@@ -83,15 +82,25 @@
                     </ul>
                 @endif
 
-                    <div class="col-md-12">
-                <hr>
-            </div>
+                <div class="col-md-12">
+                    <hr>
+                </div>
 
                 <div class="form-group">
                     <input type="file" name="photos[]"><br>
                     <input type="file" name="photos[]"><br>
                     <input type="file" name="photos[]"><br>
                     <input type="file" name="photos[]"><br>
+                </div>
+            </div>
+        </div>
+
+        <div class="homebox">
+            <div class="body">
+                <h3 class="underline">Options</h3>
+
+                <div class="form-group">
+                    <input type="checkbox" name="featured" value="1" @if($article->featured) checked="checked" @endif> <label for="featured">Featured on homepage</label>
                 </div>
             </div>
         </div>

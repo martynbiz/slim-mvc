@@ -26,6 +26,9 @@ abstract class BaseController extends Controller
         // attach any flash messages
         $args['flash_messages'] = $this->get('flash')->flushMessages();
 
+        // attach any flash messages
+        $args['tags'] = $this->get('model.tag')->find();
+
         return $container->renderer->render($this->response, $file, $args);
     }
 }

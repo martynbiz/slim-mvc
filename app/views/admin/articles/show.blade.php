@@ -9,20 +9,29 @@
 
     <div class="buttons">
         <div class="col-md-6">
+
+        </div>
+
+        <div class="col-md-6 text-right">
             <a href="/admin/articles/{{ $article->id }}/edit" class="btn btn-default">Edit</a>
 
             <form id="deleteUser" method="POST" action="/admin/articles/{{ $article->id }}">
                 <input type="hidden" name="_METHOD" value="DELETE">
                 <button type="submit" class="btn btn-default">Delete</button>
             </form>
-        </div>
 
-        <div class="col-md-6 text-right">
-            @if ($current_user and ($current_user->isAdmin() or $current_user->isEditor()))
-                <form id="deleteUser" method="POST" action="/admin/articles/{{ $article->id }}/approve">
-                    <input type="hidden" name="_METHOD" value="PUT">
-                    <button type="submit" class="btn btn-primary">Approve</button>
-                </form>
+            @if($current_user and ($current_user->isAdmin() or $current_user->isEditor()))
+                @if($article->status == 1)
+                    <form method="POST" action="/admin/articles/{{ $article->id }}">
+                        <input type="hidden" name="_METHOD" value="PUT">
+                        <button type="submit" name="status" value="2" class="btn btn-primary">Approve</button>
+                    </form>
+                @else
+                    <form method="POST" action="/admin/articles/{{ $article->id }}">
+                        <input type="hidden" name="_METHOD" value="PUT">
+                        <button type="submit" name="status" value="1" class="btn btn-default">Unapprove</button>
+                    </form>
+                @endif
             @endif
         </div>
     </div>
