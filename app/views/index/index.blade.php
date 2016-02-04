@@ -15,19 +15,19 @@
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox">
               <div class="item active">
-                <a href="#"><img src="/photos/shunga.jpg" alt="Chania" width="460" height="345"></a>
+                <a href="#"><img src="/photos/201602/03/195/460x345.jpg" alt="Chania" width="460" height="345"></a>
               </div>
 
               <div class="item">
-                <img src="/photos/earthparade.jpg" alt="Chania" width="460" height="345">
+                <img src="/photos/201602/03/195/460x345.jpg" alt="Chania" width="460" height="345">
               </div>
 
               <div class="item">
-                <img src="/photos/vietnamkids.jpg" alt="Flower" width="460" height="345">
+                <img src="/photos/201602/03/195/460x345.jpg" alt="Flower" width="460" height="345">
               </div>
 
               <div class="item">
-                <img src="/photos/waoffice.jpg" alt="Flower" width="460" height="345">
+                <img src="/photos/201602/03/195/460x345.jpg" alt="Flower" width="460" height="345">
               </div>
             </div>
 
@@ -58,7 +58,7 @@
         <div class="col-md-8">
             <div class="homebox">
                 <div class="col-md-3 image">
-                    <img src="/photos/shunga.jpg" class="img-responsive">
+                    <img src="/photos/201602/03/195/300x.jpg" class="img-responsive">
                 </div>
                 <div class="col-md-9 body">
                     <h2>Shungs</h2>
@@ -77,7 +77,7 @@
 
             <div class="homebox">
                 <div class="col-md-3 image">
-                    <img src="/photos/vietnamkids.jpg" class="img-responsive">
+                    <img src="/photos/201602/03/195/300x.jpg" class="img-responsive">
                 </div>
                 <div class="col-md-9 body">
                     <h2>Cool kids in Vietnam</h2>
@@ -88,7 +88,7 @@
 
             <div class="homebox">
                 <div class="col-md-3 image">
-                    <img src="/photos/waoffice.jpg" class="img-responsive">
+                    <img src="/photos/201602/03/195/300x.jpg" class="img-responsive">
                 </div>
                 <div class="col-md-9 body">
                     <h2>Waaaa office!</h2>
@@ -99,7 +99,7 @@
 
             <div class="homebox">
                 <div class="col-md-3 image">
-                    <img src="/photos/vietnamkids.jpg" class="img-responsive">
+                    <img src="/photos/201602/03/195/300x.jpg" class="img-responsive">
                 </div>
                 <div class="col-md-9 body">
                     <h2>Cool kids in Vietnam</h2>

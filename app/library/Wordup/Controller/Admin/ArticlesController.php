@@ -219,7 +219,7 @@ class ArticlesController extends BaseController
             return $this->redirect('/admin/articles');
         } else {
             $this->get('flash')->addMessage('errors', $article->getErrors());
-            return $this->edit($id);
+            return $this->forward('edit', array( 'id' => $id ));
         }
     }
 

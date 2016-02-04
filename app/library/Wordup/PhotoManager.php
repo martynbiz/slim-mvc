@@ -61,7 +61,7 @@ class PhotoManager
             if ($maxWidth/$maxHeight > $ratioOrig) {
                $maxWidth = ceil($maxHeight*$ratioOrig);
             } else {
-               $maxHeight = ceil($maxWidth*$ratioOrig);
+               $maxHeight = ceil($maxWidth/$ratioOrig);
             }
         } else {
             $maxWidth = $widthOrig;
@@ -113,7 +113,7 @@ class PhotoManager
         } elseif (empty($width)) {
             $width = ceil($height*$ratio_orig);
         } elseif (empty($height)) {
-            $height = ceil($width*$ratio_orig);
+            $height = ceil($width/$ratio_orig);
         }
 
         // Create a new image from the uploaded file

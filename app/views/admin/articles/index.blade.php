@@ -14,14 +14,14 @@
         <tr>
             <th>Title</th>
             <th>Type</th>
-            <th>Data created</th>
+            <th>Published</th>
             <th>&nbsp;</th>
         </tr>
         @foreach ($articles as $article)
             <tr>
                 <td><a href="/admin/articles/{{ $article->id }}">{{ $article->title }}</a></td>
                 <td>{{ $article->type }}</td>
-                <td>{{ $article->created_at }}</td>
+                <td>{{ $article->published_at }}</td>
                 <td width="10%" class="text-right">
                     <form id="deleteUser" method="POST" action="/admin/articles/{{ $article->id }}">
                         <input type="hidden" name="_METHOD" value="DELETE">

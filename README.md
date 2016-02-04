@@ -78,37 +78,65 @@ $ gulp watch
 
 martynbiz/martynbiz
 
-* access properties like: $article['content']['title'], $article['options']['featured'], $article['meta']['page_views'] -- mongo
+* save tags on import
 
-photos
-* photo cache - copyjpg, resize, write to cache file, serve
-* display cached version on homepage,
+* add featured option to articles
+* add photos to articles
+* list article on homepage
+* show frontend article
+* list articles on tag page
+
+* when deleting a tag, remove from all articles
+* when deleting a user, what to do with articles?
+* when deleting an article, anything?
 
 import wordpress
-* write script
-* add photos to articles
 
-* articles/99 show page
-* add featured option to articles
-* put the $router in the view for $router->pathFor('index_index')
 
 nesbot/carbon
+add @section('title')
 
-
-
-* languages - japanese and english
-* no duplicate email register
 * paginate - test limit/skip in integrated
-* confirm alert when deleting
+
+
+
+* disable registration
+
+v２
+* languages - japanese and english
+* put the $router in the view for $router->pathFor('index_index')
+* sms links
+* export data
+
+？ create static pages? like wordpress does
+  /pages/{slug} -> PagesController::show($id);
+
+  $router->pathFor('pages_show', 'winter-2016-offer'); // e.g. /pages/winter-2016-offer
+
+  when the page is created, the link name cannot be changed
+
+
+* no duplicate email register
+* generate username
+* welcome email, remember me
+* facebook login
+* saml?
+
+
 * portfolio
-* contact form
 * about me
+* contact form
+
 * search
 * fix titles on pages esp homepage
 * csrf - ask question on SO
 
 v2
-sms links
+* video uploads
+
+
+
+
 
 test
 * validating images
@@ -120,15 +148,13 @@ test
 * tags: tags are being saved (submit, approve, draft)
 * getTagsFromTagIds, attachPhotos, class TestArticleProtected { public function testAttachPhotos() { return $this->attachPhotos } }
 * uploading images
+* utils slugify
+* article methods - getPublishedAt, save
 
 BUG!!! delete one is deleting ALL :O
-
-* register - no duplicate emails, username
-
-domains: wordm8,
+* confirm alert when deleting
 
 
-* file uploads
 
 
 * Maybe we don't need to pass in $container stuff after all http://stackoverflow.com/questions/34839399/how-to-access-the-container-within-middleware-class-in-slim-v3/34930473#34930473
@@ -139,6 +165,12 @@ testing alternatives - admin/articles with acl method calls mocked, register is 
 * mockery
 * phpspec
 
+
+
+
+* create project that can easily be installed (martynbiz/slim3-project)
+
+* package up library (martynbiz/wordup-cms)
 martynbiz\localmap
 * route /{region}/{id}/{slug} -- on the fly routes (regions collection), getUrl() eg. /glasgow/123/green-shop
 * route /{tag}
@@ -147,7 +179,6 @@ martynbiz\localmap
 * pagination? $this->service('model.articles')->find(...)->paginate(20);
 
 
-* create project that can easily be installed (martynbiz/slim3-project)
 v2
 * contributers/ submit articles for approval
 * homepage - featured, latest
@@ -165,7 +196,7 @@ vx
 
 
 
-martynbiz/php-mongo
+martynbiz/php-validator
 * isNotEmpty returns true when ?
 
 martynbiz/slim3-contoller
@@ -176,9 +207,8 @@ martynbiz/slim3-contoller
 * assertViewReceives
 
 martynbiz/php-mongo
-* access properties like: $article['content']['title'], $article['options']['featured'], $article['meta']['page_views']
+* access properties like: $article['title'], $article['featured'], $article['page_views']
 * does save() return true or false?
 * paginate - test limit/skip in integrated
 * SO is it better to update few name/values with $set, or just overwrite all with $this->data?
-* get human readable date
 * allow us to insert an empty draft

@@ -8,7 +8,11 @@ $app->group('', function () use ($app) {
 
     $controller = new Wordup\Controller\IndexController($app);
 
-    $app->get('/', $controller('index'))->setName('index');
+    $app->get('/', function ($request, $response, $args) use ($controller) {
+        $closure = $controller('index');
+        return $closure($request, $response, $args);
+    })->setName('index'); // TODO does this yield better performance?
+
     $app->get('/portfolio', $controller('portfolio'))->setName('index_portfolio');
     $app->get('/contact', $controller('contact'))->setName('index_contact');
 });
@@ -100,5 +104,13 @@ $app->group('/admin', function () use ($app) {
         $app->post('', $controller('post'))->setName('admin_tags_post');
         $app->put('/{id:[0-9]+}', $controller('update'))->setName('admin_tags_update');
         $app->delete('/{id:[0-9]+}', $controller('delete'))->setName('admin_tags_delete');
+    });
+
+    // admin/articles routes
+    $app->group('/data', function () use ($app) {
+
+        $controller = new Wordup\Controller\Admin\DataController($app);
+
+        $app->map(['GET', 'POST'], '/import', $controller('import'))->setName('admin_data_import');
     });
 })->add( new \Wordup\Middleware\Auth( $container['auth'] ) );

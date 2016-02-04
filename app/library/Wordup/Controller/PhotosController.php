@@ -27,14 +27,14 @@ class PhotosController extends BaseController
         $cachedPath = $cachedDir . '/' . $photo->getCachedFileName($dim);
 
         // check if cached file exists for this photo
-        if (!$this->get('fs')->fileExists($cachedPath)) {
+        // if (!$this->get('fs')->fileExists($cachedPath)) { // TODO uncomment this
 
             // this will generate a path to the cached file eg. 201601/31/100x100.jpg
             $origDir = $settings['photos_dir']['original'] . $photo->getOriginalDir();
             $origPath = $origDir . '/' . $photo->getOriginalFileName($dim);
 
             $this->get('photo_manager')->createCacheImage($origPath, $cachedPath, $width, $height);
-        }
+        // }
 
         // display image to browser
         $this->get('fs')->readFile($cachedPath);

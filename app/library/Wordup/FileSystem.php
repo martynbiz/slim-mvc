@@ -24,6 +24,14 @@ class FileSystem
     }
 
     /**
+     * @see http://php.net/manual/en/function.file-get-contents.php
+     */
+    public function getFileContents($file)
+    {
+        return file_get_contents($file);
+    }
+
+    /**
      * @see http://php.net/manual/en/function.readfile.php
      */
     public function readFile($file)

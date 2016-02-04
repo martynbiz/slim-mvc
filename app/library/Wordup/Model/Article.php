@@ -3,6 +3,7 @@
 namespace Wordup\Model;
 
 use MartynBiz\Validator;
+use Wordup\Utils;
 
 /**
  *
@@ -28,6 +29,7 @@ class Article extends Base
         'content',
         'tags',
         'photos',
+        'published_at',
     );
 
     /**
@@ -47,5 +49,25 @@ class Article extends Base
         // TODO editors can only view their members articles
 
         return $this->find($query);
+    }
+
+    /**
+     * Convert published_at date to human readable TODO test
+     */
+    public function getPublishedAt($value)
+    {
+        return date('d/m/Y h:i', $value->sec);
+    }
+
+    /**
+     * Additional Save procedures
+     */
+    public function save($data=array())
+    {
+        if (empty($this->data['slug'])) {
+            $this->data['slug'] = Utils::slugify($this->data['title']);
+        }
+
+        return parent::save($data);
     }
 }

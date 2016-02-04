@@ -32,6 +32,8 @@
                             <ul class="dropdown-menu">
                                 <li><a href="/">Back to homepage</a></li>
                                 <li role="separator" class="divider"></li>
+                                <li><a href="/admin/data/import">Import data</a></li>
+                                <li role="separator" class="divider"></li>
                                 <li><a href="#" onclick="$('form#deleteSession').submit(); return false;">Logout</a></li>
                             </ul>
                         </li>
@@ -42,6 +44,20 @@
         </nav>
 
         <div class="container">
+            @if (isset($flash_messages->success))
+            <div class="alert alert-success">
+                {{ $flash_messages->success }}
+            </div>
+            @endif
+
+            @if (isset($flash_messages->errors))
+            <div class="alert alert-danger">
+                @foreach ($flash_messages->errors as $error)
+                {{ $error }}<br>
+                @endforeach
+            </div>
+            @endif
+
             @yield('content')
         </div>
 
