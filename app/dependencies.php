@@ -5,7 +5,12 @@ $container = $app->getContainer();
 // view renderer
 $container['renderer'] = function ($c) {
     $settings = $c->get('settings')['renderer'];
-    return new \Wordup\View\PhpRenderer($settings['template_path']);
+    $renderer = new \Windwalker\Renderer\BladeRenderer(array(
+        $settings['template_path'],
+    ), array(
+        'cache_path' => $settings['cache_path'],
+    ));
+    return new \MartynBiz\Slim3View\Renderer($renderer);
 };
 
 // monolog

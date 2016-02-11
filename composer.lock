@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c329450eecdcf225902ddfb709596931",
-    "content-hash": "cbf8901c21f437790b218f55f8a9443f",
+    "hash": "114ef6a8c8f182de3e5d6bbca5b95662",
+    "content-hash": "4da6b4d08fb4dd21ea33b76c589d7643",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -36,16 +36,16 @@
         },
         {
             "name": "desarrolla2/cache",
-            "version": "v2.0.0",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/desarrolla2/Cache.git",
-                "reference": "40ce627d64d0bbcb3677903be9fc1139daad0a2f"
+                "reference": "5a9b1b55cf666328cb3ca161357ccd767225fea0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/desarrolla2/Cache/zipball/40ce627d64d0bbcb3677903be9fc1139daad0a2f",
-                "reference": "40ce627d64d0bbcb3677903be9fc1139daad0a2f",
+                "url": "https://api.github.com/repos/desarrolla2/Cache/zipball/5a9b1b55cf666328cb3ca161357ccd767225fea0",
+                "reference": "5a9b1b55cf666328cb3ca161357ccd767225fea0",
                 "shasum": ""
             },
             "require": {
@@ -87,7 +87,7 @@
                 "mysql",
                 "redis"
             ],
-            "time": "2015-10-27 09:58:14"
+            "time": "2015-11-26 12:29:49"
         },
         {
             "name": "doctrine/inflector",
@@ -292,12 +292,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/filesystem.git",
-                "reference": "7bd6f3c1845465d03102a81acf0c9bcac685b558"
+                "reference": "1123761f5ada416d018a7b8e75422854b1b3572d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/filesystem/zipball/7bd6f3c1845465d03102a81acf0c9bcac685b558",
-                "reference": "7bd6f3c1845465d03102a81acf0c9bcac685b558",
+                "url": "https://api.github.com/repos/illuminate/filesystem/zipball/1123761f5ada416d018a7b8e75422854b1b3572d",
+                "reference": "1123761f5ada416d018a7b8e75422854b1b3572d",
                 "shasum": ""
             },
             "require": {
@@ -334,7 +334,7 @@
             ],
             "description": "The Illuminate Filesystem package.",
             "homepage": "http://laravel.com",
-            "time": "2016-01-13 09:25:36"
+            "time": "2016-02-10 13:55:35"
         },
         {
             "name": "illuminate/support",
@@ -342,12 +342,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "d7fd7ec6f8ab6ed2f0aded1119a46ed945f7a300"
+                "reference": "54bf854e59167824b83163f9723da502691e4731"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/d7fd7ec6f8ab6ed2f0aded1119a46ed945f7a300",
-                "reference": "d7fd7ec6f8ab6ed2f0aded1119a46ed945f7a300",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/54bf854e59167824b83163f9723da502691e4731",
+                "reference": "54bf854e59167824b83163f9723da502691e4731",
                 "shasum": ""
             },
             "require": {
@@ -390,7 +390,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "http://laravel.com",
-            "time": "2016-01-26 03:23:33"
+            "time": "2016-02-10 20:44:23"
         },
         {
             "name": "illuminate/view",
@@ -398,12 +398,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/view.git",
-                "reference": "ddf8ae02d80a764c3bbe18d69a83135e3e9dcaa6"
+                "reference": "10ff2e73ae8e7ea1cd4a9c86bfabac14f6c6384d"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/illuminate/view/zipball/10ff2e73ae8e7ea1cd4a9c86bfabac14f6c6384d",
-                "reference": "ddf8ae02d80a764c3bbe18d69a83135e3e9dcaa6",
+                "reference": "10ff2e73ae8e7ea1cd4a9c86bfabac14f6c6384d",
                 "shasum": ""
             },
             "require": {
@@ -437,7 +437,7 @@
             ],
             "description": "The Illuminate View package.",
             "homepage": "http://laravel.com",
-            "time": "2016-01-23 21:42:11"
+            "time": "2016-02-02 16:45:07"
         },
         {
             "name": "martynbiz/php-flash-message",
@@ -492,52 +492,60 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/martynbiz/php-mongo.git",
-                "reference": "f0233cf0a5838944ade06e994a968d9aff9cb269"
+                "reference": "2c8796120be2a54a5f026f1ac71639ce8d2e99b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/martynbiz/php-mongo/zipball/d2a127f1bbeafd0a537640b00ee5dbf6568babc7",
-                "reference": "f0233cf0a5838944ade06e994a968d9aff9cb269",
+                "url": "https://api.github.com/repos/martynbiz/php-mongo/zipball/2c8796120be2a54a5f026f1ac71639ce8d2e99b4",
+                "reference": "2c8796120be2a54a5f026f1ac71639ce8d2e99b4",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.3.*"
-            },
-            "suggest": {
-                "martynbiz/php-validator": "Optional simple to use extendable validator usable with validate() method."
+                "phpunit/phpunit": "4.8.*"
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "MartynBiz": "src"
+                "psr-4": {
+                    "MartynBiz\\Mongo\\": "src/"
                 },
                 "classmap": [
-                    "tests/"
+                    "tests"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "description": "ODM for MongoDB with auto-incremented IDs, whitelists, soft deletes and save validation configurable.",
+            "authors": [
+                {
+                    "name": "Martyn Bissett",
+                    "email": "martynbissett@yahoo.co.uk",
+                    "homepage": "http://martyn.biz",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP ODM for MongoDB.",
             "homepage": "http://github.com/martynbiz/php-mongo",
-            "time": "2016-01-31 04:59:17"
+            "keywords": [
+                "mongo"
+            ],
+            "time": "2016-02-11 04:02:03"
         },
         {
             "name": "martynbiz/php-validator",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:martynbiz/php-validator.git",
-                "reference": "70ecea299cf9abb6c8e659095798ed9c8aaa3edd"
+                "url": "https://github.com/martynbiz/php-validator.git",
+                "reference": "7b98524e840c0f4509b280ebf2eae6fa77b76476"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/martynbiz/php-validator/zipball/70ecea299cf9abb6c8e659095798ed9c8aaa3edd",
-                "reference": "70ecea299cf9abb6c8e659095798ed9c8aaa3edd",
+                "url": "https://api.github.com/repos/martynbiz/php-validator/zipball/7b98524e840c0f4509b280ebf2eae6fa77b76476",
+                "reference": "7b98524e840c0f4509b280ebf2eae6fa77b76476",
                 "shasum": ""
             },
             "require": {
@@ -570,7 +578,7 @@
                 "form",
                 "validation"
             ],
-            "time": "2016-01-22 10:52:00"
+            "time": "2016-02-08 08:11:25"
         },
         {
             "name": "martynbiz/slim3-controller",
@@ -622,6 +630,56 @@
                 "slim3"
             ],
             "time": "2016-01-24 09:16:34"
+        },
+        {
+            "name": "martynbiz/slim3-view",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/martynbiz/slim3-view.git",
+                "reference": "fed383d409539c7e0150aac1f7aa3c9cc6d0f757"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/martynbiz/slim3-view/zipball/fed383d409539c7e0150aac1f7aa3c9cc6d0f757",
+                "reference": "fed383d409539c7e0150aac1f7aa3c9cc6d0f757",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "windwalker/renderer": "~2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.8.*",
+                "slim/slim": "~3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MartynBiz\\Slim3View\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Martyn Bissett",
+                    "email": "martynbissett@yahoo.co.uk",
+                    "homepage": "http://martyn.biz",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A wrapper for Slim3 renderer which uses Windwalker renderer (Blade, Twig, PHP etc)",
+            "homepage": "http://github.com/martynbiz/slim3-view",
+            "keywords": [
+                "mvc",
+                "slim",
+                "slim3",
+                "view"
+            ],
+            "time": "2016-02-11 03:07:11"
         },
         {
             "name": "monolog/monolog",
@@ -746,16 +804,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "1.1.6",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "e6f80ab77885151908d0ec743689ca700886e8b0"
+                "reference": "b0e69d10852716b2ccbdff69c75c477637220790"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/e6f80ab77885151908d0ec743689ca700886e8b0",
-                "reference": "e6f80ab77885151908d0ec743689ca700886e8b0",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/b0e69d10852716b2ccbdff69c75c477637220790",
+                "reference": "b0e69d10852716b2ccbdff69c75c477637220790",
                 "shasum": ""
             },
             "require": {
@@ -790,7 +848,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-01-29 16:19:52"
+            "time": "2016-02-06 03:52:05"
         },
         {
             "name": "pimple/pimple",
@@ -990,120 +1048,6 @@
             "time": "2016-01-06 21:40:42"
         },
         {
-            "name": "sabre/uri",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fruux/sabre-uri.git",
-                "reference": "6bae7efdd9dfcfdb3edfc4362741e59ce4b64f42"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fruux/sabre-uri/zipball/6bae7efdd9dfcfdb3edfc4362741e59ce4b64f42",
-                "reference": "6bae7efdd9dfcfdb3edfc4362741e59ce4b64f42",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.7"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "*",
-                "sabre/cs": "~0.0.1"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "lib/functions.php"
-                ],
-                "psr-4": {
-                    "Sabre\\Uri\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Evert Pot",
-                    "email": "me@evertpot.com",
-                    "homepage": "http://evertpot.com/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Functions for making sense out of URIs.",
-            "homepage": "http://sabre.io/uri/",
-            "keywords": [
-                "rfc3986",
-                "uri",
-                "url"
-            ],
-            "time": "2015-04-29 03:47:26"
-        },
-        {
-            "name": "sabre/xml",
-            "version": "1.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fruux/sabre-xml.git",
-                "reference": "420400f36655d79894fae8ce970516a71ea8f5f5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fruux/sabre-xml/zipball/420400f36655d79894fae8ce970516a71ea8f5f5",
-                "reference": "420400f36655d79894fae8ce970516a71ea8f5f5",
-                "shasum": ""
-            },
-            "require": {
-                "ext-dom": "*",
-                "ext-xmlreader": "*",
-                "ext-xmlwriter": "*",
-                "lib-libxml": ">=2.6.20",
-                "php": ">=5.4.1",
-                "sabre/uri": "~1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "*",
-                "sabre/cs": "~0.0.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Sabre\\Xml\\": "lib/"
-                },
-                "files": [
-                    "lib/Deserializer/functions.php",
-                    "lib/Serializer/functions.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Evert Pot",
-                    "email": "me@evertpot.com",
-                    "homepage": "http://evertpot.com/",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Markus Staab",
-                    "email": "markus.staab@redaxo.de",
-                    "role": "Developer"
-                }
-            ],
-            "description": "sabre/xml is an XML library that you may not hate.",
-            "homepage": "https://sabre.io/xml/",
-            "keywords": [
-                "XMLReader",
-                "XMLWriter",
-                "dom",
-                "xml"
-            ],
-            "time": "2015-12-29 20:51:22"
-        },
-        {
             "name": "slim/csrf",
             "version": "0.6.0",
             "source": {
@@ -1159,12 +1103,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/slimphp/Slim.git",
-                "reference": "03b44a4b41896ba42c78bbd5fa172cd79e650496"
+                "reference": "9cc105d628f9cf85434225db41e092107f69ad15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slimphp/Slim/zipball/03b44a4b41896ba42c78bbd5fa172cd79e650496",
-                "reference": "03b44a4b41896ba42c78bbd5fa172cd79e650496",
+                "url": "https://api.github.com/repos/slimphp/Slim/zipball/9cc105d628f9cf85434225db41e092107f69ad15",
+                "reference": "9cc105d628f9cf85434225db41e092107f69ad15",
                 "shasum": ""
             },
             "require": {
@@ -1218,7 +1162,7 @@
                 "micro",
                 "router"
             ],
-            "time": "2016-01-08 15:37:50"
+            "time": "2016-02-06 14:12:14"
         },
         {
             "name": "slim/twig-view",
@@ -1271,59 +1215,17 @@
             "time": "2015-08-17 08:45:48"
         },
         {
-            "name": "suramon/simple-xml-reader",
-            "version": "1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/SuRaMoN/simplexmlreader.git",
-                "reference": "fbc324610fe1b17cdaf18868ef9d5ce57a28b443"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/SuRaMoN/simplexmlreader/zipball/fbc324610fe1b17cdaf18868ef9d5ce57a28b443",
-                "reference": "fbc324610fe1b17cdaf18868ef9d5ce57a28b443",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "SimpleXmlReader\\": [
-                        "src/"
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE"
-            ],
-            "authors": [
-                {
-                    "name": "SuRaMoN",
-                    "homepage": "https://github.com/SuRaMoN"
-                }
-            ],
-            "description": "The power of SimpleXmlElement, combined with the resource-friendliness of XmlReader",
-            "homepage": "https://github.com/SuRaMoN/SimpleXmlReader",
-            "time": "2015-08-06 22:39:51"
-        },
-        {
             "name": "symfony/css-selector",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
-                "reference": "388683e63e4d02be9c1ed7c520eb3a251147fdb6"
+                "reference": "608aae2b48d9f6e5144d407919527a0fdf10c201"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/388683e63e4d02be9c1ed7c520eb3a251147fdb6",
-                "reference": "388683e63e4d02be9c1ed7c520eb3a251147fdb6",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/608aae2b48d9f6e5144d407919527a0fdf10c201",
+                "reference": "608aae2b48d9f6e5144d407919527a0fdf10c201",
                 "shasum": ""
             },
             "require": {
@@ -1363,7 +1265,7 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-            "time": "2016-01-03 15:35:40"
+            "time": "2016-02-04 12:57:09"
         },
         {
             "name": "symfony/dom-crawler",
@@ -1371,12 +1273,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "7af4c27e6a0f31338b627c11e731c8b4b78fbcf8"
+                "reference": "e8d2c38b25058da772c46b3b5f35fcff773c9f3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/239761acef91cec57e807452d9d30d38da2d313c",
-                "reference": "7af4c27e6a0f31338b627c11e731c8b4b78fbcf8",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/e8d2c38b25058da772c46b3b5f35fcff773c9f3f",
+                "reference": "e8d2c38b25058da772c46b3b5f35fcff773c9f3f",
                 "shasum": ""
             },
             "require": {
@@ -1419,7 +1321,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2016-01-03 15:35:40"
+            "time": "2016-02-04 12:57:09"
         },
         {
             "name": "symfony/finder",
@@ -1857,62 +1759,6 @@
             "time": "2016-01-12 23:29:27"
         },
         {
-            "name": "zendframework/zend-hydrator",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-hydrator.git",
-                "reference": "f3ed8b833355140350bbed98d8a7b8b66875903f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-hydrator/zipball/f3ed8b833355140350bbed98d8a7b8b66875903f",
-                "reference": "f3ed8b833355140350bbed98d8a7b8b66875903f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5",
-                "zendframework/zend-stdlib": "^2.5.1"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0",
-                "squizlabs/php_codesniffer": "^2.0@dev",
-                "zendframework/zend-eventmanager": "^2.5.1",
-                "zendframework/zend-filter": "^2.5.1",
-                "zendframework/zend-inputfilter": "^2.5.1",
-                "zendframework/zend-serializer": "^2.5.1",
-                "zendframework/zend-servicemanager": "^2.5.1"
-            },
-            "suggest": {
-                "zendframework/zend-eventmanager": "^2.5.1, to support aggregate hydrator usage",
-                "zendframework/zend-filter": "^2.5.1, to support naming strategy hydrator usage",
-                "zendframework/zend-serializer": "^2.5.1, to use the SerializableStrategy",
-                "zendframework/zend-servicemanager": "^2.5.1, to support hydrator plugin manager usage"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev",
-                    "dev-develop": "1.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\Hydrator\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "homepage": "https://github.com/zendframework/zend-hydrator",
-            "keywords": [
-                "hydrator",
-                "zf2"
-            ],
-            "time": "2015-09-17 14:06:43"
-        },
-        {
             "name": "zendframework/zend-session",
             "version": "dev-develop",
             "source": {
@@ -1988,8 +1834,7 @@
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5",
-                "zendframework/zend-hydrator": "~1.0"
+                "php": "^5.5 || ^7.0"
             },
             "require-dev": {
                 "athletic/athletic": "~0.1",
@@ -2444,12 +2289,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "acbb9e4fdcb27a9b65426b3d09770db671296a40"
+                "reference": "1ae3a683f38fe24d4b69ef35da82bd211e1894fb"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1ae3a683f38fe24d4b69ef35da82bd211e1894fb",
-                "reference": "acbb9e4fdcb27a9b65426b3d09770db671296a40",
+                "reference": "1ae3a683f38fe24d4b69ef35da82bd211e1894fb",
                 "shasum": ""
             },
             "require": {
@@ -2508,7 +2353,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-01-19 11:59:02"
+            "time": "2016-02-03 15:13:49"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2944,12 +2789,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "25d01edb35f3d5902f612eff297385e9b4d9a8b4"
+                "reference": "05a12065aa18e049f3cf91b0038374e4b1dbcb41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/25d01edb35f3d5902f612eff297385e9b4d9a8b4",
-                "reference": "25d01edb35f3d5902f612eff297385e9b4d9a8b4",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/05a12065aa18e049f3cf91b0038374e4b1dbcb41",
+                "reference": "05a12065aa18e049f3cf91b0038374e4b1dbcb41",
                 "shasum": ""
             },
             "require": {
@@ -2985,7 +2830,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-01-22 06:37:40"
+            "time": "2016-02-09 20:02:42"
         }
     ],
     "aliases": [],
@@ -2994,7 +2839,8 @@
         "martynbiz/slim3-controller": 20,
         "martynbiz/php-mongo": 20,
         "martynbiz/php-validator": 20,
-        "martynbiz/php-flash-message": 20
+        "martynbiz/php-flash-message": 20,
+        "martynbiz/slim3-view": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -7,6 +7,7 @@ $settings = [
         // Renderer settings
         'renderer' => [
             'template_path' => APPLICATION_PATH . '/views/',
+            'cache_path' => APPLICATION_PATH . '/../data/cache/blade',
         ],
 
         // photos upload dir

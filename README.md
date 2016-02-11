@@ -76,6 +76,11 @@ $ gulp watch
 
 ## TODO
 
+
+metroworks/jtsso
+* package up skeleton app from martynbiz/martynbiz
+*
+
 martynbiz/martynbiz
 
 * add featured option to articles

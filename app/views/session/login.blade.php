@@ -40,10 +40,10 @@
 
             	<div class="row omb_row-sm-offset-3">
             		<div class="col-xs-12 col-sm-6">
-                        <form method="post" action="/session" autocomplete="off">
+                        <form method="post" action="/session">
             				<div class="input-group">
             					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            					<input type="text" class="form-control" name="email" placeholder="email address" value="">
+            					<input type="text" class="form-control" name="email" placeholder="email address" value="{{ @param['email'] }}">
             				</div>
 
             				<div class="input-group">

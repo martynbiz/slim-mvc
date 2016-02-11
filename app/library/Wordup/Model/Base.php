@@ -2,7 +2,7 @@
 
 namespace Wordup\Model;
 
-use MartynBiz\Mongo;
+use MartynBiz\Mongo\Mongo;
 
 /**
  *
